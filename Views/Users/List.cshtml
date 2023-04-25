@@ -1,0 +1,13 @@
+@model IEnumerable<User>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<p><a asp-action="Insert">Insert new user</a></p>
+
+@foreach (var user in Model)
+{
+    <h1> @user.name </h1>
+    <h6> @user.id </h6>
+}
