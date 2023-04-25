@@ -33,12 +33,22 @@ public class LoginControllerTests
     }
 
     [Test]
-    public void RegisterCallbackReturnsRegisterView()
+    public void RegisterGetCallbackReturnsRegisterView()
     {
         var result = loginController!.Register();
 
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("Register", ((ViewResult)result).ViewName);
+    }
+
+    [Test]
+    public void RegisterPostCallbackInsertsNewUserAndReturnsIndexView()
+    {
+        var result = loginController!.Register(newUser);
+
+        mock!.Verify(m => m.Create(newUser));
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
     }
 
     [Test]
@@ -65,6 +75,15 @@ public class LoginControllerTests
     {
         name = "MightyBeast",
         email = "mightybeast@labs.com",
+        password = "1",
+        organization = "MightyBeastLabs",
+        role = "Project Manager"
+    };
+
+    private User newUser = new User()
+    {
+        name = "AnotherMightyBeast",
+        email = "anothermightybeast@labs.com",
         password = "1",
         organization = "MightyBeastLabs",
         role = "Project Manager"
