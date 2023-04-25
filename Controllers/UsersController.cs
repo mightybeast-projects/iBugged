@@ -1,4 +1,3 @@
-using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,15 +14,4 @@ public class UsersController : Controller
 
     [HttpGet]
     public IActionResult List() => View("List", usersService.Get());
-
-    [HttpGet]
-    public IActionResult Insert() => View("Insert");
-
-    [HttpPost]
-    public IActionResult Insert(User user)
-    {
-        usersService.Create(user);
-
-        return RedirectToAction(nameof(List));
-    }
 }
