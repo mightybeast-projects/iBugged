@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace iBugged.Services;
 
-public class UsersService
+public class UsersService : IUsersDataService
 {
     private const string DB_NAME = "iBugged_db";
     private const string COLLECTION_NAME = "users";

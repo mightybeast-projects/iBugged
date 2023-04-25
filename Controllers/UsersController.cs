@@ -5,9 +5,9 @@ namespace iBugged.Controllers;
 
 public class UsersController : Controller
 {
-    private readonly UsersService usersService;
+    private readonly IUsersDataService usersService;
 
-    public UsersController(UsersService usersService)
+    public UsersController(IUsersDataService usersService)
     {
         this.usersService = usersService;
     }
