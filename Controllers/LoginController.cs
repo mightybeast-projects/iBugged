@@ -20,6 +20,16 @@ public class LoginController : Controller
     public IActionResult Register() => View("Register");
 
     [HttpPost]
+    public IActionResult LogIn(string email, string password)
+    {
+        if (usersService.Get(email, password) != null)
+            return RedirectPermanent("~/Dashboard");
+
+        ViewData["ErrorMessage"] = "Incorect email or password";
+        return View("Index");
+    }
+
+    [HttpPost]
     public IActionResult Register(User user)
     {
         usersService.Create(user);

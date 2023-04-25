@@ -19,5 +19,10 @@ public class UsersService
 
     public List<User> Get() => users.Find(user => true).ToList();
 
+    public User Get(string email, string password)
+        => users
+            .Find(user => user.email == email && user.password == password)
+            .FirstOrDefault();
+
     public void Create(User user) => users.InsertOne(user);
 }

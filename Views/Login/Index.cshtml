@@ -4,12 +4,13 @@
     ViewData["Title"] = "Insert new user";
 }
 
-<form method="post">
-    <p>Log In :</p>
+<form asp-action="LogIn" method="post">
+    <p>Login :</p>
     <label>Email:</label><br />
     <input asp-for="email" /><br />
     <label>Password:</label><br />
     <input asp-for="password" /><br />
     <br />
-    <input type="Submit" disabled/> <a asp-action="Register">Register</a>
+    <p>@ViewData["ErrorMessage"]</p>
+    <input type="Submit"/> <a asp-action="Register">Register</a>
 </form>
