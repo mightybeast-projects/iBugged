@@ -1,0 +1,15 @@
+@model User;
+
+@{
+    ViewData["Title"] = "Insert new user";
+}
+
+<form method="post">
+    <p>Log In :</p>
+    <label>Email:</label><br />
+    <input asp-for="email" /><br />
+    <label>Password:</label><br />
+    <input asp-for="password" /><br />
+    <br />
+    <input type="Submit" disabled/> <a asp-action="Register">Register</a>
+</form>
