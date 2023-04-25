@@ -1,5 +1,7 @@
 using iBugged.Models;
 
+namespace iBugged.Services;
+
 public interface IUsersDataService
 {
     List<User> Get();
