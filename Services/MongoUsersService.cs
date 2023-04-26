@@ -3,13 +3,13 @@ using MongoDB.Driver;
 
 namespace iBugged.Services;
 
-public class UsersService : IUsersDataService
+public class MongoUsersService : IUsersService
 {
     private const string DB_NAME = "iBugged_db";
     private const string COLLECTION_NAME = "users";
     private IMongoCollection<User> users;
 
-    public UsersService(IConfiguration config)
+    public MongoUsersService(IConfiguration config)
     {
         MongoClient client =
             new MongoClient(config.GetConnectionString(DB_NAME));

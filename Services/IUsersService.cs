@@ -2,7 +2,7 @@ using iBugged.Models;
 
 namespace iBugged.Services;
 
-public interface IUsersDataService
+public interface IUsersService
 {
     List<User> Get();
     User Get(string email, string password);

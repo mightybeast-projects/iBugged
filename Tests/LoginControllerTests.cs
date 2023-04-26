@@ -10,13 +10,13 @@ namespace iBugged.Tests;
 [TestFixture]
 public class LoginControllerTests
 {
-    private Mock<IUsersDataService>? mock;
+    private Mock<IUsersService>? mock;
     private LoginController? loginController;
 
     [SetUp]
     public void SetUp()
     {
-        mock = new Mock<IUsersDataService>();
+        mock = new Mock<IUsersService>();
 
         mock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
 
