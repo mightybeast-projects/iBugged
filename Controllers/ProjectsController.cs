@@ -14,7 +14,7 @@ public class ProjectsController : Controller
     }
 
     [HttpGet]
-    public IActionResult List() => View("List");
+    public IActionResult List() => View("List", projectsService.Get());
 
     [HttpGet]
     public IActionResult Create() => View("Create");

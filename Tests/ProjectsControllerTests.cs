@@ -14,25 +14,30 @@ public class ProjectsControllerTests
     private Mock<HttpContext> httpContextMock = null!;
     private HttpSessionMock sessionMock = null!;
     private ProjectsController controller = null!;
+    private List<Project> projects = new List<Project>();
 
     [SetUp]
     public void SetUp()
     {
+        projects.Add(project);
+
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
         projectsServiceMock = new Mock<IProjectsService>();
 
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
+        projectsServiceMock.Setup(m => m.Get()).Returns(projects);
 
         controller = new ProjectsController(projectsServiceMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [Test]
-    public void ListCallbackReturnsListView()
+    public void ListCallbackReturnsCorrectModelAndListView()
     {
         var result = controller.List();
 
+        projectsServiceMock.Verify(m => m.Get());
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("List", ((ViewResult)result).ViewName);
     }

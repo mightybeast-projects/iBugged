@@ -18,4 +18,6 @@ public class MongoProjectsSevice : IProjectsService
     }
 
     public void Create(Project project) => projects.InsertOne(project);
+
+    public List<Project> Get() => projects.Find(project => true).ToList();
 }
