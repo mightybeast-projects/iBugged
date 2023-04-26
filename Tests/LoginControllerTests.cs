@@ -10,10 +10,10 @@ namespace iBugged.Tests;
 [TestFixture]
 public class LoginControllerTests
 {
-    private Mock<IUsersService>? userServiceMock;
-    private Mock<HttpContext>? httpContextMock;
-    private HttpSessionMock? sessionMock;
-    private LoginController? loginController;
+    private Mock<IUsersService> userServiceMock = null!;
+    private Mock<HttpContext> httpContextMock = null!;
+    private HttpSessionMock sessionMock = null!;
+    private LoginController controller = null!;
 
     [SetUp]
     public void SetUp()
@@ -25,14 +25,14 @@ public class LoginControllerTests
         userServiceMock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
-        loginController = new LoginController(userServiceMock.Object);
-        loginController.ControllerContext.HttpContext = httpContextMock.Object;
+        controller = new LoginController(userServiceMock.Object);
+        controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [Test]
     public void IndexCallbackReturnsIndexView()
     {
-        var result = loginController!.Index();
+        var result = controller.Index();
 
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("~/Views/Index.cshtml", ((ViewResult)result).ViewName);
@@ -41,7 +41,7 @@ public class LoginControllerTests
     [Test]
     public void RegisterGetCallbackReturnsRegisterView()
     {
-        var result = loginController!.Register();
+        var result = controller.Register();
 
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("Register", ((ViewResult)result).ViewName);
@@ -50,7 +50,7 @@ public class LoginControllerTests
     [Test]
     public void RegisterPostCallbackInsertsNewUserAndReturnsIndexView()
     {
-        var result = loginController!.Register(newUser);
+        var result = controller.Register(newUser);
 
         userServiceMock!.Verify(m => m.Create(newUser));
         Assert.IsInstanceOf<RedirectToActionResult>(result);
@@ -60,8 +60,8 @@ public class LoginControllerTests
     [Test]
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
-        var result = loginController!.LogIn("mightybeast@labs.com", "1");
-        var session = loginController.ControllerContext.HttpContext.Session;
+        var result = controller.LogIn("mightybeast@labs.com", "1");
+        var session = controller.ControllerContext.HttpContext.Session;
         var username = session.GetString("Username");
 
         Assert.IsInstanceOf<RedirectResult>(result);
@@ -72,7 +72,7 @@ public class LoginControllerTests
     [Test]
     public void LogInCallbackReturnsLoginViewOnFailedLogin()
     {
-        var result = loginController!.LogIn("", "");
+        var result = controller.LogIn("", "");
 
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("Incorect email or password",
@@ -83,10 +83,10 @@ public class LoginControllerTests
     [Test]
     public void LogOutCallbackClearsUsernameInSessionAndReturnIndexView()
     {
-        loginController!.HttpContext.Session.SetString("Username", user.name!);        
+        controller!.HttpContext.Session.SetString("Username", user.name!);        
 
-        var result = loginController!.LogOut();
-        var session = loginController.HttpContext.Session;
+        var result = controller.LogOut();
+        var session = controller.HttpContext.Session;
 
         Assert.IsInstanceOf<RedirectToActionResult>(result);
         Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
