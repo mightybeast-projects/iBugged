@@ -4,5 +4,5 @@ namespace iBugged.Controllers;
 
 public class DashboardController : Controller
 {
-    public IActionResult Index() => View("Home");
+    public IActionResult Home() => View("Home");
 }

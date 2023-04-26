@@ -27,7 +27,7 @@ public class LoginController : Controller
         if (user != null)
         {
             HttpContext.Session.SetString("Username", user.name!);
-            return RedirectPermanent("~/Dashboard");
+            return RedirectPermanent("~/Dashboard/Home");
         }
 
         ViewData["ErrorMessage"] = "Incorect email or password";

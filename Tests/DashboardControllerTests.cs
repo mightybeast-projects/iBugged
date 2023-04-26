@@ -8,11 +8,11 @@ namespace iBugged.Tests;
 public class DashboardControllerTests
 {
     [Test]
-    public void IndexCallbackReturnsHomeView()
+    public void HomeCallbackReturnsHomeView()
     {
         DashboardController dashboardController = new DashboardController();
 
-        var result = dashboardController.Index();
+        var result = dashboardController.Home();
 
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("Home", ((ViewResult)result).ViewName);

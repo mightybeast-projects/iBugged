@@ -65,7 +65,7 @@ public class LoginControllerTests
         var username = session.GetString("Username");
 
         Assert.IsInstanceOf<RedirectResult>(result);
-        Assert.AreEqual("~/Dashboard", ((RedirectResult)result).Url);
+        Assert.AreEqual("~/Dashboard/Home", ((RedirectResult)result).Url);
         Assert.AreEqual(user.name, username);
     }
 
