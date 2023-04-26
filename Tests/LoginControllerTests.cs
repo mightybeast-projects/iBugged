@@ -11,14 +11,16 @@ namespace iBugged.Tests;
 public class LoginControllerTests
 {
     private Mock<IUsersService>? userServiceMock;
+    private Mock<HttpContext>? httpContextMock;
+    private HttpSessionMock? sessionMock;
     private LoginController? loginController;
 
     [SetUp]
     public void SetUp()
     {
         userServiceMock = new Mock<IUsersService>();
-        Mock<HttpContext> httpContextMock = new Mock<HttpContext>();
-        HttpSessionMock sessionMock = new HttpSessionMock();
+        httpContextMock = new Mock<HttpContext>();
+        sessionMock = new HttpSessionMock();
 
         userServiceMock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
@@ -76,6 +78,21 @@ public class LoginControllerTests
         Assert.AreEqual("Incorect email or password",
             ((ViewResult)result).ViewData["ErrorMessage"]);
         Assert.AreEqual("Index", ((ViewResult)result).ViewName);
+    }
+
+    [Test]
+    public void LogOutCallbackClearsUsernameInSessionAndReturnIndexView()
+    {
+        loginController!.HttpContext.Session.SetString("Username", user.name!);        
+
+        var result = loginController!.LogOut();
+        var session = loginController.HttpContext.Session;
+
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
+        Assert.Throws<KeyNotFoundException>(
+            () => session.GetString("Username")
+        );
     }
 
     private User user = new User()

@@ -31,7 +31,16 @@ public class LoginController : Controller
         }
 
         ViewData["ErrorMessage"] = "Incorect email or password";
+
         return View("Index");
+    }
+
+    [HttpGet]
+    public IActionResult LogOut()
+    {
+        HttpContext.Session.Clear();
+
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]
