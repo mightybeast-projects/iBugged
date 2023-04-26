@@ -29,7 +29,7 @@ public class LoginControllerTests
         var result = loginController!.Index();
 
         Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("Index", ((ViewResult)result).ViewName);
+        Assert.AreEqual("~/Views/Index.cshtml", ((ViewResult)result).ViewName);
     }
 
     [Test]
