@@ -83,7 +83,7 @@ public class LoginControllerTests
     [Test]
     public void LogOutCallbackClearsUsernameInSessionAndReturnIndexView()
     {
-        controller!.HttpContext.Session.SetString("Username", user.name!);        
+        controller!.HttpContext.Session.SetString("Username", user.name!);
 
         var result = controller.LogOut();
         var session = controller.HttpContext.Session;

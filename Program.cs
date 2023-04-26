@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUsersService, MongoUsersService>();
+builder.Services.AddScoped<IProjectsService, MongoProjectsSevice>();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>

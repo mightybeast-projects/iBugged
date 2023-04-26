@@ -1,5 +1,8 @@
 using iBugged.Controllers;
+using iBugged.Models;
+using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 using NUnit.Framework;
 
 namespace iBugged.Tests;
@@ -7,12 +10,22 @@ namespace iBugged.Tests;
 [TestFixture]
 public class ProjectsControllerTests
 {
+    private Mock<IProjectsService> projectsServiceMock = null!;
+    private Mock<HttpContext> httpContextMock = null!;
+    private HttpSessionMock sessionMock = null!;
     private ProjectsController controller = null!;
 
     [SetUp]
     public void SetUp()
     {
-        controller = new ProjectsController();
+        httpContextMock = new Mock<HttpContext>();
+        sessionMock = new HttpSessionMock();
+        projectsServiceMock = new Mock<IProjectsService>();
+
+        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
+
+        controller = new ProjectsController(projectsServiceMock.Object);
+        controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [Test]
@@ -32,4 +45,23 @@ public class ProjectsControllerTests
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual("Create", ((ViewResult)result).ViewName);
     }
+
+    [Test]
+    public void CreatePostCallbackInsertsProjectAndRedirectsToListView()
+    {
+        controller!.HttpContext.Session.SetString("Username", "MightyBeast");  
+
+        var result = controller.Create(project);
+
+        projectsServiceMock!.Verify(m => m.Create(project));
+        Assert.IsInstanceOf<RedirectToActionResult>(result);
+        Assert.AreEqual("List", ((RedirectToActionResult)result).ActionName);
+    }
+
+    private Project project = new Project()
+    {
+        name = "Project_1",
+        description = "Simple project.",
+        members = new List<string>(){ "MightyBeast" }
+    };
 }
