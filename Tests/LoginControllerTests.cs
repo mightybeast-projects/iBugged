@@ -10,17 +10,21 @@ namespace iBugged.Tests;
 [TestFixture]
 public class LoginControllerTests
 {
-    private Mock<IUsersService>? mock;
+    private Mock<IUsersService>? userServiceMock;
     private LoginController? loginController;
 
     [SetUp]
     public void SetUp()
     {
-        mock = new Mock<IUsersService>();
+        userServiceMock = new Mock<IUsersService>();
+        Mock<HttpContext> httpContextMock = new Mock<HttpContext>();
+        HttpSessionMock sessionMock = new HttpSessionMock();
 
-        mock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
+        userServiceMock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
+        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
-        loginController = new LoginController(mock.Object);
+        loginController = new LoginController(userServiceMock.Object);
+        loginController.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [Test]
@@ -46,7 +50,7 @@ public class LoginControllerTests
     {
         var result = loginController!.Register(newUser);
 
-        mock!.Verify(m => m.Create(newUser));
+        userServiceMock!.Verify(m => m.Create(newUser));
         Assert.IsInstanceOf<RedirectToActionResult>(result);
         Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
     }
@@ -55,9 +59,12 @@ public class LoginControllerTests
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
         var result = loginController!.LogIn("mightybeast@labs.com", "1");
+        var session = loginController.ControllerContext.HttpContext.Session;
+        var username = session.GetString("Username");
 
         Assert.IsInstanceOf<RedirectResult>(result);
         Assert.AreEqual("~/Dashboard", ((RedirectResult)result).Url);
+        Assert.AreEqual(user.name, username);
     }
 
     [Test]

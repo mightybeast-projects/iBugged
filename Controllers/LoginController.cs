@@ -1,6 +1,7 @@
 using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
@@ -22,8 +23,12 @@ public class LoginController : Controller
     [HttpPost]
     public IActionResult LogIn(string email, string password)
     {
-        if (usersService.Get(email, password) != null)
+        User user = usersService.Get(email, password);
+        if (user != null)
+        {
+            HttpContext.Session.SetString("Username", user.name!);
             return RedirectPermanent("~/Dashboard");
+        }
 
         ViewData["ErrorMessage"] = "Incorect email or password";
         return View("Index");

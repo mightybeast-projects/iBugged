@@ -2,12 +2,17 @@ using iBugged.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews().AddRazorOptions(options =>
-{
-    options.ViewLocationFormats.Add("/{0}.cshtml");
-});
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUsersService, MongoUsersService>();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromSeconds(10);
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -20,6 +25,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
