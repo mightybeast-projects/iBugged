@@ -1,3 +1,5 @@
+@model IEnumerable<Project>
+
 @{
     ViewData["Title"] = "Projects";
 }
@@ -7,4 +9,16 @@
 </div>
 <div>
     <a asp-controller="Projects" asp-action="Create">Create new project</a>
+</div>
+<div>
+    @foreach (var project in Model)
+    {
+        <h1>@project.name </h1>
+        <h5>@project.description </h5>
+        <h5>Members:</h5>
+        @foreach (var member in project.members!)
+        {
+            <h7>@member</h7>
+        }
+    }
 </div>
