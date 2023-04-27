@@ -23,7 +23,7 @@ public class LoginController : Controller
         User user = usersService.Get(email, password);
         if (user != null)
         {
-            HttpContext.Session.SetString("Username", user.name!);
+            HttpContext.Session.SetString("Username", user.name);
             return RedirectPermanent("~/Dashboard/Home");
         }
 

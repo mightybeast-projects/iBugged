@@ -23,7 +23,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
 
-        userServiceMock.Setup(m => m.Get(user.email!, user.password!))
+        userServiceMock.Setup(m => m.Get(user.email, user.password))
             .Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
@@ -59,7 +59,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     [Test]
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
-        result = controller.LogIn(user.email!, user.password!);
+        result = controller.LogIn(user.email, user.password);
 
         AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
         Assert.AreEqual(user.name,
@@ -79,7 +79,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     [Test]
     public void LogOutCallbackClearsUsernameInSessionAndReturnsIndexView()
     {
-        sessionMock.SetString(SESSION_USERNAME_STR, user.name!);
+        sessionMock.SetString(SESSION_USERNAME_STR, user.name);
 
         result = controller.LogOut();
 

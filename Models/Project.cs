@@ -7,14 +7,14 @@ public class Project
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    public string? id { get; set; }
+    public string id { get; set; } = null!;
 
     [BsonElement("name")]
-    public string? name { get; set; }
+    public string name { get; set; } = null!;
 
     [BsonElement("description")]
-    public string? description { get; set; }
+    public string description { get; set; } = null!;
 
     [BsonElement("members")]
-    public List<string>? members { get; set; }
+    public List<string> members { get; set; } = null!;
 }

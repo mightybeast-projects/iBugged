@@ -50,7 +50,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void CreatePostCallbackInsertsProjectAndRedirectsToListView()
     {
-        sessionMock.SetString("Username", project.members![0]);
+        sessionMock.SetString("Username", project.members[0]);
 
         result = controller.Create(project);
 
