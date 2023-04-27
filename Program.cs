@@ -1,4 +1,8 @@
 using iBugged.Services;
+using MongoDB.Driver;
+
+var connectionString = "mongodb://localhost:27017";
+var dbName = "iBugged_db";
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +10,10 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IUsersService, MongoUsersService>();
 builder.Services.AddScoped<IProjectsService, MongoProjectsSevice>();
+
+builder.Services.AddSingleton<IMongoDatabase>(sp =>
+    new MongoClient(connectionString).GetDatabase(dbName)
+);
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>

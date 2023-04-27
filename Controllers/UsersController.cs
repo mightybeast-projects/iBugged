@@ -7,10 +7,8 @@ public class UsersController : Controller
 {
     private readonly IUsersService usersService;
 
-    public UsersController(IUsersService usersService)
-    {
+    public UsersController(IUsersService usersService) =>
         this.usersService = usersService;
-    }
 
     [HttpGet]
     public IActionResult List() => View("List", usersService.Get());

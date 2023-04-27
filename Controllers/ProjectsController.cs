@@ -8,10 +8,8 @@ public class ProjectsController : Controller
 {
     private IProjectsService projectsService;
 
-    public ProjectsController(IProjectsService projectsService)
-    {
+    public ProjectsController(IProjectsService projectsService) =>
         this.projectsService = projectsService;
-    }
 
     [HttpGet]
     public IActionResult List() => View("List", projectsService.Get());

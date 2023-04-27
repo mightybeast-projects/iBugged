@@ -1,7 +1,6 @@
 using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
@@ -9,10 +8,8 @@ public class LoginController : Controller
 {
     private readonly IUsersService usersService;
 
-    public LoginController(IUsersService usersService)
-    {
+    public LoginController(IUsersService usersService) =>
         this.usersService = usersService;
-    }
 
     [HttpGet]
     public IActionResult Index() => View("Index");
