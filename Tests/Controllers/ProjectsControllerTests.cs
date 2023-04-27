@@ -11,17 +11,17 @@ namespace iBugged.Tests.Controllers;
 public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
     private Mock<IProjectsService> projectsServiceMock = null!;
-    private Project project = TestsData.dummyProject;
+    private readonly Project project = TestsData.dummyProject;
 
     [SetUp]
     public void SetUp()
     {
+        projectsServiceMock = new Mock<IProjectsService>();
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
-        projectsServiceMock = new Mock<IProjectsService>();
 
-        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
         projectsServiceMock.Setup(m => m.Get()).Returns(TestsData.projects);
+        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
         controller = new ProjectsController(projectsServiceMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;

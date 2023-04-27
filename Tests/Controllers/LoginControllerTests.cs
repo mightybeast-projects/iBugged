@@ -14,7 +14,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersService> userServiceMock = null!;
-    private User user = TestsData.dummyUser;
+    private readonly User user = TestsData.dummyUser;
 
     [SetUp]
     public void SetUp()
@@ -61,9 +61,9 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     {
         result = controller.LogIn(user.email, user.password);
 
-        AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
         Assert.AreEqual(user.name,
             sessionMock.GetString(SESSION_USERNAME_STR));
+        AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
     }
 
     [Test]
@@ -71,9 +71,9 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     {
         result = controller.LogIn(string.Empty, string.Empty);
 
-        AssertViewResultReturnsViewWithName("Index");
         Assert.AreEqual(ERROR_MESSAGE,
             ((ViewResult)result).ViewData[ERROR_MESSAGE_NAME]);
+        AssertViewResultReturnsViewWithName("Index");
     }
 
     [Test]
@@ -83,9 +83,9 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
 
         result = controller.LogOut();
 
-        AssertRedirectToActionResultReturnsActionWithName("Index");
         Assert.Throws<KeyNotFoundException>(
             () => sessionMock.GetString(SESSION_USERNAME_STR)
         );
+        AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 }
