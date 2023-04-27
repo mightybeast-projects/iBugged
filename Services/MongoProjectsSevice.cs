@@ -3,21 +3,13 @@ using MongoDB.Driver;
 
 namespace iBugged.Services;
 
-public class MongoProjectsSevice : IProjectsService
+public class MongoProjectsSevice : MongoService<Project>, IProjectsService
 {
-    private const string DB_NAME = "iBugged_db";
-    private const string COLLECTION_NAME = "projects";
-    private IMongoCollection<Project> projects;
+    protected override string collectionName => "projects";
 
-    public MongoProjectsSevice(IConfiguration config)
-    {
-        MongoClient client =
-            new MongoClient(config.GetConnectionString(DB_NAME));
-        IMongoDatabase db = client.GetDatabase(DB_NAME);
-        projects = db.GetCollection<Project>(COLLECTION_NAME);
-    }
+    public MongoProjectsSevice(IConfiguration config) : base(config) { }
 
-    public void Create(Project project) => projects.InsertOne(project);
+    public void Create(Project project) => collection.InsertOne(project);
 
-    public List<Project> Get() => projects.Find(project => true).ToList();
+    public List<Project> Get() => collection.Find(project => true).ToList();
 }
