@@ -33,10 +33,10 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         result = controller.List();
 
         projectsServiceMock.Verify(m => m.Get());
-        AssertViewResultReturnsViewWithName("List");
         var viewResult = (ViewResult)result;
         var model = (List<Project>)viewResult.Model!;
         Assert.AreEqual(project, model[0]);
+        AssertViewResultReturnsViewWithName("List");
     }
 
     [Test]

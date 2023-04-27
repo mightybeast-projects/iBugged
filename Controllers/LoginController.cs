@@ -15,7 +15,7 @@ public class LoginController : Controller
     }
 
     [HttpGet]
-    public IActionResult Index() => View("~/Views/Index.cshtml");
+    public IActionResult Index() => View("Index");
 
     [HttpGet]
     public IActionResult Register() => View("Register");

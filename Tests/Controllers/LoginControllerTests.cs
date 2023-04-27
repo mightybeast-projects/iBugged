@@ -36,7 +36,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     {
         result = controller.Index();
 
-        AssertViewResultReturnsViewWithName("~/Views/Index.cshtml");
+        AssertViewResultReturnsViewWithName("Index");
     }
 
     [Test]
