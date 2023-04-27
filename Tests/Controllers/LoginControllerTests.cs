@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
-namespace iBugged.Tests;
+namespace iBugged.Tests.Controllers;
 
 [TestFixture]
 public class LoginControllerTests : ControllerTestsBase<LoginController>
@@ -14,6 +14,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersService> userServiceMock = null!;
+    private User user = TestsData.dummyUser;
 
     [SetUp]
     public void SetUp()
@@ -49,9 +50,9 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
     [Test]
     public void RegisterPostCallbackInsertsNewUserAndReturnsIndexView()
     {
-        result = controller.Register(newUser);
+        result = controller.Register(user);
 
-        userServiceMock.Verify(m => m.Create(newUser));
+        userServiceMock.Verify(m => m.Create(user));
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 
@@ -61,7 +62,8 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
         result = controller.LogIn(user.email!, user.password!);
 
         AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
-        Assert.AreEqual(user.name, sessionMock.GetString(SESSION_USERNAME_STR));
+        Assert.AreEqual(user.name,
+            sessionMock.GetString(SESSION_USERNAME_STR));
     }
 
     [Test]
@@ -86,22 +88,4 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
             () => sessionMock.GetString(SESSION_USERNAME_STR)
         );
     }
-
-    private User user = new User()
-    {
-        name = "MightyBeast",
-        email = "mightybeast@labs.com",
-        password = "1",
-        organization = "MightyBeastLabs",
-        role = "Project Manager"
-    };
-
-    private User newUser = new User()
-    {
-        name = "AnotherMightyBeast",
-        email = "anothermightybeast@labs.com",
-        password = "1",
-        organization = "MightyBeastLabs",
-        role = "Project Manager"
-    };
 }

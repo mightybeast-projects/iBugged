@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
-namespace iBugged.Tests;
+namespace iBugged.Tests.Controllers;
 
 [TestFixture]
 public abstract class ControllerTestsBase<T> where T : Controller

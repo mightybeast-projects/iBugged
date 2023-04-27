@@ -1,8 +1,7 @@
 using iBugged.Controllers;
-using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 
-namespace iBugged.Tests;
+namespace iBugged.Tests.Controllers;
 
 [TestFixture]
 public class DashboardControllerTests : ControllerTestsBase<DashboardController>
