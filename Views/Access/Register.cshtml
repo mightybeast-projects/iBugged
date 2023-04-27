@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create new user";
 }
 
-<form method="post">
+<form asp-controller="Access" asp-action="Register" method="post">
     <p>Create new user :</p>
     <label>Email:</label><br />
     <input asp-for="email" /><br />

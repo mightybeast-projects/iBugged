@@ -12,5 +12,6 @@
     <input asp-for="password" /><br />
     <br />
     <p>@ViewData["ErrorMessage"]</p>
-    <input type="Submit"/> <a asp-action="Register">Register</a>
+    <input type="Submit"/>
+    <a asp-controller="Access" asp-action="Register">Register</a>
 </form>

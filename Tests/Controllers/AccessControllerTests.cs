@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace iBugged.Tests.Controllers;
 
 [TestFixture]
-public class LoginControllerTests : ControllerTestsBase<LoginController>
+public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
     private const string SESSION_USERNAME_STR = "Username";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
@@ -27,7 +27,7 @@ public class LoginControllerTests : ControllerTestsBase<LoginController>
             .Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
-        controller = new LoginController(userServiceMock.Object);
+        controller = new AccessController(userServiceMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 

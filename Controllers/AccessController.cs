@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iBugged.Controllers;
 
-public class LoginController : Controller
+public class AccessController : Controller
 {
     private readonly IUsersService usersService;
 
-    public LoginController(IUsersService usersService) =>
+    public AccessController(IUsersService usersService) =>
         this.usersService = usersService;
 
     [HttpGet]
@@ -16,6 +16,14 @@ public class LoginController : Controller
 
     [HttpGet]
     public IActionResult Register() => View("Register");
+
+    [HttpGet]
+    public IActionResult LogOut()
+    {
+        HttpContext.Session.Clear();
+
+        return RedirectToAction(nameof(Index));
+    }
 
     [HttpPost]
     public IActionResult LogIn(string email, string password)
@@ -30,14 +38,6 @@ public class LoginController : Controller
         ViewData["ErrorMessage"] = "Incorect email or password";
 
         return View("Index");
-    }
-
-    [HttpGet]
-    public IActionResult LogOut()
-    {
-        HttpContext.Session.Clear();
-
-        return RedirectToAction(nameof(Index));
     }
 
     [HttpPost]

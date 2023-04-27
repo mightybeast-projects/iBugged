@@ -15,17 +15,7 @@ public class HttpSessionMock : ISession
 
     public IEnumerable<string> Keys { get { return sessionStorage.Keys; } }
 
-    public bool IsAvailable => throw new NotImplementedException();
-
-    public string Id => throw new NotImplementedException();
-
     public void Clear() => sessionStorage.Clear();
-
-    public Task CommitAsync(CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
-
-    public Task LoadAsync(CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
 
     public void Remove(string key) => sessionStorage.Remove(key);
 
@@ -39,10 +29,18 @@ public class HttpSessionMock : ISession
             value = (byte[])sessionStorage[key];
             return true;
         }
-        else
-        {
-            value = null;
-            return false;
-        }
+
+        value = null;
+        return false;
     }
+
+    public bool IsAvailable => throw new NotImplementedException();
+
+    public string Id => throw new NotImplementedException();
+
+    public Task CommitAsync(CancellationToken cancellationToken = default)
+        => throw new NotImplementedException();
+
+    public Task LoadAsync(CancellationToken cancellationToken = default)
+        => throw new NotImplementedException();
 }
