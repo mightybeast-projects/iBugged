@@ -39,10 +39,10 @@ public class ProjectsControllerTests
 
         projectsServiceMock.Verify(m => m.Get());
         Assert.IsInstanceOf<ViewResult>(result);
-        var viewResult = ((ViewResult)result);
-        var model = viewResult.Model as List<Project>;
+        var viewResult = (ViewResult)result;
+        var model = (List<Project>)viewResult.Model!;
         Assert.AreEqual("List", viewResult.ViewName);
-        Assert.AreEqual(project, model![0]);
+        Assert.AreEqual(project, model[0]);
     }
 
     [Test]
