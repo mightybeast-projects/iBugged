@@ -8,12 +8,12 @@ using NUnit.Framework;
 namespace iBugged.Tests;
 
 [TestFixture]
-public class LoginControllerTests
+public class LoginControllerTests : ControllerTestsBase<LoginController>
 {
+    private const string SESSION_USERNAME_STR = "Username";
+    private const string ERROR_MESSAGE_NAME = "ErrorMessage";
+    private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersService> userServiceMock = null!;
-    private Mock<HttpContext> httpContextMock = null!;
-    private HttpSessionMock sessionMock = null!;
-    private LoginController controller = null!;
 
     [SetUp]
     public void SetUp()
@@ -22,7 +22,8 @@ public class LoginControllerTests
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
 
-        userServiceMock.Setup(m => m.Get("mightybeast@labs.com", "1")).Returns(user);
+        userServiceMock.Setup(m => m.Get(user.email!, user.password!))
+            .Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
         controller = new LoginController(userServiceMock.Object);
@@ -32,66 +33,57 @@ public class LoginControllerTests
     [Test]
     public void IndexCallbackReturnsIndexView()
     {
-        var result = controller.Index();
+        result = controller.Index();
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("~/Views/Index.cshtml", ((ViewResult)result).ViewName);
+        AssertViewResultReturnsViewWithName("~/Views/Index.cshtml");
     }
 
     [Test]
     public void RegisterGetCallbackReturnsRegisterView()
     {
-        var result = controller.Register();
+        result = controller.Register();
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("Register", ((ViewResult)result).ViewName);
+        AssertViewResultReturnsViewWithName("Register");
     }
 
     [Test]
     public void RegisterPostCallbackInsertsNewUserAndReturnsIndexView()
     {
-        var result = controller.Register(newUser);
+        result = controller.Register(newUser);
 
-        userServiceMock!.Verify(m => m.Create(newUser));
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
+        userServiceMock.Verify(m => m.Create(newUser));
+        AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 
     [Test]
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
-        var result = controller.LogIn("mightybeast@labs.com", "1");
-        var session = controller.ControllerContext.HttpContext.Session;
-        var username = session.GetString("Username");
+        result = controller.LogIn(user.email!, user.password!);
 
-        Assert.IsInstanceOf<RedirectResult>(result);
-        Assert.AreEqual("~/Dashboard/Home", ((RedirectResult)result).Url);
-        Assert.AreEqual(user.name, username);
+        AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
+        Assert.AreEqual(user.name, sessionMock.GetString(SESSION_USERNAME_STR));
     }
 
     [Test]
-    public void LogInCallbackReturnsLoginViewOnFailedLogin()
+    public void LogInCallbackReturnsLoginViewOnFailedLoginWithErrorMessage()
     {
-        var result = controller.LogIn("", "");
+        result = controller.LogIn(string.Empty, string.Empty);
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("Incorect email or password",
-            ((ViewResult)result).ViewData["ErrorMessage"]);
-        Assert.AreEqual("Index", ((ViewResult)result).ViewName);
+        AssertViewResultReturnsViewWithName("Index");
+        Assert.AreEqual(ERROR_MESSAGE,
+            ((ViewResult)result).ViewData[ERROR_MESSAGE_NAME]);
     }
 
     [Test]
-    public void LogOutCallbackClearsUsernameInSessionAndReturnIndexView()
+    public void LogOutCallbackClearsUsernameInSessionAndReturnsIndexView()
     {
-        controller!.HttpContext.Session.SetString("Username", user.name!);
+        sessionMock.SetString(SESSION_USERNAME_STR, user.name!);
 
-        var result = controller.LogOut();
-        var session = controller.HttpContext.Session;
+        result = controller.LogOut();
 
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("Index", ((RedirectToActionResult)result).ActionName);
+        AssertRedirectToActionResultReturnsActionWithName("Index");
         Assert.Throws<KeyNotFoundException>(
-            () => session.GetString("Username")
+            () => sessionMock.GetString(SESSION_USERNAME_STR)
         );
     }
 

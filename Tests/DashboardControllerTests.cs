@@ -5,16 +5,16 @@ using NUnit.Framework;
 namespace iBugged.Tests;
 
 [TestFixture]
-public class DashboardControllerTests
+public class DashboardControllerTests : ControllerTestsBase<DashboardController>
 {
+    [SetUp]
+    public void SetUp() => controller = new DashboardController();
+
     [Test]
     public void HomeCallbackReturnsHomeView()
     {
-        DashboardController dashboardController = new DashboardController();
+        result = controller.Home();
 
-        var result = dashboardController.Home();
-
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("Home", ((ViewResult)result).ViewName);
+        AssertViewResultReturnsViewWithName("Home");
     }
 }

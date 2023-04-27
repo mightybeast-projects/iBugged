@@ -8,12 +8,9 @@ using NUnit.Framework;
 namespace iBugged.Tests;
 
 [TestFixture]
-public class ProjectsControllerTests
+public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
     private Mock<IProjectsService> projectsServiceMock = null!;
-    private Mock<HttpContext> httpContextMock = null!;
-    private HttpSessionMock sessionMock = null!;
-    private ProjectsController controller = null!;
     private List<Project> projects = new List<Project>();
 
     [SetUp]
@@ -33,43 +30,40 @@ public class ProjectsControllerTests
     }
 
     [Test]
-    public void ListCallbackReturnsCorrectModelAndListView()
+    public void ListCallbackReturnsListViewWithCorrectModel()
     {
-        var result = controller.List();
+        result = controller.List();
 
         projectsServiceMock.Verify(m => m.Get());
-        Assert.IsInstanceOf<ViewResult>(result);
+        AssertViewResultReturnsViewWithName("List");
         var viewResult = (ViewResult)result;
         var model = (List<Project>)viewResult.Model!;
-        Assert.AreEqual("List", viewResult.ViewName);
         Assert.AreEqual(project, model[0]);
     }
 
     [Test]
     public void CreateGetCallbackReturnsCreateView()
     {
-        var result = controller.Create();
+        result = controller.Create();
 
-        Assert.IsInstanceOf<ViewResult>(result);
-        Assert.AreEqual("Create", ((ViewResult)result).ViewName);
+        AssertViewResultReturnsViewWithName("Create");
     }
 
     [Test]
     public void CreatePostCallbackInsertsProjectAndRedirectsToListView()
     {
-        controller!.HttpContext.Session.SetString("Username", "MightyBeast");  
+        sessionMock.SetString("Username", project.members![0]);
 
-        var result = controller.Create(project);
+        result = controller.Create(project);
 
-        projectsServiceMock!.Verify(m => m.Create(project));
-        Assert.IsInstanceOf<RedirectToActionResult>(result);
-        Assert.AreEqual("List", ((RedirectToActionResult)result).ActionName);
+        projectsServiceMock.Verify(m => m.Create(project));
+        AssertRedirectToActionResultReturnsActionWithName("List");
     }
 
     private Project project = new Project()
     {
         name = "Project_1",
         description = "Simple project.",
-        members = new List<string>(){ "MightyBeast" }
+        members = new List<string>() { "MightyBeast" }
     };
 }
