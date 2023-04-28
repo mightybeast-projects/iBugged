@@ -8,9 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsersService, MongoUsersService>();
 builder.Services.AddScoped<IProjectsService, MongoProjectsSevice>();
 
+builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>
     new MongoClient(connectionString).GetDatabase(dbName)
 );

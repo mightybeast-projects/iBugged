@@ -1,14 +1,6 @@
-﻿@using Newtonsoft.Json;
+﻿@using iBugged.Services;
 @model dynamic;
-
-@{
-    User user = null!;
-    var userJson = Context.Session.GetString("User");
-    if (userJson != null)
-    {
-        user = JsonConvert.DeserializeObject<User>(userJson!)!;
-    }
-}
+@inject AccessViewService service;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,10 +23,10 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (user != null)
+                        @if (service.user != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark">@user.name</a>
+                                <a class="nav-link text-dark">@service.user.name</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Home">Dashboard</a>

@@ -32,7 +32,6 @@ public class AccessController : Controller
         User user = usersService.Get(email, password);
         if (user != null)
         {
-            HttpContext.Session.SetString("Username", user.name);
             HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
             return RedirectPermanent("~/Dashboard/Home");
         }
