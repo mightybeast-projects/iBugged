@@ -37,5 +37,5 @@ public class User
                role == user.role;
     }
 
-    public override int GetHashCode() => GetHashCode();
+    public override int GetHashCode() => id.GetHashCode();
 }

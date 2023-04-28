@@ -8,7 +8,10 @@
     <h1 class="display-4">Projects</h1>
 </div>
 <div>
-    <a asp-controller="Projects" asp-action="Create">Create new project</a>
+    @if (service.user.role == Role.ProjectManager)
+    {
+        <a asp-controller="Projects" asp-action="Create">Create new project</a>
+    }
 </div>
 <div>
     @foreach (var project in Model)

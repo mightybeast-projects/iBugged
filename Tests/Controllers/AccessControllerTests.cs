@@ -61,14 +61,21 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
         result = controller.LogIn(user.email, user.password);
-        var userJson = sessionMock.GetString(SESSION_USER_STR);
 
-        Assert.AreEqual(user, JsonConvert.DeserializeObject<User>(userJson!));
         AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
     }
 
     [Test]
-    public void LogInCallbackReturnsLoginViewOnFailedLoginWithErrorMessage()
+    public void LogInCallbackSetsUserInSessionOnSuccessfulLogin()
+    {
+        result = controller.LogIn(user.email, user.password);
+        var json = sessionMock.GetString(SESSION_USER_STR);
+
+        Assert.AreEqual(user, JsonConvert.DeserializeObject<User>(json!));
+    }
+
+    [Test]
+    public void LogInCallbackReturnsLoginViewWithErrorMessageOnFailedLogin()
     {
         result = controller.LogIn(string.Empty, string.Empty);
 
@@ -78,16 +85,23 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void LogOutCallbackClearsUsernameInSessionAndReturnsIndexView()
+    public void LogOutCallbackReturnsIndexView()
     {
-        sessionMock.SetString(SESSION_USER_STR,
-            JsonConvert.SerializeObject(user));
+        result = controller.LogOut();
+
+        AssertRedirectToActionResultReturnsActionWithName("Index");
+    }
+
+    [Test]
+    public void LogOutCallBackClearsUserInSession()
+    {
+        var json = JsonConvert.SerializeObject(user);
+        sessionMock.SetString(SESSION_USER_STR, json);
 
         result = controller.LogOut();
 
         Assert.Throws<KeyNotFoundException>(
             () => sessionMock.GetString(SESSION_USER_STR)
         );
-        AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 }

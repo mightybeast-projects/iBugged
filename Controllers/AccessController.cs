@@ -31,10 +31,7 @@ public class AccessController : Controller
     {
         User user = usersService.Get(email, password);
         if (user != null)
-        {
-            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
-            return RedirectPermanent("~/Dashboard/Home");
-        }
+            return SetUserInSessionAndRedirectToDashboard(user);
 
         ViewData["ErrorMessage"] = "Incorect email or password";
 
@@ -47,5 +44,12 @@ public class AccessController : Controller
         usersService.Create(user);
 
         return RedirectToAction(nameof(Index));
+    }
+
+    private IActionResult SetUserInSessionAndRedirectToDashboard(User user)
+    {
+        string json = JsonConvert.SerializeObject(user);
+        HttpContext.Session.SetString("User", json);
+        return RedirectPermanent("~/Dashboard/Home");
     }
 }
