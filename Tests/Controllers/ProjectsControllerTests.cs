@@ -3,6 +3,7 @@ using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
@@ -12,6 +13,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
     private Mock<IProjectsService> projectsServiceMock = null!;
     private readonly Project project = TestsData.dummyProject;
+    private readonly User user = TestsData.dummyUser;
 
     [SetUp]
     public void SetUp()
@@ -50,7 +52,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void CreatePostCallbackInsertsProjectAndRedirectsToListView()
     {
-        sessionMock.SetString("Username", project.members[0]);
+        sessionMock.SetString("User", JsonConvert.SerializeObject(user));
 
         result = controller.Create(project);
 

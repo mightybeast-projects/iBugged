@@ -1,6 +1,7 @@
 using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
@@ -32,6 +33,7 @@ public class AccessController : Controller
         if (user != null)
         {
             HttpContext.Session.SetString("Username", user.name);
+            HttpContext.Session.SetString("User", JsonConvert.SerializeObject(user));
             return RedirectPermanent("~/Dashboard/Home");
         }
 

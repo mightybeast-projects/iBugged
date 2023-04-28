@@ -3,6 +3,7 @@ using iBugged.Models;
 using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
@@ -10,7 +11,7 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
-    private const string SESSION_USERNAME_STR = "Username";
+    private const string SESSION_USER_STR = "User";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersService> userServiceMock = null!;
@@ -60,9 +61,9 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
     {
         result = controller.LogIn(user.email, user.password);
+        var userJson = sessionMock.GetString(SESSION_USER_STR);
 
-        Assert.AreEqual(user.name,
-            sessionMock.GetString(SESSION_USERNAME_STR));
+        Assert.AreEqual(user, JsonConvert.DeserializeObject<User>(userJson!));
         AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
     }
 
@@ -79,12 +80,13 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     [Test]
     public void LogOutCallbackClearsUsernameInSessionAndReturnsIndexView()
     {
-        sessionMock.SetString(SESSION_USERNAME_STR, user.name);
+        sessionMock.SetString(SESSION_USER_STR,
+            JsonConvert.SerializeObject(user));
 
         result = controller.LogOut();
 
         Assert.Throws<KeyNotFoundException>(
-            () => sessionMock.GetString(SESSION_USERNAME_STR)
+            () => sessionMock.GetString(SESSION_USER_STR)
         );
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
