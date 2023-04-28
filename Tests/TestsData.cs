@@ -10,7 +10,7 @@ public static class TestsData
         email = "mightybeast@labs.com",
         password = "1234567",
         organization = "MightyBeastLabs",
-        role = "Project Manager"
+        role = Role.ProjectManager
     };
 
     public static Project dummyProject = new Project()

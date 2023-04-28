@@ -15,7 +15,8 @@
     <label>Organization:</label><br />
     <input asp-for="organization" /><br />
     <label>Role:</label><br />
-    <input asp-for="role" /><br />
-    <br />
+    <select asp-for="role" asp-items="Html.GetEnumSelectList<Role>()">
+    </select>
+    <br /><br />
     <input type="Submit" value="Register"/>
 </form>

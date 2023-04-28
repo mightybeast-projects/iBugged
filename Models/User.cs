@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -22,5 +23,6 @@ public class User
     public string organization { get; set; } = null!;
 
     [BsonElement("role")]
-    public string role { get; set; } = null!;
+    [Required]
+    public Role role { get; set; }
 }
