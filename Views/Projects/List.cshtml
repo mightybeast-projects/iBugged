@@ -23,5 +23,8 @@
         {
             <h7>@member</h7>
         }
+        <a asp-controller="Projects"
+            asp-action="Delete"
+            asp-route-id="@project.id">Delete @project.name</a>
     }
 </div>

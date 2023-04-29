@@ -59,4 +59,20 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         projectsServiceMock.Verify(m => m.Create(project));
         AssertRedirectToActionResultReturnsActionWithName("List");
     }
+
+    [Test]
+    public void DeleteCallbackDeletesProject()
+    {
+        result = controller.Delete(project.id);
+
+        projectsServiceMock.Verify(m => m.Delete(project.id));
+    }
+
+    [Test]
+    public void DeleteCallbackReturnsListView()
+    {
+        result = controller.Delete(project.id);
+
+        AssertRedirectToActionResultReturnsActionWithName("List");
+    }
 }

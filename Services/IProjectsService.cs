@@ -2,8 +2,7 @@ using iBugged.Models;
 
 namespace iBugged.Services;
 
-public interface IProjectsService
+public interface IProjectsService : IService<Project>
 {
-    List<Project> Get();
-    void Create(Project project);
+    void Delete(string id);
 }

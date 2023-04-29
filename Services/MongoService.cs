@@ -2,7 +2,7 @@ using MongoDB.Driver;
 
 namespace iBugged.Services;
 
-public abstract class MongoService<T>
+public abstract class MongoService<T> : IService<T>
 {
     protected abstract string collectionName { get; }
     protected IMongoCollection<T> collection = null!;

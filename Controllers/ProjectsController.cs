@@ -18,6 +18,14 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Create() => View("Create");
 
+    [HttpGet]
+    public IActionResult Delete(string id)
+    {
+        projectsService.Delete(id);
+
+        return RedirectToAction(nameof(List));
+    }
+
     [HttpPost]
     public IActionResult Create(Project project)
     {
