@@ -50,14 +50,23 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreatePostCallbackInsertsProjectAndRedirectsToListView()
+    public void CreatePostCallbackRedirectsToListView()
+    {
+        sessionMock.SetString("User", JsonConvert.SerializeObject(user));
+
+        result = controller.Create(project);
+
+        AssertRedirectToActionResultReturnsActionWithName("List");
+    }
+
+    [Test]
+    public void CreatePostCallbackInsertsNewProject()
     {
         sessionMock.SetString("User", JsonConvert.SerializeObject(user));
 
         result = controller.Create(project);
 
         projectsServiceMock.Verify(m => m.Create(project));
-        AssertRedirectToActionResultReturnsActionWithName("List");
     }
 
     [Test]
