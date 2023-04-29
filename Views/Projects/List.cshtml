@@ -8,7 +8,7 @@
     <h1 class="display-4">Projects</h1>
 </div>
 <div>
-    @if (service.user.role == Role.ProjectManager)
+    @if (service.user.role is ProjectManager)
     {
         <a asp-controller="Projects" asp-action="Create">Create new project</a>
     }
@@ -16,15 +16,18 @@
 <div>
     @foreach (var project in Model)
     {
-        <h1>@project.name </h1>
-        <h5>@project.description </h5>
+        <h1>@project.name</h1>
+        <h5>@project.description</h5>
         <h5>Members:</h5>
-        @foreach (var member in project.members!)
+        foreach (var member in project.members!)
         {
             <h7>@member</h7>
         }
-        <a asp-controller="Projects"
-            asp-action="Delete"
-            asp-route-id="@project.id">Delete @project.name</a>
+        if (service.user.role is ProjectManager)
+        {
+            <a asp-controller="Projects"
+                asp-action="Delete"
+                asp-route-id="@project.id">Delete @project.name</a>
+        }
     }
 </div>

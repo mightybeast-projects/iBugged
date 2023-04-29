@@ -19,7 +19,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (service.user != null)
+                        @if (service.user is not null)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark">@service.user.name</a>
@@ -30,10 +30,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="List">Projects</a>
                             </li>
+                            @if (service.user.role is ProjectManager)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="List">Users</a>
+                                </li>
+                            }
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="List">Users</a>
-                        </li>
                     </ul>
                 </div>
             </div>
