@@ -1,13 +1,13 @@
 using iBugged.Models;
 using MongoDB.Driver;
 
-namespace iBugged.Services;
+namespace iBugged.Services.Repositories;
 
-public class MongoUsersService : MongoService<User>, IUsersService
+public class MongoUsersRepository : MongoRepository<User>, IUsersRepository
 {
     protected override string collectionName => "users";
 
-    public MongoUsersService(IMongoDatabase db) : base(db) { }
+    public MongoUsersRepository(IMongoDatabase db) : base(db) { }
 
     public User Get(string email, string password)
         => collection

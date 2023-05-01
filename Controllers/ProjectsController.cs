@@ -1,5 +1,5 @@
 using iBugged.Models;
-using iBugged.Services;
+using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -7,9 +7,9 @@ namespace iBugged.Controllers;
 
 public class ProjectsController : Controller
 {
-    private IProjectsService projectsService;
+    private IProjectsRepository projectsService;
 
-    public ProjectsController(IProjectsService projectsService) =>
+    public ProjectsController(IProjectsRepository projectsService) =>
         this.projectsService = projectsService;
 
     [HttpGet]

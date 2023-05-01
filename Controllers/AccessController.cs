@@ -1,5 +1,5 @@
 using iBugged.Models;
-using iBugged.Services;
+using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -7,9 +7,9 @@ namespace iBugged.Controllers;
 
 public class AccessController : Controller
 {
-    private readonly IUsersService usersService;
+    private readonly IUsersRepository usersService;
 
-    public AccessController(IUsersService usersService) =>
+    public AccessController(IUsersRepository usersService) =>
         this.usersService = usersService;
 
     [HttpGet]

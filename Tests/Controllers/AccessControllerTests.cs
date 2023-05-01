@@ -1,6 +1,6 @@
 using iBugged.Controllers;
 using iBugged.Models;
-using iBugged.Services;
+using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
@@ -14,21 +14,21 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private const string SESSION_USER_STR = "User";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
-    private Mock<IUsersService> userServiceMock = null!;
+    private Mock<IUsersRepository> userRepositoryMock = null!;
     private readonly User user = TestsData.dummyUser;
 
     [SetUp]
     public void SetUp()
     {
-        userServiceMock = new Mock<IUsersService>();
+        userRepositoryMock = new Mock<IUsersRepository>();
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
 
-        userServiceMock.Setup(m => m.Get(user.email, user.password))
+        userRepositoryMock.Setup(m => m.Get(user.email, user.password))
             .Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
-        controller = new AccessController(userServiceMock.Object);
+        controller = new AccessController(userRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
@@ -53,7 +53,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register(user);
 
-        userServiceMock.Verify(m => m.Create(user));
+        userRepositoryMock.Verify(m => m.Create(user));
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 

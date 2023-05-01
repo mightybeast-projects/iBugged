@@ -1,13 +1,13 @@
 using MongoDB.Driver;
 
-namespace iBugged.Services;
+namespace iBugged.Services.Repositories;
 
-public abstract class MongoService<T> : IService<T>
+public abstract class MongoRepository<T> : IRepository<T>
 {
     protected abstract string collectionName { get; }
     protected IMongoCollection<T> collection = null!;
 
-    public MongoService(IMongoDatabase db) =>
+    public MongoRepository(IMongoDatabase db) =>
         collection = db.GetCollection<T>(collectionName);
 
     public List<T> Get() => collection.Find(t => true).ToList();

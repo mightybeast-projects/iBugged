@@ -1,13 +1,13 @@
-using iBugged.Services;
+using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace iBugged.Controllers;
 
 public class UsersController : Controller
 {
-    private readonly IUsersService usersService;
+    private readonly IUsersRepository usersService;
 
-    public UsersController(IUsersService usersService) =>
+    public UsersController(IUsersRepository usersService) =>
         this.usersService = usersService;
 
     [HttpGet]
