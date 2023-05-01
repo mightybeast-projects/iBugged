@@ -16,7 +16,7 @@ public static class TestsData
     {
         name = "Project_1",
         description = "Simple project.",
-        members = new List<string>() { "MightyBeast" }
+        membersId = new List<string>() { dummyUser.id }
     };
 
     public static List<Project> projects = new List<Project>{ dummyProject };
