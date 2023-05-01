@@ -5,11 +5,11 @@ namespace iBugged.Controllers;
 
 public class UsersController : Controller
 {
-    private readonly IUsersRepository usersService;
+    private readonly IUsersRepository usersRepository;
 
     public UsersController(IUsersRepository usersService) =>
-        this.usersService = usersService;
+        this.usersRepository = usersService;
 
     [HttpGet]
-    public IActionResult List() => View("List", usersService.Get());
+    public IActionResult List() => View("List", usersRepository.Get());
 }

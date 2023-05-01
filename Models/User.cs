@@ -20,16 +20,4 @@ public class User
 
     [BsonElement("role")]
     public Role role { get; set; }
-
-    public override bool Equals(object? obj)
-    {
-        return obj is User user &&
-               id == user.id &&
-               name == user.name &&
-               email == user.email &&
-               password == user.password &&
-               role == user.role;
-    }
-
-    public override int GetHashCode() => id.GetHashCode();
 }

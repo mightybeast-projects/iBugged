@@ -1,4 +1,4 @@
-@model IEnumerable<Project>
+@model IEnumerable<ProjectViewModel>
 
 @{
     ViewData["Title"] = "Projects";
@@ -14,20 +14,20 @@
     }
 </div>
 <div>
-    @foreach (var project in Model)
+    @foreach (var viewModel in Model)
     {
-        <h1>@project.name</h1>
-        <h5>@project.description</h5>
+        <h1>@viewModel.project.name</h1>
+        <h5>@viewModel.project.description</h5>
         <h5>Members:</h5>
-        foreach (var memberId in project.membersId!)
+        foreach (var member in viewModel.members)
         {
-            <h7>@memberId</h7>
+            <h7>@member.name</h7>
         }
         if (service.user.role is ProjectManager)
         {
             <br /><a asp-controller="Projects"
                 asp-action="Delete"
-                asp-route-id="@project.id">Delete project</a>
+                asp-route-id="@viewModel.project.id">Delete project</a>
         }
     }
 </div>

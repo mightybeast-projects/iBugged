@@ -16,5 +16,5 @@ public class Project
     public string description { get; set; } = null!;
 
     [BsonElement("members_id")]
-    public List<string> membersId { get; set; } = null!;
+    public List<string> membersId { get; set; } = new List<string>();
 }

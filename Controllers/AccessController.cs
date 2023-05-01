@@ -7,10 +7,10 @@ namespace iBugged.Controllers;
 
 public class AccessController : Controller
 {
-    private readonly IUsersRepository usersService;
+    private readonly IUsersRepository usersRepository;
 
     public AccessController(IUsersRepository usersService) =>
-        this.usersService = usersService;
+        this.usersRepository = usersService;
 
     [HttpGet]
     public IActionResult Index() => View("Index");
@@ -29,7 +29,7 @@ public class AccessController : Controller
     [HttpPost]
     public IActionResult LogIn(string email, string password)
     {
-        User user = usersService.Get(email, password);
+        User user = usersRepository.Get(email, password);
         if (user != null)
             return SetUserInSessionAndRedirectToDashboard(user);
 
@@ -53,7 +53,7 @@ public class AccessController : Controller
     [HttpPost]
     public IActionResult Register(User user)
     {
-        usersService.Create(user);
+        usersRepository.Create(user);
 
         return RedirectToAction(nameof(Index));
     }

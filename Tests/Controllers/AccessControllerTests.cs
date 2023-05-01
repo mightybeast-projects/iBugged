@@ -82,9 +82,10 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     public void LogInCallbackSetsUserInSessionOnSuccessfulLogin(User user)
     {
         result = controller.LogIn(user.email, user.password);
-        var json = sessionMock.GetString(SESSION_USER_STR);
+        var loggedUserJson = JsonConvert.SerializeObject(user);
+        var sessionUserJson = sessionMock.GetString(SESSION_USER_STR);
 
-        Assert.AreEqual(user, JsonConvert.DeserializeObject<User>(json!));
+        Assert.AreEqual(loggedUserJson, sessionUserJson);
     }
 
     [Test]

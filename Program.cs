@@ -21,7 +21,7 @@ builder.Services.AddSingleton<IMongoDatabase>(sp =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
 {
-    option.IdleTimeout = TimeSpan.FromSeconds(10);
+    option.IdleTimeout = TimeSpan.FromMinutes(20);
     option.Cookie.HttpOnly = true;
     option.Cookie.IsEssential = true;
 });

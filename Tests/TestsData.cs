@@ -7,6 +7,7 @@ public static class TestsData
 {
     public static User dummyUser = new User()
     {
+        id = "1",
         name = "MightyBeast",
         email = "mightybeast@labs.com",
         password = "1234567",
@@ -15,6 +16,7 @@ public static class TestsData
 
     public static User demoProjectManager = new User()
     {
+        id = "2",
         name = "Demo Project Manager",
         email = "demoprojectmanager@gmail.com",
         password = "1234567",
@@ -23,6 +25,7 @@ public static class TestsData
 
     public static User demoDeveloper = new User()
     {
+        id = "3",
         name = "Demo Developer",
         email = "demodeveloper@gmail.com",
         password = "1234567",
@@ -31,6 +34,7 @@ public static class TestsData
 
     public static User demoTeamMember = new User()
     {
+        id = "4",
         name = "Demo Team Member",
         email = "demoteammember@gmail.com",
         password = "1234567",
@@ -39,6 +43,7 @@ public static class TestsData
 
     public static Project dummyProject = new Project()
     {
+        id = "1",
         name = "Project_1",
         description = "Simple project.",
         membersId = new List<string>() { dummyUser.id }
