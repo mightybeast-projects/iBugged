@@ -8,7 +8,7 @@ public enum Role
     [BsonRepresentation(BsonType.String)]
     ProjectManager,
     [BsonRepresentation(BsonType.String)]
-    TeamMember,
+    Developer,
     [BsonRepresentation(BsonType.String)]
-    Developer
+    TeamMember
 }

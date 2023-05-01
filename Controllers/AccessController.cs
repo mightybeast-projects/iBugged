@@ -38,6 +38,18 @@ public class AccessController : Controller
         return View("Index");
     }
 
+    [HttpGet]
+    public IActionResult LogInAsProjectManager() =>
+        LogIn("demoprojectmanager@gmail.com", "1234567");
+
+    [HttpGet]
+    public IActionResult LogInAsDeveloper() =>
+        LogIn("demodeveloper@gmail.com", "1234567");
+
+    [HttpGet]
+    public IActionResult LogInAsTeamMember() =>
+        LogIn("demoteammember@gmail.com", "1234567");
+
     [HttpPost]
     public IActionResult Register(User user)
     {

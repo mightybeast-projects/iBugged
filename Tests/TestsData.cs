@@ -31,7 +31,7 @@ public static class TestsData
 
     public static User demoTeamMember = new User()
     {
-        name = "Demo Team Manager",
+        name = "Demo Team Member",
         email = "demoteammember@gmail.com",
         password = "1234567",
         role = Role.TeamMember
