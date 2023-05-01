@@ -16,6 +16,9 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersRepository> userRepositoryMock = null!;
     private readonly User user = TestsData.dummyUser;
+    private readonly User demoPM = TestsData.demoProjectManager;
+    private readonly User demoDeveloper = TestsData.demoDeveloper;
+    private readonly User demoTeamMember = TestsData.demoTeamMember;
 
     [SetUp]
     public void SetUp()
@@ -24,8 +27,18 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
 
-        userRepositoryMock.Setup(m => m.Get(user.email, user.password))
+        userRepositoryMock
+            .Setup(m => m.Get(user.email, user.password))
             .Returns(user);
+        userRepositoryMock
+            .Setup(m => m.Get(demoPM.email, demoPM.password))
+            .Returns(demoPM);
+        userRepositoryMock
+            .Setup(m => m.Get(demoDeveloper.email, demoDeveloper.password))
+            .Returns(demoDeveloper);
+        userRepositoryMock
+            .Setup(m => m.Get(demoTeamMember.email, demoTeamMember.password))
+            .Returns(demoTeamMember);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
         controller = new AccessController(userRepositoryMock.Object);
@@ -57,16 +70,16 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 
-    [Test]
-    public void LogInCallbackRedirectsToDashboardOnSuccessfulLogin()
+    [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
+    public void LogInCallbackRedirectsToDashboardOnSuccessfulLoginOf(User user)
     {
         result = controller.LogIn(user.email, user.password);
 
         AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
     }
 
-    [Test]
-    public void LogInCallbackSetsUserInSessionOnSuccessfulLogin()
+    [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
+    public void LogInCallbackSetsUserInSessionOnSuccessfulLogin(User user)
     {
         result = controller.LogIn(user.email, user.password);
         var json = sessionMock.GetString(SESSION_USER_STR);
@@ -92,8 +105,8 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 
-    [Test]
-    public void LogOutCallBackClearsUserInSession()
+    [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
+    public void LogOutCallBackClearsUserInSession(User user)
     {
         var json = JsonConvert.SerializeObject(user);
         sessionMock.SetString(SESSION_USER_STR, json);
