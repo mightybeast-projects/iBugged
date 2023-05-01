@@ -19,15 +19,15 @@
         <h1>@project.name</h1>
         <h5>@project.description</h5>
         <h5>Members:</h5>
-        foreach (var member in project.members!)
+        foreach (var memberId in project.members!)
         {
-            <h7>@member</h7>
+            <h7>@memberId</h7>
         }
         if (service.user.role is ProjectManager)
         {
             <a asp-controller="Projects"
                 asp-action="Delete"
-                asp-route-id="@project.id">Delete @project.name</a>
+                asp-route-id="@project.id">Delete project</a>
         }
     }
 </div>

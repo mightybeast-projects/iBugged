@@ -32,8 +32,7 @@ public class ProjectsController : Controller
         string userJson = HttpContext.Session.GetString("User")!;
         User user = JsonConvert.DeserializeObject<User>(userJson)!;
 
-        project.members = new List<string>();
-        project.members.Add(user.name);
+        project.members = new List<string>{ user.id };
         projectsService.Create(project);
 
         return RedirectToAction("List");
