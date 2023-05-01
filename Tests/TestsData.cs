@@ -9,7 +9,6 @@ public static class TestsData
         name = "MightyBeast",
         email = "mightybeast@labs.com",
         password = "1234567",
-        organization = "MightyBeastLabs",
         role = Role.ProjectManager
     };
 

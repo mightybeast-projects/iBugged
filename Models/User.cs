@@ -18,9 +18,6 @@ public class User
     [BsonElement("password")]
     public string password { get; set; } = null!;
 
-    [BsonElement("organization")]
-    public string organization { get; set; } = null!;
-
     [BsonElement("role")]
     public Role role { get; set; }
 
@@ -31,7 +28,6 @@ public class User
                name == user.name &&
                email == user.email &&
                password == user.password &&
-               organization == user.organization &&
                role == user.role;
     }
 
