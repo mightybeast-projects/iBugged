@@ -14,6 +14,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
     private Mock<IProjectsRepository> projectsRepositoryMock = null!;
     private Mock<IUsersRepository> usersRepositoryMock = null!;
+    private readonly List<User> users = TestsData.users;
     private readonly List<Project> projects = TestsData.projects;
     private readonly Project project = TestsData.dummyProject;
     private readonly User user = TestsData.dummyUser;
@@ -27,6 +28,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         sessionMock = new HttpSessionMock();
 
         projectsRepositoryMock.Setup(m => m.Get()).Returns(projects);
+        usersRepositoryMock.Setup(m => m.Get()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
@@ -47,7 +49,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void ListCallbackReturnListOfProjectViewModels()
     {
-        ProjectViewModel projectViewModel = new ProjectViewModel()
+        ProjectViewModel projectVM = new ProjectViewModel()
         {
             project = project,
             members = new List<User>{ user }
@@ -59,7 +61,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         usersRepositoryMock.Verify(m => m.Get(user.id));
         var viewResult = (ViewResult)result;
         var model = (List<ProjectViewModel>)viewResult.Model!;
-        var projectViewModelJson = JsonConvert.SerializeObject(projectViewModel);
+        var projectViewModelJson = JsonConvert.SerializeObject(projectVM);
         var resultProjectViewModelJson = JsonConvert.SerializeObject(model[0]);
         Assert.AreEqual(projectViewModelJson, resultProjectViewModelJson);
     }
@@ -70,6 +72,16 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         result = controller.Create();
 
         AssertViewResultReturnsViewWithName("Create");
+    }
+
+    [Test]
+    public void CreateGetCallbackReturnsCorrectModel()
+    {
+        result = controller.Create();
+
+        var model = ((ViewResult)result).Model;
+        Assert.IsInstanceOf<ProjectCreationViewModel>(model);
+        Assert.AreEqual(user, ((ProjectCreationViewModel)model!).users[0]);
     }
 
     [Test]

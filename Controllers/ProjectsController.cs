@@ -20,10 +20,11 @@ public class ProjectsController : Controller
     }
 
     [HttpGet]
-    public IActionResult List() => View("List", GetProjectModelViews());
+    public IActionResult List() => View("List", GetProjectViewModels());
 
     [HttpGet]
-    public IActionResult Create() => View("Create");
+    public IActionResult Create() =>
+        View("Create", GetProjectCreationViewModel());
 
     [HttpGet]
     public IActionResult Delete(string id)
@@ -45,7 +46,7 @@ public class ProjectsController : Controller
         return RedirectToAction("List");
     }
 
-    private List<ProjectViewModel> GetProjectModelViews()
+    private List<ProjectViewModel> GetProjectViewModels()
     {
         List<ProjectViewModel> projectViewModels = new List<ProjectViewModel>();
 
@@ -60,4 +61,7 @@ public class ProjectsController : Controller
 
         return projectViewModels;
     }
+
+    private ProjectCreationViewModel GetProjectCreationViewModel() =>
+        new ProjectCreationViewModel(){ users = usersRepository.Get() };
 }
