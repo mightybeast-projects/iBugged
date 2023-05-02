@@ -11,5 +11,19 @@
     <label>Description:</label><br />
     <input asp-for="project.description" /><br />
     <br />
-    <input type="Submit" value="Register"/>
+    <select id="my-select" name="project.membersId" asp-items="@Model.users" multiple="multiple"></select>
+    <br />
+    <input type="Submit" value="Create"/>
 </form>
+
+@section scripts {
+    <link href="~/css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
+    <script src="~/js/jquery.multi-select.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('#my-select').multiSelect(
+            {
+                selectableHeader: "<div class='custom-header'>Select members:</div>",
+                selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
+            })
+    </script>
+}

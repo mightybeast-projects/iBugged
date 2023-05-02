@@ -21,7 +21,7 @@
         <h5>Members:</h5>
         foreach (var member in viewModel.members)
         {
-            <h7>@member.name</h7>
+            <h7>@member.name</h7><br />
         }
         if (service.user.role is ProjectManager)
         {

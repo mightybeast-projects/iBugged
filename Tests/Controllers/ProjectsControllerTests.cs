@@ -81,14 +81,13 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 
         var model = ((ViewResult)result).Model;
         Assert.IsInstanceOf<ProjectCreationViewModel>(model);
-        Assert.AreEqual(user, ((ProjectCreationViewModel)model!).users[0]);
+        Assert.AreEqual(user.id,
+            ((ProjectCreationViewModel)model!).users[0].Value);
     }
 
     [Test]
     public void CreatePostCallbackRedirectsToListView()
     {
-        sessionMock.SetString("User", JsonConvert.SerializeObject(user));
-
         result = controller.Create(project);
 
         AssertRedirectToActionResultReturnsActionWithName("List");
@@ -97,8 +96,6 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void CreatePostCallbackInsertsNewProject()
     {
-        sessionMock.SetString("User", JsonConvert.SerializeObject(user));
-
         result = controller.Create(project);
 
         projectsRepositoryMock.Verify(m => m.Create(project));

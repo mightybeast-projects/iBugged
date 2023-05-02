@@ -3,6 +3,7 @@ using iBugged.ViewModels;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace iBugged.Controllers;
 
@@ -37,10 +38,6 @@ public class ProjectsController : Controller
     [HttpPost]
     public IActionResult Create(Project project)
     {
-        string userJson = HttpContext.Session.GetString("User")!;
-        User user = JsonConvert.DeserializeObject<User>(userJson)!;
-
-        project.membersId = new List<string>{ user.id };
         projectsRepository.Create(project);
 
         return RedirectToAction("List");
@@ -54,14 +51,24 @@ public class ProjectsController : Controller
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             projectViewModel.project = project;
-            foreach (string memberId in project.membersId)
-                projectViewModel.members.Add(usersRepository.Get(memberId));
+            project.membersId.ForEach(id =>
+                projectViewModel.members.Add(usersRepository.Get(id)));
             projectViewModels.Add(projectViewModel);
         }
 
         return projectViewModels;
     }
 
-    private ProjectCreationViewModel GetProjectCreationViewModel() =>
-        new ProjectCreationViewModel(){ users = usersRepository.Get() };
+    private ProjectCreationViewModel GetProjectCreationViewModel()
+    {
+        List<User> users = usersRepository.Get();
+        ProjectCreationViewModel projectCreationVM
+            = new ProjectCreationViewModel();
+
+        users.ForEach(u =>
+            projectCreationVM.users
+            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+
+        return projectCreationVM;
+    }
 }
