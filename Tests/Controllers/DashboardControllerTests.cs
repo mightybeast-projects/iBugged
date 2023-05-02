@@ -7,7 +7,7 @@ namespace iBugged.Tests.Controllers;
 public class DashboardControllerTests : ControllerTestsBase<DashboardController>
 {
     [SetUp]
-    public void SetUp() => controller = new DashboardController();
+    public override void SetUp() => controller = new DashboardController();
 
     [Test]
     public void HomeCallbackReturnsHomeView()

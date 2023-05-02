@@ -20,17 +20,15 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     private readonly User user = TestsData.dummyUser;
 
     [SetUp]
-    public void SetUp()
+    public override void SetUp()
     {
+        base.SetUp();
         projectsRepositoryMock = new Mock<IProjectsRepository>();
         usersRepositoryMock = new Mock<IUsersRepository>();
-        httpContextMock = new Mock<HttpContext>();
-        sessionMock = new HttpSessionMock();
 
         projectsRepositoryMock.Setup(m => m.Get()).Returns(projects);
         usersRepositoryMock.Setup(m => m.Get()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
-        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
         controller = new ProjectsController(
             projectsRepositoryMock.Object,

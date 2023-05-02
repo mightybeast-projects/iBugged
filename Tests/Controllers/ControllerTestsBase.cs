@@ -12,6 +12,15 @@ public abstract class ControllerTestsBase<T> where T : Controller
     protected T controller = null!;
     protected IActionResult result = null!;
 
+    [SetUp]
+    public virtual void SetUp()
+    {
+        httpContextMock = new Mock<HttpContext>();
+        sessionMock = new HttpSessionMock();
+
+        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
+    }
+
     protected void AssertViewResultReturnsViewWithName(string viewName)
     {
         Assert.IsInstanceOf<ViewResult>(result);

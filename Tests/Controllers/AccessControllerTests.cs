@@ -21,11 +21,10 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private readonly User demoTeamMember = TestsData.demoTeamMember;
 
     [SetUp]
-    public void SetUp()
+    public override void SetUp()
     {
+        base.SetUp();
         userRepositoryMock = new Mock<IUsersRepository>();
-        httpContextMock = new Mock<HttpContext>();
-        sessionMock = new HttpSessionMock();
 
         userRepositoryMock
             .Setup(m => m.Get(user.email, user.password))
@@ -39,7 +38,6 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         userRepositoryMock
             .Setup(m => m.Get(demoTeamMember.email, demoTeamMember.password))
             .Returns(demoTeamMember);
-        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
         controller = new AccessController(userRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
