@@ -71,6 +71,8 @@ public static class TestsData
 
     public static List<Project> projects = new List<Project>{ dummyProject };
 
+    public static List<Ticket> tickets = new List<Ticket>{ dummyTicket };
+
     public static TestCaseData[] userCases =
     {
         new TestCaseData(dummyUser),
