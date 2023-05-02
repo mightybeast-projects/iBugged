@@ -14,22 +14,23 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private const string SESSION_USER_STR = "User";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
-    private Mock<IUsersRepository> userRepositoryMock = null!;
+    private Mock<IUsersRepository> userRepositoryMock;
     private readonly User user = TestsData.dummyUser;
 
-    [SetUp]
-    public override void SetUp()
+    public AccessControllerTests()
     {
-        base.SetUp();
         userRepositoryMock = new Mock<IUsersRepository>();
+        controller = new AccessController(userRepositoryMock.Object);
+        controller.ControllerContext.HttpContext = httpContextMock.Object;
+    }
 
+    [OneTimeSetUp]
+    public new void SetUp()
+    {
         TestsData.users
             .ForEach(u => userRepositoryMock
             .Setup(m => m.Get(u.email, u.password))
             .Returns(u));
-
-        controller = new AccessController(userRepositoryMock.Object);
-        controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [Test]
@@ -49,11 +50,18 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void RegisterPostCallbackInsertsNewUserAndReturnsIndexView()
+    public void RegisterPostCallbackInsertsNewUser()
     {
         result = controller.Register(user);
 
         userRepositoryMock.Verify(m => m.Create(user));
+    }
+
+    [Test]
+    public void RegisterPostCallbackReturnsIndexView()
+    {
+        result = controller.Register(user);
+
         AssertRedirectToActionResultReturnsActionWithName("Index");
     }
 

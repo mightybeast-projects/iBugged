@@ -10,19 +10,19 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
-    private Mock<ITicketsRepository> ticketsRepository = null!;
+    private readonly Mock<ITicketsRepository> ticketsRepository;
     private readonly List<Ticket> tickets = TestsData.tickets;
     private readonly Ticket ticket = TestsData.dummyTicket;
 
-    [SetUp]
-    public override void SetUp()
+    public TicketsControllerTests()
     {
         ticketsRepository = new Mock<ITicketsRepository>();
-
-        ticketsRepository.Setup(m => m.Get()).Returns(tickets);
-
         controller = new TicketsController(ticketsRepository.Object);
     }
+
+    [OneTimeSetUp]
+    public new void SetUp() =>
+        ticketsRepository.Setup(m => m.Get()).Returns(tickets);
 
     [Test]
     public void ListCallbackReturnsListView()

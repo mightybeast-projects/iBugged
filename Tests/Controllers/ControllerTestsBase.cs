@@ -1,25 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using Newtonsoft.Json;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
 
-[TestFixture]
 public abstract class ControllerTestsBase<T> where T : Controller
 {
-    protected Mock<HttpContext> httpContextMock = null!;
-    protected HttpSessionMock sessionMock = null!;
+    protected readonly Mock<HttpContext> httpContextMock;
+    protected readonly HttpSessionMock sessionMock;
     protected T controller = null!;
     protected IActionResult result = null!;
 
-    [SetUp]
-    public virtual void SetUp()
+    public ControllerTestsBase()
     {
         httpContextMock = new Mock<HttpContext>();
         sessionMock = new HttpSessionMock();
-
-        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
     }
+
+    [OneTimeSetUp]
+    public void SetUp() =>
+        httpContextMock.Setup(s => s.Session).Returns(sessionMock);
 
     protected void AssertViewResultReturnsViewWithName(string viewName)
     {
@@ -37,5 +38,12 @@ public abstract class ControllerTestsBase<T> where T : Controller
     {
         Assert.IsInstanceOf<RedirectResult>(result);
         Assert.AreEqual(redirectPath, ((RedirectResult)result).Url);
+    }
+
+    protected void AssertObjectsAreEqualAsJsons(object obj1, object obj2)
+    {
+        string obj1Json = JsonConvert.SerializeObject(obj1);
+        string obj2Json = JsonConvert.SerializeObject(obj2);
+        Assert.AreEqual(obj1Json, obj2Json);
     }
 }

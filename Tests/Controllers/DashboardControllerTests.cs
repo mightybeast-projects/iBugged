@@ -6,8 +6,8 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class DashboardControllerTests : ControllerTestsBase<DashboardController>
 {
-    [SetUp]
-    public override void SetUp() => controller = new DashboardController();
+    public DashboardControllerTests() =>
+        controller = new DashboardController();
 
     [Test]
     public void HomeCallbackReturnsHomeView()

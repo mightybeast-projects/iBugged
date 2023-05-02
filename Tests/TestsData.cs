@@ -1,4 +1,5 @@
 using iBugged.Models;
+using iBugged.ViewModels;
 using NUnit.Framework;
 
 namespace iBugged.Tests;
@@ -61,6 +62,14 @@ public static class TestsData
         assigneeId = "2",
     };
 
+    public static TestCaseData[] userCases =
+    {
+        new TestCaseData(dummyUser),
+        new TestCaseData(demoProjectManager),
+        new TestCaseData(demoDeveloper),
+        new TestCaseData(demoTeamMember),
+    };
+
     public static List<User> users = new List<User>
     {
         dummyUser,
@@ -73,11 +82,9 @@ public static class TestsData
 
     public static List<Ticket> tickets = new List<Ticket>{ dummyTicket };
 
-    public static TestCaseData[] userCases =
+    public static ProjectViewModel dummyProjectVM = new ProjectViewModel()
     {
-        new TestCaseData(dummyUser),
-        new TestCaseData(demoProjectManager),
-        new TestCaseData(demoDeveloper),
-        new TestCaseData(demoTeamMember),
+        project = dummyProject,
+        members = new List<User>{ dummyUser }
     };
 }
