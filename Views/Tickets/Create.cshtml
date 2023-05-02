@@ -3,3 +3,17 @@
 @{
     ViewData["Title"] = "Create new ticket";
 }
+
+<form asp-controller="Tickets" asp-action="Create" method="post">
+    <p>Create new ticket :</p>
+    <label>Title:</label><br />
+    <input asp-for="title" /><br />
+    <label>Description:</label><br />
+    <input asp-for="description" /><br />
+    <label>TicketType:</label><br />
+    <select asp-for="ticketType" asp-items="Html.GetEnumSelectList<TicketType>()"></select><br />
+    <label>Priority:</label><br />
+    <select asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select><br />
+    <br />
+    <input type="Submit" value="Create"/>
+</form>
