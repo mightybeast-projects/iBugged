@@ -49,6 +49,18 @@ public static class TestsData
         membersId = new List<string>() { dummyUser.id }
     };
 
+    public static Ticket dummyTicket = new Ticket()
+    {
+        id = "1",
+        title = "Ticket 1",
+        description = "Just a simple ticket.",
+        priority = Priority.Low,
+        ticketType = TicketType.Bug,
+        projectId = "1",
+        authorId = "1",
+        assigneeId = "2",
+    };
+
     public static List<User> users = new List<User>
     {
         dummyUser,

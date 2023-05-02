@@ -12,6 +12,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUsersRepository, MongoUsersRepository>();
 builder.Services.AddScoped<IProjectsRepository, MongoProjectsRepository>();
+builder.Services.AddScoped<ITicketsRepository, MongoTicketsRepository>();
 
 builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>
