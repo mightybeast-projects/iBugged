@@ -1,4 +1,6 @@
-namespace iBugged.Models.ViewModels;
+using iBugged.Models;
+
+namespace iBugged.ViewModels;
 
 public class ProjectViewModel
 {

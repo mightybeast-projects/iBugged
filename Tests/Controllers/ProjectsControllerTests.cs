@@ -1,6 +1,6 @@
 using iBugged.Controllers;
 using iBugged.Models;
-using iBugged.Models.ViewModels;
+using iBugged.ViewModels;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
