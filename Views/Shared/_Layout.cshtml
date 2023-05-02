@@ -30,6 +30,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="List">Projects</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Tickets" asp-action="List">Tickets</a>
+                            </li>
                             @if (service.user.role is ProjectManager)
                             {
                                 <li class="nav-item">
