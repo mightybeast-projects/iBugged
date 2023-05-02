@@ -49,7 +49,13 @@ public static class TestsData
         membersId = new List<string>() { dummyUser.id }
     };
 
-    public static List<User> users = new List<User>{ dummyUser };
+    public static List<User> users = new List<User>
+    {
+        dummyUser,
+        demoProjectManager,
+        demoDeveloper,
+        demoTeamMember
+    };
 
     public static List<Project> projects = new List<Project>{ dummyProject };
 

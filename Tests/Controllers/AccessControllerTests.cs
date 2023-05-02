@@ -16,9 +16,6 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IUsersRepository> userRepositoryMock = null!;
     private readonly User user = TestsData.dummyUser;
-    private readonly User demoPM = TestsData.demoProjectManager;
-    private readonly User demoDeveloper = TestsData.demoDeveloper;
-    private readonly User demoTeamMember = TestsData.demoTeamMember;
 
     [SetUp]
     public override void SetUp()
@@ -26,18 +23,10 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         base.SetUp();
         userRepositoryMock = new Mock<IUsersRepository>();
 
-        userRepositoryMock
-            .Setup(m => m.Get(user.email, user.password))
-            .Returns(user);
-        userRepositoryMock
-            .Setup(m => m.Get(demoPM.email, demoPM.password))
-            .Returns(demoPM);
-        userRepositoryMock
-            .Setup(m => m.Get(demoDeveloper.email, demoDeveloper.password))
-            .Returns(demoDeveloper);
-        userRepositoryMock
-            .Setup(m => m.Get(demoTeamMember.email, demoTeamMember.password))
-            .Returns(demoTeamMember);
+        TestsData.users
+            .ForEach(u => userRepositoryMock
+            .Setup(m => m.Get(u.email, u.password))
+            .Returns(u));
 
         controller = new AccessController(userRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
