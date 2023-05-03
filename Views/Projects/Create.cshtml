@@ -1,4 +1,4 @@
-@model ProjectCreationViewModel;
+@model Project;
 
 @{
     ViewData["Title"] = "Create new project";
@@ -7,11 +7,11 @@
 <form asp-controller="Projects" asp-action="Create" method="post">
     <p>Create new project :</p>
     <label>Name:</label><br />
-    <input asp-for="project.name" /><br />
+    <input asp-for="name" /><br />
     <label>Description:</label><br />
-    <input asp-for="project.description" /><br />
+    <input asp-for="description" /><br />
     <br />
-    <select id="my-select" name="project.membersId" asp-items="@Model.users" multiple="multiple"></select>
+    <select id="my-select" name="membersId" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
     <br />
     <input type="Submit" value="Create"/>
 </form>

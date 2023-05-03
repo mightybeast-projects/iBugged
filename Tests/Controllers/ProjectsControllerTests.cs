@@ -68,14 +68,11 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreateGetCallbackReturnsCorrectModel()
+    public void CreateGetCallbackSetsUsersListInViewBag()
     {
         result = controller.Create();
 
-        var model = ((ViewResult)result).Model;
-        Assert.IsInstanceOf<ProjectCreationViewModel>(model);
-        Assert.AreEqual(user.id,
-            ((ProjectCreationViewModel)model!).users[0].Value);
+        Assert.AreEqual(users[0].name, controller.ViewBag.usersList[0].Text);
     }
 
     [Test]

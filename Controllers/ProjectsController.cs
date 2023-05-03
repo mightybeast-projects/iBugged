@@ -24,8 +24,16 @@ public class ProjectsController : Controller
     public IActionResult List() => View("List", GetProjectViewModels());
 
     [HttpGet]
-    public IActionResult Create() =>
-        View("Create", GetProjectCreationViewModel());
+    public IActionResult Create()
+    {
+        List<SelectListItem> usersList = new List<SelectListItem>();
+        usersRepository.Get()
+            .ForEach(u => usersList
+            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+        ViewBag.usersList = usersList;
+
+        return View("Create");
+    }
 
     [HttpGet]
     public IActionResult Edit(string id)
@@ -34,8 +42,8 @@ public class ProjectsController : Controller
         usersRepository.Get()
             .ForEach(u => usersList
             .Add(new SelectListItem() { Text = u.name, Value = u.id }));
-
         ViewBag.usersList = usersList;
+
         return View("Edit", projectsRepository.Get(id));
     }
 
@@ -69,17 +77,5 @@ public class ProjectsController : Controller
         }
 
         return projectViewModels;
-    }
-
-    private ProjectCreationViewModel GetProjectCreationViewModel()
-    {
-        ProjectCreationViewModel projectCreationVM
-            = new ProjectCreationViewModel();
-
-        usersRepository.Get()
-            .ForEach(u => projectCreationVM.users
-            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
-
-        return projectCreationVM;
     }
 }
