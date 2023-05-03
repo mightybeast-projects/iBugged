@@ -29,7 +29,8 @@ public class AccessController : Controller
     [HttpPost]
     public IActionResult LogIn(string email, string password)
     {
-        User user = usersRepository.Get(email, password);
+        User user = usersRepository
+            .Get(f => f.email == email && f.password == password);
         if (user != null)
             return SetUserInSessionAndRedirectToDashboard(user);
 
@@ -37,18 +38,6 @@ public class AccessController : Controller
 
         return View("Index");
     }
-
-    [HttpGet]
-    public IActionResult LogInAsProjectManager() =>
-        LogIn("demoprojectmanager@gmail.com", "1234567");
-
-    [HttpGet]
-    public IActionResult LogInAsDeveloper() =>
-        LogIn("demodeveloper@gmail.com", "1234567");
-
-    [HttpGet]
-    public IActionResult LogInAsTeamMember() =>
-        LogIn("demoteammember@gmail.com", "1234567");
 
     [HttpPost]
     public IActionResult Register(User user)

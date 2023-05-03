@@ -9,10 +9,4 @@ public class MongoProjectsRepository
     protected override string collectionName => "projects";
     
     public MongoProjectsRepository(IMongoDatabase db) : base(db) { }
-
-    public void Edit(string id, Project project) =>
-        collection.ReplaceOne(project => project.id == id, project);
-
-    public void Delete(string id) =>
-        collection.DeleteOne(project => project.id == id);
 }

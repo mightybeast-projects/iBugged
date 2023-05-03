@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Services.Repositories;
@@ -24,13 +25,16 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
-    [OneTimeSetUp]
+    [SetUp]
     public new void SetUp()
     {
         TestsData.users
             .ForEach(u => userRepositoryMock
-            .Setup(m => m.Get(u.email, u.password))
-            .Returns(u));
+            .Setup(m => m.Get(It.IsAny<Expression<Func<User, bool>>>()))
+            .Returns((Expression<Func<User, bool>> predicate) =>
+                TestsData.users
+                .Where(predicate.Compile())
+                .FirstOrDefault()!));
     }
 
     [Test]
