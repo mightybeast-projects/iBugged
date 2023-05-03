@@ -4,7 +4,8 @@ using MongoDB.Driver;
 
 namespace iBugged.Services.Repositories.Mongo;
 
-public abstract class MongoRepository<T> : IRepository<T> where T : Document
+public abstract class MongoRepository<T> : IRepository<T>
+    where T : Document
 {
     protected abstract string collectionName { get; }
     protected readonly IMongoCollection<T> collection;

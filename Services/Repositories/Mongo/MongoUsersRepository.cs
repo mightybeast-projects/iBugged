@@ -3,8 +3,7 @@ using MongoDB.Driver;
 
 namespace iBugged.Services.Repositories.Mongo;
 
-public class MongoUsersRepository
-    : MongoRepository<User>, IUsersRepository
+public class MongoUsersRepository : MongoRepository<User>
 {
     protected override string collectionName => "users";
 

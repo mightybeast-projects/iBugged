@@ -11,8 +11,8 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
-    private readonly Mock<IProjectsRepository> projectsRepositoryMock;
-    private readonly Mock<IUsersRepository> usersRepositoryMock;
+    private readonly Mock<IRepository<Project>> projectsRepositoryMock;
+    private readonly Mock<IRepository<User>> usersRepositoryMock;
     private readonly ProjectViewModel projectVM = TestsData.dummyProjectVM;
     private readonly List<User> users = TestsData.users;
     private readonly List<Project> projects = TestsData.projects;
@@ -21,8 +21,8 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 
     public ProjectsControllerTests()
     {
-        projectsRepositoryMock = new Mock<IProjectsRepository>();
-        usersRepositoryMock = new Mock<IUsersRepository>();
+        projectsRepositoryMock = new Mock<IRepository<Project>>();
+        usersRepositoryMock = new Mock<IRepository<User>>();
 
         controller = new ProjectsController(
             projectsRepositoryMock.Object,

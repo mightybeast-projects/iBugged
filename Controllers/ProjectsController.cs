@@ -9,12 +9,12 @@ namespace iBugged.Controllers;
 
 public class ProjectsController : Controller
 {
-    private readonly IProjectsRepository projectsRepository;
-    private readonly IUsersRepository usersRepository;
+    private readonly IRepository<Project> projectsRepository;
+    private readonly IRepository<User> usersRepository;
 
     public ProjectsController(
-        IProjectsRepository projectsRepository,
-        IUsersRepository usersRepository)
+        IRepository<Project> projectsRepository,
+        IRepository<User> usersRepository)
     {
         this.projectsRepository = projectsRepository;
         this.usersRepository = usersRepository;

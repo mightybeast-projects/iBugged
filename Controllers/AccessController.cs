@@ -7,9 +7,9 @@ namespace iBugged.Controllers;
 
 public class AccessController : Controller
 {
-    private readonly IUsersRepository usersRepository;
+    private readonly IRepository<User> usersRepository;
 
-    public AccessController(IUsersRepository usersService) =>
+    public AccessController(IRepository<User> usersService) =>
         this.usersRepository = usersService;
 
     [HttpGet]

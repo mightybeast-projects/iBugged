@@ -1,3 +1,4 @@
+using iBugged.Models;
 using iBugged.Services;
 using iBugged.Services.Repositories;
 using iBugged.Services.Repositories.Mongo;
@@ -11,9 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IUsersRepository, MongoUsersRepository>();
-builder.Services.AddScoped<IProjectsRepository, MongoProjectsRepository>();
-builder.Services.AddScoped<ITicketsRepository, MongoTicketsRepository>();
+builder.Services.AddScoped<IRepository<User>, MongoUsersRepository>();
+builder.Services.AddScoped<IRepository<Project>, MongoProjectsRepository>();
+builder.Services.AddScoped<IRepository<Ticket>, MongoTicketsRepository>();
 
 builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>

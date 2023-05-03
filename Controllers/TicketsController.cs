@@ -6,9 +6,9 @@ namespace iBugged.Controllers;
 
 public class TicketsController : Controller
 {
-    private readonly ITicketsRepository ticketsRepository;
+    private readonly IRepository<Ticket> ticketsRepository;
 
-    public TicketsController(ITicketsRepository ticketsRepository)
+    public TicketsController(IRepository<Ticket> ticketsRepository)
         => this.ticketsRepository = ticketsRepository;
 
     [HttpGet]

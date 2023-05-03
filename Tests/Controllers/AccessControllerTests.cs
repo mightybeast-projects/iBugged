@@ -15,12 +15,12 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     private const string SESSION_USER_STR = "User";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
-    private Mock<IUsersRepository> userRepositoryMock;
+    private Mock<IRepository<User>> userRepositoryMock;
     private readonly User user = TestsData.dummyUser;
 
     public AccessControllerTests()
     {
-        userRepositoryMock = new Mock<IUsersRepository>();
+        userRepositoryMock = new Mock<IRepository<User>>();
         controller = new AccessController(userRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }

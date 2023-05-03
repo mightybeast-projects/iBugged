@@ -3,8 +3,7 @@ using MongoDB.Driver;
 
 namespace iBugged.Services.Repositories.Mongo;
 
-public class MongoProjectsRepository
-    : MongoRepository<Project>, IProjectsRepository
+public class MongoProjectsRepository : MongoRepository<Project>
 {
     protected override string collectionName => "projects";
     

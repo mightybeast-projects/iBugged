@@ -10,13 +10,13 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
-    private readonly Mock<ITicketsRepository> ticketsRepository;
+    private readonly Mock<IRepository<Ticket>> ticketsRepository;
     private readonly List<Ticket> tickets = TestsData.tickets;
     private readonly Ticket ticket = TestsData.dummyTicket;
 
     public TicketsControllerTests()
     {
-        ticketsRepository = new Mock<ITicketsRepository>();
+        ticketsRepository = new Mock<IRepository<Ticket>>();
         controller = new TicketsController(ticketsRepository.Object);
     }
 
