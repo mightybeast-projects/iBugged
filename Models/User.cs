@@ -1,3 +1,4 @@
+using iBugged.Models.Enums;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 

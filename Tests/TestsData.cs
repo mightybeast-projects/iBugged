@@ -1,4 +1,5 @@
 using iBugged.Models;
+using iBugged.Models.Enums;
 using iBugged.ViewModels;
 using NUnit.Framework;
 

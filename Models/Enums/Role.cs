@@ -1,7 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace iBugged.Models;
+namespace iBugged.Models.Enums;
 
 public enum Role
 {

@@ -1,6 +1,6 @@
 using MongoDB.Driver;
 
-namespace iBugged.Services.Repositories;
+namespace iBugged.Services.Repositories.Mongo;
 
 public abstract class MongoRepository<T> : IRepository<T>
 {

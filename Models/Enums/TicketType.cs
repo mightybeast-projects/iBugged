@@ -1,14 +1,16 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace iBugged.Models;
+namespace iBugged.Models.Enums;
 
-public enum Priority
+public enum TicketType
 {
     [BsonRepresentation(BsonType.String)]
-    Low,
+    Bug,
     [BsonRepresentation(BsonType.String)]
-    Medium,
+    Task,
     [BsonRepresentation(BsonType.String)]
-    High
+    Support,
+    [BsonRepresentation(BsonType.String)]
+    Other
 }
