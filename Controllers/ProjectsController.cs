@@ -26,11 +26,7 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Create()
     {
-        List<SelectListItem> usersList = new List<SelectListItem>();
-        usersRepository.Get()
-            .ForEach(u => usersList
-            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
-        ViewBag.usersList = usersList;
+        ViewBag.usersList = GetUsersList();
 
         return View("Create");
     }
@@ -38,11 +34,7 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Edit(string id)
     {
-        List<SelectListItem> usersList = new List<SelectListItem>();
-        usersRepository.Get()
-            .ForEach(u => usersList
-            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
-        ViewBag.usersList = usersList;
+        ViewBag.usersList = GetUsersList();
 
         return View("Edit", projectsRepository.Get(id));
     }
@@ -77,5 +69,14 @@ public class ProjectsController : Controller
         }
 
         return projectViewModels;
+    }
+
+    private List<SelectListItem> GetUsersList()
+    {
+        List<SelectListItem> usersList = new List<SelectListItem>();
+        usersRepository.Get()
+            .ForEach(u => usersList
+            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+        return usersList;
     }
 }
