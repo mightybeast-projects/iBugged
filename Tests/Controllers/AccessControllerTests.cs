@@ -12,11 +12,9 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
-    private const string SESSION_USER_STR = "User";
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
     private Mock<IRepository<User>> userRepositoryMock;
-    private readonly User user = TestsData.dummyUser;
 
     public AccessControllerTests()
     {
@@ -25,16 +23,13 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
-    [SetUp]
+    [OneTimeSetUp]
     public new void SetUp()
     {
-        TestsData.users
-            .ForEach(u => userRepositoryMock
+        users.ForEach(u => userRepositoryMock
             .Setup(m => m.Get(It.IsAny<Expression<Func<User, bool>>>()))
             .Returns((Expression<Func<User, bool>> predicate) =>
-                TestsData.users
-                .Where(predicate.Compile())
-                .FirstOrDefault()!));
+                users.Find(predicate.Compile().Invoke)!));
     }
 
     [Test]
@@ -108,8 +103,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
     public void LogOutCallBackClearsUserInSession(User user)
     {
-        var json = JsonConvert.SerializeObject(user);
-        sessionMock.SetString(SESSION_USER_STR, json);
+        SetUserInSession(user);
 
         result = controller.LogOut();
 

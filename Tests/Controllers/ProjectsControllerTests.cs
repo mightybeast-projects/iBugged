@@ -5,6 +5,8 @@ using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using Newtonsoft.Json;
+using System.Linq.Expressions;
 
 namespace iBugged.Tests.Controllers;
 
@@ -14,10 +16,6 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     private readonly Mock<IRepository<Project>> projectsRepositoryMock;
     private readonly Mock<IRepository<User>> usersRepositoryMock;
     private readonly ProjectViewModel projectVM = TestsData.dummyProjectVM;
-    private readonly List<User> users = TestsData.users;
-    private readonly List<Project> projects = TestsData.projects;
-    private readonly Project project = TestsData.dummyProject;
-    private readonly User user = TestsData.dummyUser;
 
     public ProjectsControllerTests()
     {
@@ -33,10 +31,16 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [OneTimeSetUp]
     public new void SetUp()
     {
-        projectsRepositoryMock.Setup(m => m.Get()).Returns(projects);
+        projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
         projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
-        usersRepositoryMock.Setup(m => m.Get()).Returns(users);
+        projectsRepositoryMock
+            .Setup(m => m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()))
+            .Returns((Expression<Func<Project, bool>> predicate) =>
+                projects.FindAll(predicate.Compile().Invoke));
+        usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
+
+        SetUserInSession(user);
     }
 
     [Test]
@@ -52,8 +56,10 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.List();
 
-        projectsRepositoryMock.Verify(m => m.Get());
         usersRepositoryMock.Verify(m => m.Get(user.id));
+        projectsRepositoryMock.Verify(m =>
+            m.GetAll(It.Is<Expression<Func<Project, bool>>>(e =>
+            project.membersId.Contains(user.id))));
         var viewResult = (ViewResult)result;
         var model = (List<ProjectViewModel>)viewResult.Model!;
         AssertObjectsAreEqualAsJsons(projectVM, model[0]);

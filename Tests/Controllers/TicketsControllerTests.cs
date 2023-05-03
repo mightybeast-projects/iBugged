@@ -11,8 +11,6 @@ namespace iBugged.Tests.Controllers;
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
     private readonly Mock<IRepository<Ticket>> ticketsRepository;
-    private readonly List<Ticket> tickets = TestsData.tickets;
-    private readonly Ticket ticket = TestsData.dummyTicket;
 
     public TicketsControllerTests()
     {
@@ -21,8 +19,12 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [OneTimeSetUp]
-    public new void SetUp() =>
-        ticketsRepository.Setup(m => m.Get()).Returns(tickets);
+    public new void SetUp()
+    {
+        ticketsRepository.Setup(m => m.GetAll()).Returns(tickets);
+
+        SetUserInSession(user);
+    }
 
     [Test]
     public void ListCallbackReturnsListView()

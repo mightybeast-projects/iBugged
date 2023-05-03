@@ -16,9 +16,9 @@ public class AccessViewService
     {
         ISession session = accessor.HttpContext!.Session;
         string userJson = session.GetString("User")!;
-        if (userJson == null)
+        if (userJson is null)
             _user = null!;
-        if (_user == null && userJson != null)
+        if (_user is null && userJson is not null)
             _user = JsonConvert.DeserializeObject<User>(userJson)!;
         return _user!;
     }

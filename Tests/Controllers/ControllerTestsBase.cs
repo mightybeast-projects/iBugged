@@ -1,3 +1,4 @@
+using iBugged.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
@@ -7,8 +8,15 @@ namespace iBugged.Tests.Controllers;
 
 public abstract class ControllerTestsBase<T> where T : Controller
 {
+    protected const string SESSION_USER_STR = "User";
     protected readonly Mock<HttpContext> httpContextMock;
     protected readonly HttpSessionMock sessionMock;
+    protected readonly List<User> users = TestsData.users;
+    protected readonly List<Project> projects = TestsData.projects;
+    protected readonly List<Ticket> tickets = TestsData.tickets;
+    protected readonly User user = TestsData.dummyUser;
+    protected readonly Project project = TestsData.dummyProject;
+    protected readonly Ticket ticket = TestsData.dummyTicket;
     protected T controller = null!;
     protected IActionResult result = null!;
 
@@ -21,6 +29,12 @@ public abstract class ControllerTestsBase<T> where T : Controller
     [OneTimeSetUp]
     public void SetUp() =>
         httpContextMock.Setup(s => s.Session).Returns(sessionMock);
+
+    protected void SetUserInSession(User user)
+    {
+        var json = JsonConvert.SerializeObject(user);
+        sessionMock.SetString(SESSION_USER_STR, json);
+    }
 
     protected void AssertViewResultReturnsViewWithName(string viewName)
     {

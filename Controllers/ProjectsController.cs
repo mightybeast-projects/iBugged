@@ -65,9 +65,14 @@ public class ProjectsController : Controller
 
     private List<ProjectViewModel> GetProjectViewModels()
     {
+        string userJson = HttpContext.Session.GetString("User")!;
+        User user = JsonConvert.DeserializeObject<User>(userJson)!;
         List<ProjectViewModel> projectViewModels = new List<ProjectViewModel>();
+        List<Project> projects =
+            projectsRepository.GetAll(project => 
+                project.membersId.Contains(user.id));
 
-        foreach (Project project in projectsRepository.Get())
+        foreach (Project project in projects)
         {
             ProjectViewModel projectViewModel = new ProjectViewModel();
             projectViewModel.project = project;
@@ -82,7 +87,7 @@ public class ProjectsController : Controller
     private List<SelectListItem> GetUsersList()
     {
         List<SelectListItem> usersList = new List<SelectListItem>();
-        usersRepository.Get()
+        usersRepository.GetAll()
             .ForEach(u => usersList
             .Add(new SelectListItem() { Text = u.name, Value = u.id }));
         return usersList;

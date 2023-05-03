@@ -12,7 +12,7 @@ public class TicketsController : Controller
         => this.ticketsRepository = ticketsRepository;
 
     [HttpGet]
-    public IActionResult List() => View("List", ticketsRepository.Get());
+    public IActionResult List() => View("List", ticketsRepository.GetAll());
 
     [HttpGet]
     public IActionResult Create() => View("Create");

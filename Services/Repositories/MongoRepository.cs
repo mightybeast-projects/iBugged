@@ -12,7 +12,10 @@ public class MongoRepository<T> : IRepository<T>
     public MongoRepository(IMongoDatabase db) =>
         collection = db.GetCollection<T>(GetCollectionName());
 
-    public List<T> Get() => collection.Find(t => true).ToList();
+    public List<T> GetAll() => collection.Find(t => true).ToList();
+
+    public List<T> GetAll(Expression<Func<T, bool>> filter) =>
+        collection.Find(filter).ToList();
 
     public T Get(string id) =>
         collection.Find(t => t.id == id).FirstOrDefault();
