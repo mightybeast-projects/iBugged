@@ -1,8 +1,10 @@
+using iBugged.Models.Mongo;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace iBugged.Models;
 
+[BsonCollection("projects")]
 public class Project : Document
 {
     [BsonElement("name")]

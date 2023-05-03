@@ -1,17 +1,16 @@
 using System.Linq.Expressions;
-using iBugged.Models;
+using iBugged.Models.Mongo;
 using MongoDB.Driver;
 
-namespace iBugged.Services.Repositories.Mongo;
+namespace iBugged.Services.Repositories;
 
-public abstract class MongoRepository<T> : IRepository<T>
+public class MongoRepository<T> : IRepository<T>
     where T : Document
 {
-    protected abstract string collectionName { get; }
     protected readonly IMongoCollection<T> collection;
 
     public MongoRepository(IMongoDatabase db) =>
-        collection = db.GetCollection<T>(collectionName);
+        collection = db.GetCollection<T>(GetCollectionName());
 
     public List<T> Get() => collection.Find(t => true).ToList();
 
@@ -28,4 +27,10 @@ public abstract class MongoRepository<T> : IRepository<T>
 
     public void Delete(string id) =>
         collection.DeleteOne(t => t.id == id);
+
+    private string GetCollectionName() =>
+        (typeof(T)
+        .GetCustomAttributes(typeof(BsonCollectionAttribute), true)
+        .FirstOrDefault() as BsonCollectionAttribute)!
+        .collectionName;
 }

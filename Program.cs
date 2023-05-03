@@ -1,7 +1,6 @@
 using iBugged.Models;
 using iBugged.Services;
 using iBugged.Services.Repositories;
-using iBugged.Services.Repositories.Mongo;
 using MongoDB.Driver;
 
 var connectionString = "mongodb://localhost:27017";
@@ -12,9 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IRepository<User>, MongoUsersRepository>();
-builder.Services.AddScoped<IRepository<Project>, MongoProjectsRepository>();
-builder.Services.AddScoped<IRepository<Ticket>, MongoTicketsRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 
 builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>

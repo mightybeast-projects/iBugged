@@ -1,9 +1,11 @@
 using iBugged.Models.Enums;
+using iBugged.Models.Mongo;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace iBugged.Models;
 
+[BsonCollection("tickets")]
 public class Ticket : Document
 {
     [BsonElement("title")]
