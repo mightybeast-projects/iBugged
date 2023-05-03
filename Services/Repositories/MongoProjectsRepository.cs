@@ -9,6 +9,9 @@ public class MongoProjectsRepository : MongoRepository<Project>, IProjectsReposi
     
     public MongoProjectsRepository(IMongoDatabase db) : base(db) { }
 
+    public Project Get(string id) =>
+        collection.Find(project => project.id == id).FirstOrDefault();
+
     public void Delete(string id) =>
         collection.DeleteOne(project => project.id == id);
 }

@@ -25,7 +25,10 @@
         }
         if (service.user.role is ProjectManager)
         {
-            <br /><a asp-controller="Projects"
+            <a asp-controller="Projects"
+                asp-action="Edit"
+                asp-route-id="@viewModel.project.id">Edit project</a>
+            <a asp-controller="Projects"
                 asp-action="Delete"
                 asp-route-id="@viewModel.project.id">Delete project</a>
         }

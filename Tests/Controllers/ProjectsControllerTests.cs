@@ -34,6 +34,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     public new void SetUp()
     {
         projectsRepositoryMock.Setup(m => m.Get()).Returns(projects);
+        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
         usersRepositoryMock.Setup(m => m.Get()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
     }
@@ -91,6 +92,25 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         result = controller.Create(project);
 
         projectsRepositoryMock.Verify(m => m.Create(project));
+    }
+
+    [Test]
+    public void EditGetCallbackReturnsEditView()
+    {
+        result = controller.Edit(project.id);
+
+        AssertViewResultReturnsViewWithName("Edit");
+    }
+
+    [Test]
+    public void EditGetCallbackReturnsProjectModel()
+    {
+        result = controller.Edit(project.id);
+
+        var model = ((ViewResult)result).Model!;
+        var modelProject = (Project) model;
+        Assert.AreEqual(project, modelProject);
+        Assert.AreEqual(users[0].name, controller.ViewBag.usersList[0].Text);
     }
 
     [Test]
