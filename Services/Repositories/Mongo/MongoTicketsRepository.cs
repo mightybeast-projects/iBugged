@@ -3,7 +3,8 @@ using MongoDB.Driver;
 
 namespace iBugged.Services.Repositories.Mongo;
 
-public class MongoTicketsRepository : MongoRepository<Ticket>, ITicketsRepository
+public class MongoTicketsRepository
+    : MongoRepository<Ticket>, ITicketsRepository
 {
     protected override string collectionName => "tickets";
 

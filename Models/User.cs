@@ -4,12 +4,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace iBugged.Models;
 
-public class User
+public class User : Document
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string id { get; set; } = null!;
-
     [BsonElement("name")]
     public string name { get; set; } = null!;
 

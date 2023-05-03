@@ -17,7 +17,6 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     private readonly List<User> users = TestsData.users;
     private readonly List<Project> projects = TestsData.projects;
     private readonly Project project = TestsData.dummyProject;
-    private readonly Project editedProject = TestsData.dummyProject;
     private readonly User user = TestsData.dummyUser;
 
     public ProjectsControllerTests()
@@ -101,7 +100,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditGetCallbackReturnsProjectModel()
+    public void EditGetCallbackReturnsCorrectModel()
     {
         result = controller.Edit(project.id);
 
@@ -114,7 +113,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void EditPostCallbackReturnsListView()
     {
-        result = controller.Edit(editedProject);
+        result = controller.Edit(project);
 
         AssertRedirectToActionResultReturnsActionWithName("List");
     }
@@ -122,20 +121,9 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     [Test]
     public void EditPostCallbackEditsProject()
     {
-        editedProject.name = "EditedProject";
+        result = controller.Edit(project);
 
-        result = controller.Edit(editedProject);
-
-        projectsRepositoryMock
-            .Verify(m => m.Edit(editedProject.id, editedProject));
-    }
-
-    [Test]
-    public void DeleteCallbackDeletesProject()
-    {
-        result = controller.Delete(project.id);
-
-        projectsRepositoryMock.Verify(m => m.Delete(project.id));
+        projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
     }
 
     [Test]
@@ -144,5 +132,13 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         result = controller.Delete(project.id);
 
         AssertRedirectToActionResultReturnsActionWithName("List");
+    }
+
+    [Test]
+    public void DeleteCallbackDeletesProject()
+    {
+        result = controller.Delete(project.id);
+
+        projectsRepositoryMock.Verify(m => m.Delete(project.id));
     }
 }

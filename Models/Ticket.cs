@@ -4,12 +4,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace iBugged.Models;
 
-public class Ticket
+public class Ticket : Document
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string id { get; set; } = null!;
-
     [BsonElement("title")]
     public string title { get; set; } = null!;
 
