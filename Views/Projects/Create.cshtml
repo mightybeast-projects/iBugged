@@ -1,11 +1,11 @@
-@model Project;
+@model Project
 
 @{
     ViewData["Title"] = "Create new project";
 }
 
 <form asp-controller="Projects" asp-action="Create" method="post">
-    <p>Create new project :</p>
+    <p>Create project :</p>
     <label>Name:</label><br />
     <input asp-for="name" /><br />
     <label>Description:</label><br />
@@ -17,13 +17,11 @@
 </form>
 
 @section scripts {
-    <link href="~/css/multi-select.css" media="screen" rel="stylesheet" type="text/css">
-    <script src="~/js/jquery.multi-select.js" type="text/javascript"></script>
     <script type="text/javascript">
         $('#my-select').multiSelect(
-            {
-                selectableHeader: "<div class='custom-header'>Select members:</div>",
-                selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
-            })
+        {
+            selectableHeader: "<div class='custom-header'>Select members:</div>",
+            selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
+        })
     </script>
 }
