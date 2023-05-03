@@ -4,16 +4,17 @@
     ViewData["Title"] = "Edit project";
 }
 
-<form>
-    <p>Create new project :</p>
+<form asp-controller="Projects" asp-action="Edit" method="post">
+    <input asp-for="id" visible=false hidden>
+    <p>Edit project :</p>
     <label>Name:</label><br />
     <input asp-for="name" /><br />
     <label>Description:</label><br />
     <input asp-for="description" /><br />
     <br />
-    <select id="my-select" name="membersId" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
+    <select id="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
     <br />
-    <input type="Submit" value="Create"/>
+    <input type="Submit" value="Save"/>
 </form>
 
 @section scripts {

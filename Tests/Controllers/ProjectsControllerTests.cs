@@ -17,6 +17,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     private readonly List<User> users = TestsData.users;
     private readonly List<Project> projects = TestsData.projects;
     private readonly Project project = TestsData.dummyProject;
+    private readonly Project editedProject = TestsData.dummyProject;
     private readonly User user = TestsData.dummyUser;
 
     public ProjectsControllerTests()
@@ -108,6 +109,25 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         var modelProject = (Project) model;
         Assert.AreEqual(project, modelProject);
         Assert.AreEqual(users[0].name, controller.ViewBag.usersList[0].Text);
+    }
+
+    [Test]
+    public void EditPostCallbackReturnsListView()
+    {
+        result = controller.Edit(editedProject);
+
+        AssertRedirectToActionResultReturnsActionWithName("List");
+    }
+
+    [Test]
+    public void EditPostCallbackEditsProject()
+    {
+        editedProject.name = "EditedProject";
+
+        result = controller.Edit(editedProject);
+
+        projectsRepositoryMock
+            .Verify(m => m.Edit(editedProject.id, editedProject));
     }
 
     [Test]

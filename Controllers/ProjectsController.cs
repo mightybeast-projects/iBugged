@@ -52,7 +52,15 @@ public class ProjectsController : Controller
     {
         projectsRepository.Create(project);
 
-        return RedirectToAction("List");
+        return RedirectToAction(nameof(List));
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Project project)
+    {
+        projectsRepository.Edit(project.id, project);
+
+        return RedirectToAction(nameof(List));
     }
 
     private List<ProjectViewModel> GetProjectViewModels()

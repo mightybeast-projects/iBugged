@@ -12,6 +12,9 @@ public class MongoProjectsRepository : MongoRepository<Project>, IProjectsReposi
     public Project Get(string id) =>
         collection.Find(project => project.id == id).FirstOrDefault();
 
+    public void Edit(string id, Project project) =>
+        collection.ReplaceOne(project => project.id == id, project);
+
     public void Delete(string id) =>
         collection.DeleteOne(project => project.id == id);
 }
