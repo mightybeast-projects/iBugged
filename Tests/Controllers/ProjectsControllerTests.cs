@@ -34,7 +34,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void ListCallbackReturnListOfProjectViewModels()
+    public void ListCallbackReturnsCorrectModel()
     {
         result = controller.List();
 
@@ -69,8 +69,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Create(project);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]
@@ -104,8 +103,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Edit(project);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]
@@ -121,8 +119,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Delete(project.id);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]

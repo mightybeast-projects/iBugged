@@ -47,8 +47,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register(user);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.Index));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.Index));
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
@@ -56,7 +55,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.LogIn(user.email, user.password);
 
-        AssertRedirectResultRedirectsToPath("~/Dashboard/Home");
+        AssertRedirectResultRedirectsTo("~/Dashboard/Home");
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
@@ -85,8 +84,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.LogOut();
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.Index));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.Index));
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]

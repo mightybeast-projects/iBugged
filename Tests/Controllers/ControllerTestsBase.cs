@@ -44,7 +44,7 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
         Assert.AreEqual(actionName, ((RedirectToActionResult)result).ActionName);
     }
 
-    protected void AssertRedirectResultRedirectsToPath(string redirectPath)
+    protected void AssertRedirectResultRedirectsTo(string redirectPath)
     {
         Assert.IsInstanceOf<RedirectResult>(result);
         Assert.AreEqual(redirectPath, ((RedirectResult)result).Url);

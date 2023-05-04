@@ -28,16 +28,29 @@ public class RepositoryMocksSetup
     [OneTimeSetUp]
     public void SetUp()
     {
+        SetUpUsersRepositoryMock();
+        SetUpTicketsRepositoryMock();
+        SetUpProjectsRepositoryMock();
+    }
+
+    private void SetUpUsersRepositoryMock()
+    {
         usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
         users.ForEach(u => usersRepositoryMock
             .Setup(m => m.Get(It.IsAny<Expression<Func<User, bool>>>()))
             .Returns((Expression<Func<User, bool>> predicate) =>
                 users.Find(predicate.Compile().Invoke)!));
+    }
 
+    private void SetUpTicketsRepositoryMock()
+    {
         ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
         ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
+    }
 
+    private void SetUpProjectsRepositoryMock()
+    {
         projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
         projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
         projectsRepositoryMock

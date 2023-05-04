@@ -34,7 +34,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void ListCallbackReturnsListOfTicketViewModels()
+    public void ListCallbackReturnsCorrectModel()
     {
         result = controller.List();
 
@@ -58,10 +58,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create();
 
-        AssertViewBagList(controller.ViewBag.projectsList,
-            projects.Cast<Document>().ToList());
-        AssertViewBagList(controller.ViewBag.usersList,
-            users.Cast<Document>().ToList());
+        AssertUsersAndProjectsListsInViewBag();
     }
 
     [Test]
@@ -69,8 +66,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create(ticket);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]
@@ -91,14 +87,11 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditGetCallbackSetsUsersAndProjectsLists()
+    public void EditGetCallbackReturnsCorrectModel()
     {
         result = controller.Edit(ticket.id);
 
-        AssertViewBagList(controller.ViewBag.projectsList,
-            projects.Cast<Document>().ToList());
-        AssertViewBagList(controller.ViewBag.usersList,
-            users.Cast<Document>().ToList());
+        AssertUsersAndProjectsListsInViewBag();
         AssertModelIsEqualWithResultModel(ticket);
     }
 
@@ -107,8 +100,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]
@@ -124,8 +116,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Delete(ticket.id);
 
-        AssertRedirectToActionResultReturnsAction(
-            nameof(controller.List));
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]
@@ -139,5 +130,13 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
             m.Get(It.Is<Expression<Func<Project, bool>>>(e =>
             project.ticketsId.Contains(ticket.id))));
         projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
+    }
+
+    private void AssertUsersAndProjectsListsInViewBag()
+    {
+        AssertViewBagList(controller.ViewBag.projectsList,
+            projects.Cast<Document>().ToList());
+        AssertViewBagList(controller.ViewBag.usersList,
+            users.Cast<Document>().ToList());
     }
 }
