@@ -21,7 +21,14 @@
         <h5>Ticket priority : @viewModel.ticket.priority</h5>
         <h5>Opened : @viewModel.ticket.isOpened</h5>
         <h5>Project : @viewModel.project.name</h5>
-        <h5>Assignee : @viewModel.assignee.name</h5>
+        @if (viewModel.assignee == null)
+        {
+            <h5>Assignee : Unassigned</h5>
+        }
+        else
+        {
+            <h5>Assignee : @viewModel.assignee.name</h5>
+        }
         <h5>Author : @viewModel.author.name</h5>
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
     }
