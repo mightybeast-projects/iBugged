@@ -21,7 +21,7 @@
         <h5>Ticket priority : @viewModel.ticket.priority</h5>
         <h5>Opened : @viewModel.ticket.isOpened</h5>
         <h5>Project : @viewModel.project.name</h5>
-        @if (viewModel.assignee == null)
+        if (viewModel.assignee == null)
         {
             <h5>Assignee : Unassigned</h5>
         }
@@ -31,7 +31,15 @@
         }
         <h5>Author : @viewModel.author.name</h5>
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
-        if (service.user.role != Role.TeamMember)
+        
+        if (service.user.role != TeamMember ||
+            UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))
+        {
+            <a asp-controller="Tickets"
+                asp-action="Edit"
+                asp-route-id="@viewModel.ticket.id">Edit ticket</a>
+        }
+        if (service.user.role != TeamMember)
         {
             <a asp-controller="Tickets"
                 asp-action="Delete"
@@ -39,3 +47,10 @@
         }
     }
 </div>
+
+@functions
+{
+    private bool UserIsTeamMemberAndAuthorOfTicket(Ticket ticket) =>
+        service.user.role == TeamMember && 
+        service.user.id == ticket.authorId;
+}

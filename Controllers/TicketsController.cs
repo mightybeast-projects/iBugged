@@ -34,12 +34,13 @@ public class TicketsController : Controller
         return View("Create");
     }
 
-    [HttpPost]
-    public IActionResult Create(Ticket ticket)
+    [HttpGet]
+    public IActionResult Edit(string id)
     {
-        ticketsRepository.Create(ticket);
+        ViewBag.projectsList = GetProjectsList();
+        ViewBag.usersList = GetUsersList();
 
-        return RedirectToAction(nameof(List));
+        return View("Edit", ticketsRepository.Get(id));
     }
 
     [HttpGet]
@@ -47,6 +48,14 @@ public class TicketsController : Controller
     {
         ticketsRepository.Delete(id);
         
+        return RedirectToAction(nameof(List));
+    }
+
+    [HttpPost]
+    public IActionResult Create(Ticket ticket)
+    {
+        ticketsRepository.Create(ticket);
+
         return RedirectToAction(nameof(List));
     }
 

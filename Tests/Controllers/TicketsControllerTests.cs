@@ -32,6 +32,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     public new void SetUp()
     {
         ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
+        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
         projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
         projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
         usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
@@ -70,7 +71,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreateGetCallbackReturnsCorrectModel()
+    public void CreateGetCallbackSetsUsersAndProjectsLists()
     {
         result = controller.Create();
 
@@ -96,6 +97,30 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.Create(ticket);
 
         ticketsRepositoryMock.Verify(m => m.Create(ticket));
+    }
+
+    [Test]
+    public void EditGetCallbackReturnsEditView()
+    {
+        result = controller.Edit(ticket.id);
+
+        AssertViewResultReturnsViewWithName("Edit");
+    }
+
+    [Test]
+    public void EditGetCallbackSetsUsersAndProjectsLists()
+    {
+        result = controller.Edit(ticket.id);
+
+        var model = ((ViewResult)result).Model!;
+        var modelTicket = (Ticket) model;
+        Assert.AreEqual(ticket, modelTicket);
+        var projectsList = controller.ViewBag.projectsList;
+        Assert.AreEqual(project.id, projectsList[0].Value);
+        Assert.AreEqual(project.name, projectsList[0].Text);
+        var usersList = controller.ViewBag.usersList;
+        Assert.AreEqual(user.id, usersList[0].Value);
+        Assert.AreEqual(user.name, usersList[0].Text);
     }
 
     [Test]
