@@ -124,6 +124,22 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
+    public void EditPostCallbackReturnsListView()
+    {
+        result = controller.Edit(ticket);
+
+        AssertRedirectToActionResultReturnsActionWithName("List");
+    }
+
+    [Test]
+    public void EditPostCallbackEditsTicket()
+    {
+        result = controller.Edit(ticket);
+
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+    }
+
+    [Test]
     public void DeleteCallbackReturnsListView()
     {
         result = controller.Delete(ticket.id);

@@ -59,6 +59,14 @@ public class TicketsController : Controller
         return RedirectToAction(nameof(List));
     }
 
+    [HttpPost]
+    public IActionResult Edit(Ticket ticket)
+    {
+        ticketsRepository.Edit(ticket.id, ticket);
+
+        return RedirectToAction(nameof(List));
+    }
+
     private List<SelectListItem> GetProjectsList()
     {
         List<SelectListItem> projectsList = new List<SelectListItem>();

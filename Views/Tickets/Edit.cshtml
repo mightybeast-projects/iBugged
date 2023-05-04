@@ -5,6 +5,7 @@
 }
 
 <form asp-controller="Tickets" asp-action="Edit" method="post">
+    <input asp-for="id" visible=false hidden>
     <p>Create new ticket :</p>
     <label>Title :</label><br />
     <input asp-for="title" /><br />
@@ -30,6 +31,7 @@
             <option value="@service.user.id">@service.user.name</option>
         </select><br />
     }
+    <input asp-for="authorId" hidden >
     <br />
     <input type="Submit" value="Save"/>
 </form>
