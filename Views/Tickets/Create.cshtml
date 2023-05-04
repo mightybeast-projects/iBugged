@@ -16,6 +16,10 @@
     <select asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select><br />
     <label>Select project :</label><br />
     <select asp-for="projectId" asp-items="ViewBag.projectsList"></select><br />
+    <label>Assignee :</label><br />
+    <select asp-for="assigneeId" asp-items="ViewBag.usersList">
+        <option value="" selected disabled hidden>Choose assignee</option>
+    </select><br />
     <label>Author :</label><br />
     <input asp-for="authorId" value="@service.user.id" hidden >
     <input value="@service.user.name" disabled /><br />

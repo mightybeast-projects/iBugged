@@ -9,13 +9,16 @@ public class TicketsController : Controller
 {
     private readonly IRepository<Ticket> ticketsRepository;
     private readonly IRepository<Project> projectsRepository;
+    private readonly IRepository<User> usersRepository;
 
     public TicketsController(
         IRepository<Ticket> ticketsRepository, 
-        IRepository<Project> projectsRepository)
+        IRepository<Project> projectsRepository,
+        IRepository<User> usersRepository)
     {
         this.ticketsRepository = ticketsRepository;
         this.projectsRepository = projectsRepository;
+        this.usersRepository = usersRepository;
     }
 
     [HttpGet]
@@ -25,6 +28,7 @@ public class TicketsController : Controller
     public IActionResult Create()
     {
         ViewBag.projectsList = GetProjectsList();
+        ViewBag.usersList = GetUsersList();
 
         return View("Create");
     }
@@ -44,5 +48,14 @@ public class TicketsController : Controller
             .ForEach(p => projectsList
             .Add(new SelectListItem() { Text = p.name, Value = p.id }));
         return projectsList;
+    }
+
+    private List<SelectListItem> GetUsersList()
+    {
+        List<SelectListItem> usersList = new List<SelectListItem>();
+        usersRepository.GetAll()
+            .ForEach(u => usersList
+            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+        return usersList;
     }
 }

@@ -12,14 +12,17 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
     private readonly Mock<IRepository<Ticket>> ticketsRepository;
     private readonly Mock<IRepository<Project>> projectsRepository;
+    private readonly Mock<IRepository<User>> usersRepository;
 
     public TicketsControllerTests()
     {
         ticketsRepository = new Mock<IRepository<Ticket>>();
         projectsRepository=  new Mock<IRepository<Project>>();
+        usersRepository = new Mock<IRepository<User>>();
         controller = new TicketsController(
             ticketsRepository.Object,
-            projectsRepository.Object);
+            projectsRepository.Object,
+            usersRepository.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
@@ -28,6 +31,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         ticketsRepository.Setup(m => m.GetAll()).Returns(tickets);
         projectsRepository.Setup(m => m.GetAll()).Returns(projects);
+        usersRepository.Setup(m => m.GetAll()).Returns(users);
 
         SetUserInSession(user);
     }
@@ -66,6 +70,9 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         var projectsList = controller.ViewBag.projectsList;
         Assert.AreEqual(project.id, projectsList[0].Value);
         Assert.AreEqual(project.name, projectsList[0].Text);
+        var usersList = controller.ViewBag.usersList;
+        Assert.AreEqual(user.id, usersList[0].Value);
+        Assert.AreEqual(user.name, usersList[0].Text);
     }
 
     [Test]
