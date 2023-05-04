@@ -154,5 +154,6 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         result = controller.Delete(project.id);
 
         projectsRepositoryMock.Verify(m => m.Delete(project.id));
+        ticketsRepositoryMock.Verify(m => m.Delete(ticket.id));
     }
 }

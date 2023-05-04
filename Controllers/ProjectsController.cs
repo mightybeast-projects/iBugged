@@ -45,7 +45,9 @@ public class ProjectsController : Controller
     [HttpGet]
     public IActionResult Delete(string id)
     {
+        Project project = projectsRepository.Get(id);
         projectsRepository.Delete(id);
+        project.ticketsId.ForEach(id => ticketsRepository.Delete(id));
 
         return RedirectToAction(nameof(List));
     }
