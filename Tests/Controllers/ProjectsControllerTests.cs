@@ -78,7 +78,9 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Create();
 
-        Assert.AreEqual(users[0].name, controller.ViewBag.usersList[0].Text);
+        var usersList = controller.ViewBag.usersList;
+        Assert.AreEqual(users[0].id, usersList[0].Value);
+        Assert.AreEqual(users[0].name, usersList[0].Text);
     }
 
     [Test]

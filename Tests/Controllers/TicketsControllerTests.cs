@@ -11,17 +11,23 @@ namespace iBugged.Tests.Controllers;
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
     private readonly Mock<IRepository<Ticket>> ticketsRepository;
+    private readonly Mock<IRepository<Project>> projectsRepository;
 
     public TicketsControllerTests()
     {
         ticketsRepository = new Mock<IRepository<Ticket>>();
-        controller = new TicketsController(ticketsRepository.Object);
+        projectsRepository=  new Mock<IRepository<Project>>();
+        controller = new TicketsController(
+            ticketsRepository.Object,
+            projectsRepository.Object);
+        controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [OneTimeSetUp]
     public new void SetUp()
     {
         ticketsRepository.Setup(m => m.GetAll()).Returns(tickets);
+        projectsRepository.Setup(m => m.GetAll()).Returns(projects);
 
         SetUserInSession(user);
     }
@@ -50,6 +56,16 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.Create();
 
         AssertViewResultReturnsViewWithName("Create");
+    }
+
+    [Test]
+    public void CreateGetCallbackReturnsCorrectModel()
+    {
+        result = controller.Create();
+
+        var projectsList = controller.ViewBag.projectsList;
+        Assert.AreEqual(project.id, projectsList[0].Value);
+        Assert.AreEqual(project.name, projectsList[0].Text);
     }
 
     [Test]
