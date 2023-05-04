@@ -1,6 +1,7 @@
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Services.Repositories;
+using iBugged.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
@@ -10,28 +11,31 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
-    private readonly Mock<IRepository<Ticket>> ticketsRepository;
-    private readonly Mock<IRepository<Project>> projectsRepository;
-    private readonly Mock<IRepository<User>> usersRepository;
+    private readonly Mock<IRepository<Ticket>> ticketsRepositoryMock;
+    private readonly Mock<IRepository<Project>> projectsRepositoryMock;
+    private readonly Mock<IRepository<User>> usersRepositoryMock;
+    private readonly TicketViewModel ticketViewModel = TestsData.dummyTicketVM;
 
     public TicketsControllerTests()
     {
-        ticketsRepository = new Mock<IRepository<Ticket>>();
-        projectsRepository=  new Mock<IRepository<Project>>();
-        usersRepository = new Mock<IRepository<User>>();
+        ticketsRepositoryMock = new Mock<IRepository<Ticket>>();
+        projectsRepositoryMock=  new Mock<IRepository<Project>>();
+        usersRepositoryMock = new Mock<IRepository<User>>();
         controller = new TicketsController(
-            ticketsRepository.Object,
-            projectsRepository.Object,
-            usersRepository.Object);
+            ticketsRepositoryMock.Object,
+            projectsRepositoryMock.Object,
+            usersRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
     [OneTimeSetUp]
     public new void SetUp()
     {
-        ticketsRepository.Setup(m => m.GetAll()).Returns(tickets);
-        projectsRepository.Setup(m => m.GetAll()).Returns(projects);
-        usersRepository.Setup(m => m.GetAll()).Returns(users);
+        ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
+        projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
+        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
+        usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
+        usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
 
         SetUserInSession(user);
     }
@@ -45,13 +49,16 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void ListCallbackReturnsCorrectModel()
+    public void ListCallbackReturnsListOfTicketViewModels()
     {
         result = controller.List();
 
-        var model = ((ViewResult)result).Model;
-        Assert.IsInstanceOf<List<Ticket>>(model);
-        Assert.AreEqual(ticket, ((List<Ticket>)model!)[0]);
+        ticketsRepositoryMock.Verify(m => m.GetAll());
+        projectsRepositoryMock.Verify(m => m.Get(project.id));
+        usersRepositoryMock.Verify(m => m.Get(user.id));
+        var viewResult = (ViewResult)result;
+        var model = (List<TicketViewModel>)viewResult.Model!;
+        AssertObjectsAreEqualAsJsons(ticketViewModel, model[0]);
     }
 
     [Test]
@@ -88,6 +95,6 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create(ticket);
 
-        ticketsRepository.Verify(m => m.Create(ticket));
+        ticketsRepositoryMock.Verify(m => m.Create(ticket));
     }
 }

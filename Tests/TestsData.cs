@@ -60,7 +60,7 @@ public static class TestsData
         ticketType = TicketType.Bug,
         projectId = "1",
         authorId = "1",
-        assigneeId = "2",
+        assigneeId = "1",
     };
 
     public static TestCaseData[] userCases =
@@ -87,5 +87,13 @@ public static class TestsData
     {
         project = dummyProject,
         members = new List<User>{ dummyUser }
+    };
+
+    public static TicketViewModel dummyTicketVM = new TicketViewModel()
+    {
+        ticket = dummyTicket,
+        project = dummyProject,
+        assignee = dummyUser,
+        author = dummyUser
     };
 }

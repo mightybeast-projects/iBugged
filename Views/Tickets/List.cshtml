@@ -1,4 +1,4 @@
-@model IEnumerable<Ticket>
+@model IEnumerable<TicketViewModel>
 
 @{
     ViewData["Title"] = "Tickets";
@@ -13,16 +13,16 @@
 </div>
 
 <div>
-    @foreach (var ticket in Model)
+    @foreach (var viewModel in Model)
     {
-        <h1>@ticket.title</h1>
-        <h5>@ticket.description</h5>
-        <h5>Ticket type : @ticket.ticketType</h5>
-        <h5>Ticket priority : @ticket.priority</h5>
-        <h5>Opened : @ticket.isOpened</h5>
-        <h5>@ticket.projectId</h5>
-        <h5>@ticket.authorId</h5>
-        <h5>@ticket.assigneeId</h5>
-        <h5>@ticket.creationDate</h5>
+        <h1>@viewModel.ticket.title</h1>
+        <h5>@viewModel.ticket.description</h5>
+        <h5>Ticket type : @viewModel.ticket.ticketType</h5>
+        <h5>Ticket priority : @viewModel.ticket.priority</h5>
+        <h5>Opened : @viewModel.ticket.isOpened</h5>
+        <h5>Project : @viewModel.project.name</h5>
+        <h5>Assignee : @viewModel.assignee.name</h5>
+        <h5>Author : @viewModel.author.name</h5>
+        <h5>Creation date : @viewModel.ticket.creationDate</h5>
     }
 </div>

@@ -1,5 +1,6 @@
 using iBugged.Models;
 using iBugged.Services.Repositories;
+using iBugged.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,7 +23,7 @@ public class TicketsController : Controller
     }
 
     [HttpGet]
-    public IActionResult List() => View("List", ticketsRepository.GetAll());
+    public IActionResult List() => View("List", GetTicketViewModels());
 
     [HttpGet]
     public IActionResult Create()
@@ -57,5 +58,22 @@ public class TicketsController : Controller
             .ForEach(u => usersList
             .Add(new SelectListItem() { Text = u.name, Value = u.id }));
         return usersList;
+    }
+
+    private List<TicketViewModel> GetTicketViewModels()
+    {
+        List<TicketViewModel> ticketViewModels = new List<TicketViewModel>();
+
+        foreach(Ticket ticket in ticketsRepository.GetAll())
+        {
+            TicketViewModel ticketVM = new TicketViewModel();
+            ticketVM.ticket = ticket;
+            ticketVM.project = projectsRepository.Get(ticket.projectId);
+            ticketVM.assignee = usersRepository.Get(ticket.assigneeId);
+            ticketVM.author = usersRepository.Get(ticket.authorId);
+            ticketViewModels.Add(ticketVM);
+        }
+
+        return ticketViewModels;
     }
 }
