@@ -5,7 +5,6 @@ using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
-using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace iBugged.Tests.Controllers;
@@ -15,16 +14,19 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
     private readonly Mock<IRepository<Project>> projectsRepositoryMock;
     private readonly Mock<IRepository<User>> usersRepositoryMock;
+    private readonly Mock<IRepository<Ticket>> ticketsRepositoryMock;
     private readonly ProjectViewModel projectVM = TestsData.dummyProjectVM;
 
     public ProjectsControllerTests()
     {
         projectsRepositoryMock = new Mock<IRepository<Project>>();
         usersRepositoryMock = new Mock<IRepository<User>>();
+        ticketsRepositoryMock = new Mock<IRepository<Ticket>>();
 
         controller = new ProjectsController(
             projectsRepositoryMock.Object,
-            usersRepositoryMock.Object);
+            usersRepositoryMock.Object,
+            ticketsRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
@@ -39,6 +41,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
                 projects.FindAll(predicate.Compile().Invoke));
         usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
+        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
 
         SetUserInSession(user);
     }
@@ -56,10 +59,11 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.List();
 
-        usersRepositoryMock.Verify(m => m.Get(user.id));
         projectsRepositoryMock.Verify(m =>
             m.GetAll(It.Is<Expression<Func<Project, bool>>>(e =>
             project.membersId.Contains(user.id))));
+        usersRepositoryMock.Verify(m => m.Get(user.id));
+        ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
         var viewResult = (ViewResult)result;
         var model = (List<ProjectViewModel>)viewResult.Model!;
         AssertObjectsAreEqualAsJsons(projectVM, model[0]);

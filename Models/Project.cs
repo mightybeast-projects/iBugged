@@ -15,4 +15,7 @@ public class Project : Document
 
     [BsonElement("members_id")]
     public List<string> membersId { get; set; } = new List<string>();
+
+    [BsonElement("tickets_id")]
+    public List<string> ticketsId { get; set; } = new List<string>();
 }

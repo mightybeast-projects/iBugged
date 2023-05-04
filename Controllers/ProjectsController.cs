@@ -11,13 +11,16 @@ public class ProjectsController : Controller
 {
     private readonly IRepository<Project> projectsRepository;
     private readonly IRepository<User> usersRepository;
+    private readonly IRepository<Ticket> ticketsRepository;
 
     public ProjectsController(
         IRepository<Project> projectsRepository,
-        IRepository<User> usersRepository)
+        IRepository<User> usersRepository,
+        IRepository<Ticket> ticketsRepository)
     {
         this.projectsRepository = projectsRepository;
         this.usersRepository = usersRepository;
+        this.ticketsRepository = ticketsRepository;
     }
 
     [HttpGet]
@@ -78,6 +81,8 @@ public class ProjectsController : Controller
             projectViewModel.project = project;
             project.membersId.ForEach(id =>
                 projectViewModel.members.Add(usersRepository.Get(id)));
+            project.ticketsId.ForEach(id =>
+                projectViewModel.tickets.Add(ticketsRepository.Get(id)));
             projectViewModels.Add(projectViewModel);
         }
 

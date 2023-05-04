@@ -18,10 +18,15 @@
     {
         <h1>@viewModel.project.name</h1>
         <h5>@viewModel.project.description</h5>
-        <h5>Members:</h5>
+        <h5>Members (@viewModel.members.Count) :</h5>
         foreach (var member in viewModel.members)
         {
             <h7>@member.name</h7><br />
+        }
+        <h5>Tickets (@viewModel.tickets.Count) :</h5>
+        foreach (var ticket in viewModel.tickets)
+        {
+            <h7>@ticket.title</h7><br />
         }
         if (service.user.role is ProjectManager)
         {
