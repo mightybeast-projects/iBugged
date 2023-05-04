@@ -1,6 +1,7 @@
 using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
+using iBugged.Models.Mongo;
 using iBugged.Services.Repositories;
 using iBugged.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -62,9 +63,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         ticketsRepositoryMock.Verify(m => m.GetAll());
         projectsRepositoryMock.Verify(m => m.Get(project.id));
         usersRepositoryMock.Verify(m => m.Get(user.id));
-        var viewResult = (ViewResult)result;
-        var model = (List<TicketViewModel>)viewResult.Model!;
-        AssertObjectsAreEqualAsJsons(ticketViewModel, model[0]);
+        AssertModelIsEqualWithResultModel(
+            new List<TicketViewModel> { ticketViewModel });
     }
 
     [Test]
@@ -80,12 +80,10 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create();
 
-        var projectsList = controller.ViewBag.projectsList;
-        Assert.AreEqual(project.id, projectsList[0].Value);
-        Assert.AreEqual(project.name, projectsList[0].Text);
-        var usersList = controller.ViewBag.usersList;
-        Assert.AreEqual(user.id, usersList[0].Value);
-        Assert.AreEqual(user.name, usersList[0].Text);
+        AssertViewBagList(controller.ViewBag.projectsList,
+            projects.Cast<Document>().ToList());
+        AssertViewBagList(controller.ViewBag.usersList,
+            users.Cast<Document>().ToList());
     }
 
     [Test]
@@ -118,15 +116,11 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket.id);
 
-        var model = ((ViewResult)result).Model!;
-        var modelTicket = (Ticket) model;
-        Assert.AreEqual(ticket, modelTicket);
-        var projectsList = controller.ViewBag.projectsList;
-        Assert.AreEqual(project.id, projectsList[0].Value);
-        Assert.AreEqual(project.name, projectsList[0].Text);
-        var usersList = controller.ViewBag.usersList;
-        Assert.AreEqual(user.id, usersList[0].Value);
-        Assert.AreEqual(user.name, usersList[0].Text);
+        AssertViewBagList(controller.ViewBag.projectsList,
+            projects.Cast<Document>().ToList());
+        AssertViewBagList(controller.ViewBag.usersList,
+            users.Cast<Document>().ToList());
+        AssertModelIsEqualWithResultModel(ticket);
     }
 
     [Test]

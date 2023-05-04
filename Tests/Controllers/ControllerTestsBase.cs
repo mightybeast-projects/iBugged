@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using iBugged.Models;
+using iBugged.Models.Mongo;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Newtonsoft.Json;
@@ -60,4 +62,14 @@ public abstract class ControllerTestsBase<T> where T : Controller
         string obj2Json = JsonConvert.SerializeObject(obj2);
         Assert.AreEqual(obj1Json, obj2Json);
     }
+
+    protected void AssertModelIsEqualWithResultModel<W>(W model)
+    {
+        var viewModel = ((ViewResult)result).Model!;
+        var modelProject = (W) viewModel;
+        AssertObjectsAreEqualAsJsons(model!, viewModel);
+    }
+
+    protected void AssertViewBagList(dynamic viewBagList, List<Document> list) =>
+        Assert.AreEqual(list[0].id, viewBagList[0].Value);
 }
