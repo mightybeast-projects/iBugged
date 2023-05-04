@@ -30,7 +30,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.List();
 
-        AssertViewResultReturnsViewWithName("List");
+        AssertViewResultReturnsView(nameof(controller.List));
     }
 
     [Test]
@@ -50,7 +50,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create();
 
-        AssertViewResultReturnsViewWithName("Create");
+        AssertViewResultReturnsView(nameof(controller.Create));
     }
 
     [Test]
@@ -69,7 +69,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create(ticket);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]
@@ -86,7 +87,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket.id);
 
-        AssertViewResultReturnsViewWithName("Edit");
+        AssertViewResultReturnsView(nameof(controller.Edit));
     }
 
     [Test]
@@ -106,7 +107,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]
@@ -122,7 +124,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Delete(ticket.id);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]

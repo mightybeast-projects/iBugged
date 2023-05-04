@@ -32,13 +32,13 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
         sessionMock.SetString(SESSION_USER_STR, json);
     }
 
-    protected void AssertViewResultReturnsViewWithName(string viewName)
+    protected void AssertViewResultReturnsView(string viewName)
     {
         Assert.IsInstanceOf<ViewResult>(result);
         Assert.AreEqual(viewName, ((ViewResult)result).ViewName);
     }
 
-    protected void AssertRedirectToActionResultReturnsActionWithName(string actionName)
+    protected void AssertRedirectToActionResultReturnsAction(string actionName)
     {
         Assert.IsInstanceOf<RedirectToActionResult>(result);
         Assert.AreEqual(actionName, ((RedirectToActionResult)result).ActionName);

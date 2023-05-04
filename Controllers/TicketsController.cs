@@ -23,7 +23,7 @@ public class TicketsController : Controller
     }
 
     [HttpGet]
-    public IActionResult List() => View("List", GetTicketViewModels());
+    public IActionResult List() => View(nameof(List), GetTicketViewModels());
 
     [HttpGet]
     public IActionResult Create()
@@ -31,7 +31,7 @@ public class TicketsController : Controller
         ViewBag.projectsList = GetProjectsList();
         ViewBag.usersList = GetUsersList();
 
-        return View("Create");
+        return View(nameof(Create));
     }
 
     [HttpGet]
@@ -40,7 +40,7 @@ public class TicketsController : Controller
         ViewBag.projectsList = GetProjectsList();
         ViewBag.usersList = GetUsersList();
 
-        return View("Edit", ticketsRepository.Get(id));
+        return View(nameof(Edit), ticketsRepository.Get(id));
     }
 
     [HttpGet]

@@ -30,7 +30,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.List();
 
-        AssertViewResultReturnsViewWithName("List");
+        AssertViewResultReturnsView(nameof(controller.List));
     }
 
     [Test]
@@ -52,7 +52,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Create();
 
-        AssertViewResultReturnsViewWithName("Create");
+        AssertViewResultReturnsView(nameof(controller.Create));
     }
 
     [Test]
@@ -69,7 +69,8 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Create(project);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]
@@ -85,7 +86,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Edit(project.id);
 
-        AssertViewResultReturnsViewWithName("Edit");
+        AssertViewResultReturnsView(nameof(controller.Edit));
     }
 
     [Test]
@@ -103,7 +104,8 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Edit(project);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]
@@ -119,7 +121,8 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Delete(project.id);
 
-        AssertRedirectToActionResultReturnsActionWithName("List");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.List));
     }
 
     [Test]

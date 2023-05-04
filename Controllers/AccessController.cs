@@ -15,10 +15,10 @@ public class AccessController : Controller
         this.usersRepository = usersService;
 
     [HttpGet]
-    public IActionResult Index() => View("Index");
+    public IActionResult Index() => View(nameof(Index));
 
     [HttpGet]
-    public IActionResult Register() => View("Register");
+    public IActionResult Register() => View(nameof(Register));
 
     [HttpGet]
     public IActionResult LogOut()
@@ -38,7 +38,7 @@ public class AccessController : Controller
 
         ViewData[ERROR_MESSAGE_NAME] = ERROR_MESSAGE;
 
-        return View("Index");
+        return View(nameof(Index));
     }
 
     [HttpPost]

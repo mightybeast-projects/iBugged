@@ -24,14 +24,14 @@ public class ProjectsController : Controller
     }
 
     [HttpGet]
-    public IActionResult List() => View("List", GetProjectViewModels());
+    public IActionResult List() => View(nameof(List), GetProjectViewModels());
 
     [HttpGet]
     public IActionResult Create()
     {
         ViewBag.usersList = GetUsersList();
 
-        return View("Create");
+        return View(nameof(Create));
     }
 
     [HttpGet]
@@ -39,7 +39,7 @@ public class ProjectsController : Controller
     {
         ViewBag.usersList = GetUsersList();
 
-        return View("Edit", projectsRepository.Get(id));
+        return View(nameof(Edit), projectsRepository.Get(id));
     }
 
     [HttpGet]

@@ -17,6 +17,6 @@ public class DashboardControllerTests : ControllerTestsBase<DashboardController>
     {
         result = controller.Home();
 
-        AssertViewResultReturnsViewWithName("Home");
+        AssertViewResultReturnsView(nameof(controller.Home));
     }
 }

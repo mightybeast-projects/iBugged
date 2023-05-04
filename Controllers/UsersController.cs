@@ -12,5 +12,5 @@ public class UsersController : Controller
         this.usersRepository = usersService;
 
     [HttpGet]
-    public IActionResult List() => View("List", usersRepository.GetAll());
+    public IActionResult List() => View(nameof(List), usersRepository.GetAll());
 }

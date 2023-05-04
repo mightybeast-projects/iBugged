@@ -23,7 +23,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Index();
 
-        AssertViewResultReturnsViewWithName("Index");
+        AssertViewResultReturnsView(nameof(controller.Index));
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register();
 
-        AssertViewResultReturnsViewWithName("Register");
+        AssertViewResultReturnsView(nameof(controller.Register));
     }
 
     [Test]
@@ -47,7 +47,8 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register(user);
 
-        AssertRedirectToActionResultReturnsActionWithName("Index");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.Index));
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
@@ -76,7 +77,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         var viewResult = (ViewResult)result;
         Assert.AreEqual(ERROR_MESSAGE,
             viewResult.ViewData[ERROR_MESSAGE_NAME]);
-        AssertViewResultReturnsViewWithName("Index");
+        AssertViewResultReturnsView(nameof(controller.Index));
     }
 
     [Test]
@@ -84,7 +85,8 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.LogOut();
 
-        AssertRedirectToActionResultReturnsActionWithName("Index");
+        AssertRedirectToActionResultReturnsAction(
+            nameof(controller.Index));
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
