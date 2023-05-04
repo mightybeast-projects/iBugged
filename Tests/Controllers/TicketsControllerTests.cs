@@ -97,4 +97,20 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 
         ticketsRepositoryMock.Verify(m => m.Create(ticket));
     }
+
+    [Test]
+    public void DeleteCallbackReturnsListView()
+    {
+        result = controller.Delete(ticket.id);
+
+        AssertRedirectToActionResultReturnsActionWithName("List");
+    }
+
+    [Test]
+    public void DeleteCallbackDeletesTicket()
+    {
+        result = controller.Delete(ticket.id);
+
+        ticketsRepositoryMock.Verify(m => m.Delete(ticket.id));
+    }
 }

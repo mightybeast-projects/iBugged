@@ -42,6 +42,14 @@ public class TicketsController : Controller
         return RedirectToAction(nameof(List));
     }
 
+    [HttpGet]
+    public IActionResult Delete(string id)
+    {
+        ticketsRepository.Delete(id);
+        
+        return RedirectToAction(nameof(List));
+    }
+
     private List<SelectListItem> GetProjectsList()
     {
         List<SelectListItem> projectsList = new List<SelectListItem>();

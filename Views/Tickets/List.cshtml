@@ -31,5 +31,11 @@
         }
         <h5>Author : @viewModel.author.name</h5>
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
+        if (service.user.role != Role.TeamMember)
+        {
+            <a asp-controller="Tickets"
+                asp-action="Delete"
+                asp-route-id="@viewModel.ticket.id">Delete ticket</a>
+        }
     }
 </div>
