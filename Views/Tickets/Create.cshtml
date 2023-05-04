@@ -15,7 +15,10 @@
     <label>Priority :</label><br />
     <select asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select><br />
     <label>Select project :</label><br />
-    <select asp-for="projectId" asp-items="@ViewBag.projectsList"></select><br />
+    <select asp-for="projectId" asp-items="ViewBag.projectsList"></select><br />
+    <label>Author :</label><br />
+    <input asp-for="authorId" value="@service.user.id" hidden >
+    <input value="@service.user.name" disabled /><br />
     <br />
     <input type="Submit" value="Create"/>
 </form>
