@@ -47,6 +47,10 @@ public class TicketsController : Controller
     public IActionResult Delete(string id)
     {
         ticketsRepository.Delete(id);
+        Project project = projectsRepository.Get(project =>
+            project.ticketsId.Contains(id));
+        project.ticketsId.Remove(id);
+        projectsRepository.Edit(project.id, project);
         
         return RedirectToAction(nameof(List));
     }

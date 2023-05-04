@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Services.Repositories;
@@ -35,6 +36,10 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
         projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
         projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
+        projectsRepositoryMock
+            .Setup(m => m.Get(It.IsAny<Expression<Func<Project, bool>>>()))
+            .Returns((Expression<Func<Project, bool>> predicate) =>
+                projects.Find(predicate.Compile().Invoke)!);
         usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
 
@@ -92,7 +97,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreatePostCallbackInsertsNewTicket()
+    public void CreatePostCallbackInsertsNewTicketAndUpdatesProject()
     {
         result = controller.Create(ticket);
 
@@ -149,10 +154,15 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void DeleteCallbackDeletesTicket()
+    public void DeleteCallbackDeletesTicketAndUpdatesProject()
     {
         result = controller.Delete(ticket.id);
 
         ticketsRepositoryMock.Verify(m => m.Delete(ticket.id));
+        projectsRepositoryMock
+            .Verify(m =>
+            m.Get(It.Is<Expression<Func<Project, bool>>>(e =>
+            project.ticketsId.Contains(ticket.id))));
+        projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
     }
 }
