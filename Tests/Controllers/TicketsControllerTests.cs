@@ -2,9 +2,7 @@ using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Models.Mongo;
-using iBugged.Services.Repositories;
 using iBugged.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
@@ -13,16 +11,10 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
-    private readonly Mock<IRepository<Ticket>> ticketsRepositoryMock;
-    private readonly Mock<IRepository<Project>> projectsRepositoryMock;
-    private readonly Mock<IRepository<User>> usersRepositoryMock;
     private readonly TicketViewModel ticketViewModel = TestsData.dummyTicketVM;
 
     public TicketsControllerTests()
     {
-        ticketsRepositoryMock = new Mock<IRepository<Ticket>>();
-        projectsRepositoryMock=  new Mock<IRepository<Project>>();
-        usersRepositoryMock = new Mock<IRepository<User>>();
         controller = new TicketsController(
             ticketsRepositoryMock.Object,
             projectsRepositoryMock.Object,
@@ -31,21 +23,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [OneTimeSetUp]
-    public new void SetUp()
-    {
-        ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
-        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
-        projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
-        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
-        projectsRepositoryMock
-            .Setup(m => m.Get(It.IsAny<Expression<Func<Project, bool>>>()))
-            .Returns((Expression<Func<Project, bool>> predicate) =>
-                projects.Find(predicate.Compile().Invoke)!);
-        usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
-        usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
-
-        SetUserInSession(user);
-    }
+    public new void SetUp() => SetUserInSession(user);
 
     [Test]
     public void ListCallbackReturnsListView()

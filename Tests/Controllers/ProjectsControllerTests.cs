@@ -1,8 +1,6 @@
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.ViewModels;
-using iBugged.Services.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
@@ -13,17 +11,10 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
-    private readonly Mock<IRepository<User>> usersRepositoryMock;
-    private readonly Mock<IRepository<Ticket>> ticketsRepositoryMock;
-    private readonly Mock<IRepository<Project>> projectsRepositoryMock;
     private readonly ProjectViewModel projectVM = TestsData.dummyProjectVM;
 
     public ProjectsControllerTests()
     {
-        projectsRepositoryMock = new Mock<IRepository<Project>>();
-        usersRepositoryMock = new Mock<IRepository<User>>();
-        ticketsRepositoryMock = new Mock<IRepository<Ticket>>();
-
         controller = new ProjectsController(
             projectsRepositoryMock.Object,
             usersRepositoryMock.Object,
@@ -32,20 +23,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [OneTimeSetUp]
-    public new void SetUp()
-    {
-        projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
-        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
-        projectsRepositoryMock
-            .Setup(m => m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()))
-            .Returns((Expression<Func<Project, bool>> predicate) =>
-                projects.FindAll(predicate.Compile().Invoke));
-        usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
-        usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
-        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
-
-        SetUserInSession(user);
-    }
+    public new void SetUp() => SetUserInSession(user);
 
     [Test]
     public void ListCallbackReturnsListView()

@@ -1,9 +1,6 @@
-using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
-using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -14,22 +11,11 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
     private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
-    private Mock<IRepository<User>> userRepositoryMock;
 
     public AccessControllerTests()
     {
-        userRepositoryMock = new Mock<IRepository<User>>();
-        controller = new AccessController(userRepositoryMock.Object);
+        controller = new AccessController(usersRepositoryMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
-    }
-
-    [OneTimeSetUp]
-    public new void SetUp()
-    {
-        users.ForEach(u => userRepositoryMock
-            .Setup(m => m.Get(It.IsAny<Expression<Func<User, bool>>>()))
-            .Returns((Expression<Func<User, bool>> predicate) =>
-                users.Find(predicate.Compile().Invoke)!));
     }
 
     [Test]
@@ -53,7 +39,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register(user);
 
-        userRepositoryMock.Verify(m => m.Create(user));
+        usersRepositoryMock.Verify(m => m.Create(user));
     }
 
     [Test]
@@ -87,8 +73,9 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.LogIn(string.Empty, string.Empty);
 
+        var viewResult = (ViewResult)result;
         Assert.AreEqual(ERROR_MESSAGE,
-            ((ViewResult)result).ViewData[ERROR_MESSAGE_NAME]);
+            viewResult.ViewData[ERROR_MESSAGE_NAME]);
         AssertViewResultReturnsViewWithName("Index");
     }
 
@@ -108,7 +95,6 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         result = controller.LogOut();
 
         Assert.Throws<KeyNotFoundException>(
-            () => sessionMock.GetString(SESSION_USER_STR)
-        );
+            () => sessionMock.GetString(SESSION_USER_STR));
     }
 }
