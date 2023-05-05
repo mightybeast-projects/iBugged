@@ -1,7 +1,4 @@
-using System.Linq.Expressions;
 using iBugged.Controllers;
-using iBugged.Models;
-using Moq;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
@@ -12,7 +9,8 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     public UsersControllerTests() =>
         controller = new UsersController(
             usersRepositoryMock.Object,
-            projectsRepositoryMock.Object);
+            projectsRepositoryMock.Object,
+            ticketsRepositoryMock.Object);
 
     [Test]
     public void List_ReturnsListView()
@@ -52,5 +50,13 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
         result = controller.Delete(user.id);
 
         projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
+    }
+
+    [Test]
+    public void Delete_RemovesUserFromTicketsAuthorAndAssinee()
+    {
+        result = controller.Delete(user.id);
+
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
     }
 }

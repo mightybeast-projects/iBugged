@@ -43,6 +43,15 @@ public static class TestsData
         role = Role.TeamMember
     };
 
+    public static Project dummyProject = new Project()
+    {
+        id = "1",
+        name = "Project_1",
+        description = "Simple project.",
+        membersId = new List<string>() { "1" },
+        ticketsId = new List<string>() { "1" }
+    };
+
     public static Ticket dummyTicket = new Ticket()
     {
         id = "1",
@@ -53,15 +62,6 @@ public static class TestsData
         projectId = "1",
         authorId = "1",
         assigneeId = "1",
-    };
-
-    public static Project dummyProject = new Project()
-    {
-        id = "1",
-        name = "Project_1",
-        description = "Simple project.",
-        membersId = new List<string>() { dummyUser.id },
-        ticketsId = new List<string>() { dummyTicket.id }
     };
 
     public static TestCaseData[] userCases =

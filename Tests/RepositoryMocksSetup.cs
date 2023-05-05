@@ -47,6 +47,10 @@ public class RepositoryMocksSetup
     {
         ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
         ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
+        ticketsRepositoryMock
+            .Setup(m => m.GetAll(It.IsAny<Expression<Func<Ticket, bool>>>()))
+            .Returns((Expression<Func<Ticket, bool>> predicate) =>
+                tickets.FindAll(predicate.Compile().Invoke));
     }
 
     private void SetUpProjectsRepositoryMock()

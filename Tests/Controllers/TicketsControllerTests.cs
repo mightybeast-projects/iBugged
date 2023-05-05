@@ -125,10 +125,9 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.Delete(ticket.id);
 
         ticketsRepositoryMock.Verify(m => m.Delete(ticket.id));
-        projectsRepositoryMock
-            .Verify(m =>
+        projectsRepositoryMock.Verify(m => 
             m.Get(It.Is<Expression<Func<Project, bool>>>(e =>
-            project.ticketsId.Contains(ticket.id))));
+                project.ticketsId.Contains(ticket.id))));
         projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
     }
 

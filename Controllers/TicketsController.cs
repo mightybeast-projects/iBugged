@@ -58,10 +58,10 @@ public class TicketsController : Controller
     [HttpPost]
     public IActionResult Create(Ticket ticket)
     {
+        ticketsRepository.Create(ticket);
         Project project = projectsRepository.Get(ticket.projectId);
         project.ticketsId.Add(ticket.id);
         projectsRepository.Edit(project.id, project);
-        ticketsRepository.Create(ticket);
 
         return RedirectToAction(nameof(List));
     }

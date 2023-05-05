@@ -29,7 +29,14 @@
         {
             <h5>Assignee : @viewModel.assignee.name</h5>
         }
-        <h5>Author : @viewModel.author.name</h5>
+        if (viewModel.author == null)
+        {
+            <h5>Author : Deleted user</h5>
+        }
+        else
+        {
+            <h5>Author : @viewModel.author.name</h5>
+        }
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
         
         if (service.user.role != TeamMember ||

@@ -8,13 +8,16 @@ public class UsersController : Controller
 {
     private readonly IRepository<User> usersRepository;
     private readonly IRepository<Project> projectsRepository;
+    private readonly IRepository<Ticket> ticketsRepository;
 
     public UsersController(
         IRepository<User> usersService,
-        IRepository<Project> projectsRepository)
+        IRepository<Project> projectsRepository,
+        IRepository<Ticket> ticketsRepository)
     {
         this.usersRepository = usersService;
         this.projectsRepository = projectsRepository;
+        this.ticketsRepository = ticketsRepository;
     }
 
     [HttpGet]
@@ -29,6 +32,17 @@ public class UsersController : Controller
         projects.ForEach(project => project.membersId.Remove(id));
         projects.ForEach(project =>
             projectsRepository.Edit(project.id, project));
+
+        List<Ticket> tickets = ticketsRepository.GetAll(ticket =>
+            ticket.authorId == id);
+        tickets.ForEach(ticket => ticket.authorId = null!);
+        tickets.ForEach(ticket => ticketsRepository.Edit(ticket.id, ticket));
+        
+        tickets = ticketsRepository.GetAll(ticket =>
+            ticket.assigneeId == id);
+        tickets.ForEach(ticket => ticket.assigneeId = null!);
+        tickets.ForEach(ticket => ticketsRepository.Edit(ticket.id, ticket));
+
         usersRepository.Delete(id);
         
         return RedirectToAction(nameof(List));

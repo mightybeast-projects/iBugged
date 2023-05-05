@@ -31,7 +31,16 @@
             <option value="@service.user.id">@service.user.name</option>
         </select><br />
     }
-    <input asp-for="authorId" hidden >
+    @if (Model.authorId == null)
+    {
+        <label>Author :</label><br />
+        <input asp-for="authorId" value="@service.user.id" hidden >
+        <input value="@service.user.name" disabled /><br />
+    }
+    else
+    {
+        <input asp-for="authorId" hidden >
+    }
     <br />
     <input type="Submit" value="Save"/>
 </form>
