@@ -45,6 +45,22 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     }
 
     [Test]
+    public void EditPost_RedirectsToListAction()
+    {
+        result = controller.Edit(user);
+
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
+    }
+
+    [Test]
+    public void EditPost_EditsUser()
+    {
+        result = controller.Edit(user);
+
+        usersRepositoryMock.Verify(m => m.Edit(user.id, user));
+    }
+
+    [Test]
     public void Delete_RedirectsToListAction()
     {
         result = controller.Delete(user.id);

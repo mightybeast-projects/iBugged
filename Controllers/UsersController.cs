@@ -50,4 +50,12 @@ public class UsersController : Controller
         
         return RedirectToAction(nameof(List));
     }
+
+    [HttpPost]
+    public IActionResult Edit(User user)
+    {
+        usersRepository.Edit(user.id, user);
+
+        return RedirectToAction(nameof(List));
+    }
 }
