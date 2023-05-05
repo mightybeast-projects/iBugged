@@ -1,0 +1,20 @@
+@model User;
+
+@{
+    ViewData["Title"] = "Edit user";
+}
+
+<form>
+    <p>Edit user :</p>
+    <label>Username:</label><br />
+    <input asp-for="name" /><br />
+    <label>Email:</label><br />
+    <input asp-for="email" disabled /><br />
+    <label>Password:</label><br />
+    <input asp-for="password" disabled /><br />
+    <label>Role:</label><br />
+    <select asp-for="role" asp-items="Html.GetEnumSelectList<Role>()">
+    </select>
+    <br /><br />
+    <input type="Submit" value="Save"/>
+</form>

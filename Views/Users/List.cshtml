@@ -15,6 +15,9 @@
     <h6> Password: @user.password </h6>
     <h6> Role: @user.role </h6>
     <a asp-controller="Users"
+                asp-action="Edit"
+                asp-route-id="@user.id">Edit user</a>
+    <a asp-controller="Users"
                 asp-action="Delete"
                 asp-route-id="@user.id">Delete user</a>
 }

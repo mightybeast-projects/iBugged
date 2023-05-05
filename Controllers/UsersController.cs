@@ -24,6 +24,9 @@ public class UsersController : Controller
     public IActionResult List() => View(nameof(List), usersRepository.GetAll());
 
     [HttpGet]
+    public IActionResult Edit(string id) => View(nameof(Edit), usersRepository.Get(id));
+
+    [HttpGet]
     public IActionResult Delete(string id)
     {
         List<Project> projects = 

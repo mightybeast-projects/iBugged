@@ -29,6 +29,22 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     }
 
     [Test]
+    public void EditGet_ReturnsRegisterView()
+    {
+        result = controller.Edit(user.id);
+
+        AssertViewResultReturnsView(nameof(controller.Edit));
+    }
+
+    [Test]
+    public void EditGet_ReturnsUserModel()
+    {
+        result = controller.Edit(user.id);
+
+        AssertModelIsEqualWithResultModel(user);
+    }
+
+    [Test]
     public void Delete_RedirectsToListAction()
     {
         result = controller.Delete(user.id);
