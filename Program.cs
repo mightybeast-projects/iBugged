@@ -14,6 +14,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
 builder.Services.AddScoped(typeof(UsersService));
 builder.Services.AddScoped(typeof(ProjectsService));
+builder.Services.AddScoped(typeof(TicketsService));
 
 builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>

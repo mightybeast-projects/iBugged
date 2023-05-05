@@ -14,7 +14,8 @@ public class ProjectsController : Controller
         this.projectsService = projectService;
 
     [HttpGet]
-    public IActionResult List() => View(nameof(List), GetProjectViewModels());
+    public IActionResult List() =>
+        View(nameof(List), GetProjectViewModels());
 
     [HttpGet]
     public IActionResult Create()

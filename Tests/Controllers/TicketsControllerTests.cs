@@ -2,6 +2,7 @@ using System.Linq.Expressions;
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Models.Mongo;
+using iBugged.Services;
 using iBugged.ViewModels;
 using Moq;
 using NUnit.Framework;
@@ -11,14 +12,16 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 {
+    private readonly TicketsService ticketsService;
     private readonly TicketViewModel ticketViewModel = TestsData.dummyTicketVM;
 
     public TicketsControllerTests()
     {
-        controller = new TicketsController(
-            ticketsRepositoryMock.Object,
+        ticketsService = new TicketsService(
+            usersRepositoryMock.Object,
             projectsRepositoryMock.Object,
-            usersRepositoryMock.Object);
+            ticketsRepositoryMock.Object);
+        controller = new TicketsController(ticketsService);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 

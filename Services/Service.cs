@@ -28,4 +28,13 @@ public abstract class Service
             .Add(new SelectListItem() { Text = u.name, Value = u.id }));
         return usersList;
     }
+
+    public List<SelectListItem> GetProjectsList()
+    {
+        List<SelectListItem> projectsList = new List<SelectListItem>();
+        projectsRepository.GetAll()
+            .ForEach(p => projectsList
+            .Add(new SelectListItem() { Text = p.name, Value = p.id }));
+        return projectsList;
+    }
 }
