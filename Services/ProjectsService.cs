@@ -6,7 +6,9 @@ namespace iBugged.Services;
 
 public class ProjectsService : Service
 {
+    private List<ProjectViewModel> projectViewModels = null!;
     private Project project = null!;
+    private ProjectViewModel projectVM = null!;
 
     public ProjectsService(
         IRepository<User> usersRepository,
@@ -31,22 +33,23 @@ public class ProjectsService : Service
 
     public List<ProjectViewModel> GetProjectViewModels(User user)
     {
-        List<ProjectViewModel> projectViewModels = new List<ProjectViewModel>();
-        List<Project> projects =
-            projectsRepository.GetAll(project => 
-                project.membersId.Contains(user.id));
-
-        foreach (Project project in projects)
-        {
-            ProjectViewModel projectViewModel = new ProjectViewModel();
-            projectViewModel.project = project;
-            project.membersId.ForEach(id =>
-                projectViewModel.members.Add(usersRepository.Get(id)));
-            project.ticketsId.ForEach(id =>
-                projectViewModel.tickets.Add(ticketsRepository.Get(id)));
-            projectViewModels.Add(projectViewModel);
-        }
+        projectViewModels = new List<ProjectViewModel>();
+        projectsRepository
+            .GetAll(project => project.membersId.Contains(user.id))
+            .ForEach(project =>
+                projectViewModels.Add(GetProjectViewModel(project)));
 
         return projectViewModels;
+    }
+
+    private ProjectViewModel GetProjectViewModel(Project project)
+    {
+        projectVM = new ProjectViewModel();
+        projectVM.project = project;
+        project.membersId.ForEach(id =>
+            projectVM.members.Add(usersRepository.Get(id)));
+        project.ticketsId.ForEach(id =>
+            projectVM.tickets.Add(ticketsRepository.Get(id)));
+        return projectVM;
     }
 }

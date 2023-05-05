@@ -6,6 +6,7 @@ namespace iBugged.Services;
 
 public class TicketsService : Service
 {
+    private List<TicketViewModel> ticketViewModels = null!;
     private Project project = null!;
 
     public TicketsService(
@@ -38,18 +39,21 @@ public class TicketsService : Service
 
     public List<TicketViewModel> GetTicketViewModels()
     {
-        List<TicketViewModel> ticketViewModels = new List<TicketViewModel>();
+        ticketViewModels = new List<TicketViewModel>();
 
-        foreach(Ticket ticket in ticketsRepository.GetAll())
-        {
-            TicketViewModel ticketVM = new TicketViewModel();
-            ticketVM.ticket = ticket;
-            ticketVM.project = projectsRepository.Get(ticket.projectId);
-            ticketVM.assignee = usersRepository.Get(ticket.assigneeId);
-            ticketVM.author = usersRepository.Get(ticket.authorId);
-            ticketViewModels.Add(ticketVM);
-        }
+        ticketsRepository
+            .GetAll().ForEach(ticket =>
+                ticketViewModels.Add(GetTicketViewModel(ticket)));
 
         return ticketViewModels;
     }
+
+    private TicketViewModel GetTicketViewModel(Ticket ticket) =>
+        new TicketViewModel()
+        {
+            ticket = ticket,
+            project = projectsRepository.Get(ticket.projectId),
+            assignee = usersRepository.Get(ticket.assigneeId),
+            author = usersRepository.Get(ticket.authorId)
+        };
 }

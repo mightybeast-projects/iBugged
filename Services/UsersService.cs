@@ -25,24 +25,37 @@ public class UsersService : Service
     
     public void DeleteUser(string id)
     {
+        DeleteUserFromProjects(id);
+        DeleteUserFromTicketsAuthor(id);
+        DeleteUserFromTicketsAssignee(id);
+
+        usersRepository.Delete(id);
+    }
+
+    private void DeleteUserFromProjects(string id)
+    {
         projects = projectsRepository.GetAll(project =>
-            project.membersId.Contains(id));
+                    project.membersId.Contains(id));
         projects.ForEach(project => project.membersId.Remove(id));
         projects.ForEach(project =>
             projectsRepository.Edit(project.id, project));
+    }
 
+    private void DeleteUserFromTicketsAuthor(string id)
+    {
         tickets = ticketsRepository.GetAll(ticket =>
-            ticket.authorId == id);
+                    ticket.authorId == id);
         tickets.ForEach(ticket => ticket.authorId = null!);
         tickets.ForEach(ticket =>
             ticketsRepository.Edit(ticket.id, ticket));
-        
+    }
+
+    private void DeleteUserFromTicketsAssignee(string id)
+    {
         tickets = ticketsRepository.GetAll(ticket =>
-            ticket.assigneeId == id);
+                    ticket.assigneeId == id);
         tickets.ForEach(ticket => ticket.assigneeId = null!);
         tickets.ForEach(ticket =>
             ticketsRepository.Edit(ticket.id, ticket));
-
-        usersRepository.Delete(id);
     }
 }
