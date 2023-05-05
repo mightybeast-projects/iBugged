@@ -17,7 +17,7 @@ public class UsersController : Controller
 
     [HttpGet]
     public IActionResult Edit(string id) =>
-        View(nameof(Edit), usersService.Get(u => u.id == id));
+        View(nameof(Edit), usersService.Get(id));
 
     [HttpGet]
     public IActionResult Delete(string id)

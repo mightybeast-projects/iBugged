@@ -1,5 +1,6 @@
 using iBugged.Models;
 using iBugged.Services.Repositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace iBugged.Services;
 
@@ -17,5 +18,14 @@ public abstract class Service
         this.usersRepository = usersRepository;
         this.projectsRepository = projectsRepository;
         this.ticketsRepository = ticketsRepository;
+    }
+
+    public List<SelectListItem> GetUsersList()
+    {
+        List<SelectListItem> usersList = new List<SelectListItem>();
+        usersRepository.GetAll()
+            .ForEach(u => usersList
+            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+        return usersList;
     }
 }

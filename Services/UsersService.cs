@@ -17,8 +17,8 @@ public class UsersService : Service
 
     public List<User> GetAll() => usersRepository.GetAll();
 
-    public User Get(Expression<Func<User, bool>> e)
-        => usersRepository.Get(e);
+    public User Get(string id)
+        => usersRepository.Get(id);
 
     public void Edit(string id, User user)
         => usersRepository.Edit(id, user);

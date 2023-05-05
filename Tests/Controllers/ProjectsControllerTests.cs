@@ -5,20 +5,23 @@ using Moq;
 using NUnit.Framework;
 using System.Linq.Expressions;
 using iBugged.Models.Mongo;
+using iBugged.Services;
 
 namespace iBugged.Tests.Controllers;
 
 [TestFixture]
 public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 {
+    private readonly ProjectsService projectsService;
     private readonly ProjectViewModel projectVM = TestsData.dummyProjectVM;
 
     public ProjectsControllerTests()
     {
-        controller = new ProjectsController(
-            projectsRepositoryMock.Object,
+        projectsService = new ProjectsService(
             usersRepositoryMock.Object,
+            projectsRepositoryMock.Object,
             ticketsRepositoryMock.Object);
+        controller = new ProjectsController(projectsService);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
