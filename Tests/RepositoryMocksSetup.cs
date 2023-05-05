@@ -52,11 +52,11 @@ public class RepositoryMocksSetup
     private void SetUpProjectsRepositoryMock()
     {
         projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
-        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
         projectsRepositoryMock
             .Setup(m => m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()))
             .Returns((Expression<Func<Project, bool>> predicate) =>
                 projects.FindAll(predicate.Compile().Invoke));
+        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
         projectsRepositoryMock
             .Setup(m => m.Get(It.IsAny<Expression<Func<Project, bool>>>()))
             .Returns((Expression<Func<Project, bool>> predicate) =>

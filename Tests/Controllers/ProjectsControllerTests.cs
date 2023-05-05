@@ -40,7 +40,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 
         projectsRepositoryMock.Verify(m =>
             m.GetAll(It.Is<Expression<Func<Project, bool>>>(e =>
-            project.membersId.Contains(user.id))));
+                project.membersId.Contains(user.id))));
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
         AssertModelIsEqualWithResultModel(
@@ -115,7 +115,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void Delete_ReturnsListView()
+    public void Delete_RedirectsToListAction()
     {
         result = controller.Delete(project.id);
 

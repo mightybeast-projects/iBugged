@@ -14,4 +14,7 @@
     <h6> Email: @user.email </h6>
     <h6> Password: @user.password </h6>
     <h6> Role: @user.role </h6>
+    <a asp-controller="Users"
+                asp-action="Delete"
+                asp-route-id="@user.id">Delete user</a>
 }
