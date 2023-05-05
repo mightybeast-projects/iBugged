@@ -1,4 +1,5 @@
 using iBugged.Controllers;
+using iBugged.Services;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
@@ -6,11 +7,17 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class UsersControllerTests : ControllerTestsBase<UsersController>
 {
-    public UsersControllerTests() =>
-        controller = new UsersController(
+    private readonly UsersService usersService;
+
+    public UsersControllerTests()
+    {
+        usersService = new UsersService(
             usersRepositoryMock.Object,
             projectsRepositoryMock.Object,
             ticketsRepositoryMock.Object);
+        controller = new UsersController(usersService);
+        controller.ControllerContext.HttpContext = httpContextMock.Object;
+    }
 
     [Test]
     public void List_ReturnsListView()

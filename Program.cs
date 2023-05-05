@@ -1,3 +1,4 @@
+using iBugged.Services;
 using iBugged.Services.Repositories;
 using iBugged.Services.ViewServices;
 using MongoDB.Driver;
@@ -11,6 +12,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+builder.Services.AddScoped(typeof(UsersService));
 
 builder.Services.AddSingleton<AccessViewService>();
 builder.Services.AddSingleton<IMongoDatabase>(sp =>
