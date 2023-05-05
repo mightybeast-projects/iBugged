@@ -1,7 +1,7 @@
 using iBugged.Models;
 using Newtonsoft.Json;
 
-namespace iBugged.Services;
+namespace iBugged.Services.ViewServices;
 
 public class AccessViewService
 {

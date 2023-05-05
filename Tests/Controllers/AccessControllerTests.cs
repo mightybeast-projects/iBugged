@@ -40,7 +40,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void RegisterPost_ReturnsIndexView()
+    public void RegisterPost_RedirectsToIndexAction()
     {
         result = controller.Register(user);
 
@@ -75,7 +75,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void LogOut_ReturnsIndexView()
+    public void LogOut_RedirectsToIndexAction()
     {
         result = controller.LogOut();
 

@@ -34,7 +34,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void List_ReturnsCorrectModel()
+    public void List_ReturnsTicketViewModelList()
     {
         result = controller.List();
 
@@ -62,7 +62,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreatePost_RedirectsToListView()
+    public void CreatePost_RedirectsToListAction()
     {
         result = controller.Create(ticket);
 
@@ -70,11 +70,18 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreatePost_InsertsNewTicketAndUpdatesProject()
+    public void CreatePost_InsertsTicket()
     {
         result = controller.Create(ticket);
 
         ticketsRepositoryMock.Verify(m => m.Create(ticket));
+    }
+
+    [Test]
+    public void CreatePost_UpdatesTicketProject()
+    {
+        result = controller.Create(ticket);
+
         projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
     }
 
@@ -87,7 +94,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditGet_ReturnsCorrectModel()
+    public void EditGet_ReturnsTicketModel()
     {
         result = controller.Edit(ticket.id);
 
@@ -96,7 +103,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditPost_ReturnsListView()
+    public void EditPost_RedirectsToListAction()
     {
         result = controller.Edit(ticket);
 
@@ -112,7 +119,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void Delete_ReturnsListView()
+    public void Delete_RedirectsToListAction()
     {
         result = controller.Delete(ticket.id);
 
@@ -120,11 +127,18 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void Delete_DeletesTicketAndUpdatesProject()
+    public void Delete_DeletesTicket()
     {
         result = controller.Delete(ticket.id);
 
         ticketsRepositoryMock.Verify(m => m.Delete(ticket.id));
+    }
+
+    [Test]
+    public void Delete_UpdatesTicketProject()
+    {
+        result = controller.Delete(ticket.id);
+
         projectsRepositoryMock.Verify(m => 
             m.Get(It.Is<Expression<Func<Project, bool>>>(e =>
                 project.ticketsId.Contains(ticket.id))));

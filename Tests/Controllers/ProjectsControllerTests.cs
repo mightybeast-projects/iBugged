@@ -34,7 +34,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void List_ReturnsCorrectModel()
+    public void List_ReturnsProjectViewModelList()
     {
         result = controller.List();
 
@@ -65,7 +65,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreatePost_RedirectsToListView()
+    public void CreatePost_RedirectsToListAction()
     {
         result = controller.Create(project);
 
@@ -89,7 +89,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditGet_ReturnsCorrectModel()
+    public void EditGet_ReturnsProjectModel()
     {
         result = controller.Edit(project.id);
 
@@ -99,7 +99,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditPost_ReturnsListView()
+    public void EditPost_RedirectsToListAction()
     {
         result = controller.Edit(project);
 

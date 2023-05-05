@@ -1,6 +1,5 @@
-using iBugged.Models;
-using iBugged.Services;
 using iBugged.Services.Repositories;
+using iBugged.Services.ViewServices;
 using MongoDB.Driver;
 
 var connectionString = "mongodb://localhost:27017";
