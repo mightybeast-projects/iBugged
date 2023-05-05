@@ -46,11 +46,11 @@ public class TicketsController : Controller
     [HttpGet]
     public IActionResult Delete(string id)
     {
-        ticketsRepository.Delete(id);
         Project project = projectsRepository.Get(project =>
             project.ticketsId.Contains(id));
         project.ticketsId.Remove(id);
         projectsRepository.Edit(project.id, project);
+        ticketsRepository.Delete(id);
         
         return RedirectToAction(nameof(List));
     }
@@ -58,10 +58,10 @@ public class TicketsController : Controller
     [HttpPost]
     public IActionResult Create(Ticket ticket)
     {
-        ticketsRepository.Create(ticket);
         Project project = projectsRepository.Get(ticket.projectId);
         project.ticketsId.Add(ticket.id);
         projectsRepository.Edit(project.id, project);
+        ticketsRepository.Create(ticket);
 
         return RedirectToAction(nameof(List));
     }

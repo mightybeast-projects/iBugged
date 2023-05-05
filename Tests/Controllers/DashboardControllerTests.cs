@@ -13,7 +13,7 @@ public class DashboardControllerTests : ControllerTestsBase<DashboardController>
     public new void SetUp() => SetUserInSession(user);
 
     [Test]
-    public void HomeCallbackReturnsHomeView()
+    public void Home_ReturnsHomeView()
     {
         result = controller.Home();
 

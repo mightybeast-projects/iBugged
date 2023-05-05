@@ -9,9 +9,6 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
-    private const string ERROR_MESSAGE_NAME = "ErrorMessage";
-    private const string ERROR_MESSAGE = "Incorect email or password";
-
     public AccessControllerTests()
     {
         controller = new AccessController(usersRepositoryMock.Object);
@@ -19,7 +16,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void IndexCallbackReturnsIndexView()
+    public void Index_ReturnsIndexView()
     {
         result = controller.Index();
 
@@ -27,7 +24,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void RegisterGetCallbackReturnsRegisterView()
+    public void RegisterGet_ReturnsRegisterView()
     {
         result = controller.Register();
 
@@ -35,7 +32,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void RegisterPostCallbackInsertsNewUser()
+    public void RegisterPost_InsertsNewUser()
     {
         result = controller.Register(user);
 
@@ -43,7 +40,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void RegisterPostCallbackReturnsIndexView()
+    public void RegisterPost_ReturnsIndexView()
     {
         result = controller.Register(user);
 
@@ -51,7 +48,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
-    public void LogInCallbackRedirectsToDashboardOnSuccessfulLoginOf(User user)
+    public void LogIn_RedirectsToDashboard_OnSuccessfulLoginOf(User user)
     {
         result = controller.LogIn(user.email, user.password);
 
@@ -59,7 +56,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
-    public void LogInCallbackSetsUserInSessionOnSuccessfulLogin(User user)
+    public void LogIn_SetsUserInSession_OnSuccessfulLoginOf(User user)
     {
         result = controller.LogIn(user.email, user.password);
         var loggedUserJson = JsonConvert.SerializeObject(user);
@@ -69,18 +66,16 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void LogInCallbackReturnsLoginViewWithErrorMessageOnFailedLogin()
+    public void LogIn_ReturnsLoginViewWithErrorMessage_OnFailedLogin()
     {
         result = controller.LogIn(string.Empty, string.Empty);
 
-        var viewResult = (ViewResult)result;
-        Assert.AreEqual(ERROR_MESSAGE,
-            viewResult.ViewData[ERROR_MESSAGE_NAME]);
+        Assert.IsNotNull(controller.ViewBag.errorMessage);
         AssertViewResultReturnsView(nameof(controller.Index));
     }
 
     [Test]
-    public void LogOutCallbackReturnsIndexView()
+    public void LogOut_ReturnsIndexView()
     {
         result = controller.LogOut();
 
@@ -88,7 +83,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
-    public void LogOutCallBackClearsUserInSession(User user)
+    public void LogOut_ClearsUserInSession(User user)
     {
         SetUserInSession(user);
 

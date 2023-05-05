@@ -7,7 +7,6 @@ namespace iBugged.Controllers;
 
 public class AccessController : Controller
 {
-    private const string ERROR_MESSAGE_NAME = "ErrorMessage";
     private const string ERROR_MESSAGE = "Incorect email or password";
     private readonly IRepository<User> usersRepository;
 
@@ -36,7 +35,7 @@ public class AccessController : Controller
         if (user is not null)
             return SetUserInSessionAndRedirectToDashboard(user);
 
-        ViewData[ERROR_MESSAGE_NAME] = ERROR_MESSAGE;
+        ViewBag.errorMessage = ERROR_MESSAGE;
 
         return View(nameof(Index));
     }

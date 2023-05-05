@@ -26,7 +26,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     public new void SetUp() => SetUserInSession(user);
 
     [Test]
-    public void ListCallbackReturnsListView()
+    public void List_ReturnsListView()
     {
         result = controller.List();
 
@@ -34,7 +34,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void ListCallbackReturnsCorrectModel()
+    public void List_ReturnsCorrectModel()
     {
         result = controller.List();
 
@@ -46,7 +46,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreateGetCallbackReturnsCreateView()
+    public void CreateGet_ReturnsCreateView()
     {
         result = controller.Create();
 
@@ -54,7 +54,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreateGetCallbackSetsUsersAndProjectsLists()
+    public void CreateGet_SetsUsersAndProjectsLists()
     {
         result = controller.Create();
 
@@ -62,7 +62,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreatePostCallbackRedirectsToListView()
+    public void CreatePost_RedirectsToListView()
     {
         result = controller.Create(ticket);
 
@@ -70,7 +70,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void CreatePostCallbackInsertsNewTicketAndUpdatesProject()
+    public void CreatePost_InsertsNewTicketAndUpdatesProject()
     {
         result = controller.Create(ticket);
 
@@ -79,7 +79,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditGetCallbackReturnsEditView()
+    public void EditGet_ReturnsEditView()
     {
         result = controller.Edit(ticket.id);
 
@@ -87,7 +87,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditGetCallbackReturnsCorrectModel()
+    public void EditGet_ReturnsCorrectModel()
     {
         result = controller.Edit(ticket.id);
 
@@ -96,7 +96,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditPostCallbackReturnsListView()
+    public void EditPost_ReturnsListView()
     {
         result = controller.Edit(ticket);
 
@@ -104,7 +104,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void EditPostCallbackEditsTicket()
+    public void EditPost_EditsTicket()
     {
         result = controller.Edit(ticket);
 
@@ -112,7 +112,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void DeleteCallbackReturnsListView()
+    public void Delete_ReturnsListView()
     {
         result = controller.Delete(ticket.id);
 
@@ -120,7 +120,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
-    public void DeleteCallbackDeletesTicketAndUpdatesProject()
+    public void Delete_DeletesTicketAndUpdatesProject()
     {
         result = controller.Delete(ticket.id);
 

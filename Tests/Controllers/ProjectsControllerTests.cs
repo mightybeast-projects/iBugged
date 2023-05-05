@@ -26,7 +26,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     public new void SetUp() => SetUserInSession(user);
 
     [Test]
-    public void ListCallbackReturnsListView()
+    public void List_ReturnsListView()
     {
         result = controller.List();
 
@@ -34,7 +34,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void ListCallbackReturnsCorrectModel()
+    public void List_ReturnsCorrectModel()
     {
         result = controller.List();
 
@@ -48,7 +48,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreateGetCallbackReturnsCreateView()
+    public void CreateGet_ReturnsCreateView()
     {
         result = controller.Create();
 
@@ -56,7 +56,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreateGetCallbackSetsUsersList()
+    public void CreateGet_SetsUsersList()
     {
         result = controller.Create();
 
@@ -65,7 +65,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreatePostCallbackRedirectsToListView()
+    public void CreatePost_RedirectsToListView()
     {
         result = controller.Create(project);
 
@@ -73,7 +73,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void CreatePostCallbackInsertsNewProject()
+    public void CreatePost_InsertsNewProject()
     {
         result = controller.Create(project);
 
@@ -81,7 +81,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditGetCallbackReturnsEditView()
+    public void EditGet_ReturnsEditView()
     {
         result = controller.Edit(project.id);
 
@@ -89,7 +89,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditGetCallbackReturnsCorrectModel()
+    public void EditGet_ReturnsCorrectModel()
     {
         result = controller.Edit(project.id);
 
@@ -99,7 +99,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditPostCallbackReturnsListView()
+    public void EditPost_ReturnsListView()
     {
         result = controller.Edit(project);
 
@@ -107,7 +107,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void EditPostCallbackEditsProject()
+    public void EditPost_EditsProject()
     {
         result = controller.Edit(project);
 
@@ -115,7 +115,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void DeleteCallbackReturnsListView()
+    public void Delete_ReturnsListView()
     {
         result = controller.Delete(project.id);
 
@@ -123,7 +123,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
-    public void DeleteCallbackDeletesProject()
+    public void Delete_DeletesProject()
     {
         result = controller.Delete(project.id);
 
