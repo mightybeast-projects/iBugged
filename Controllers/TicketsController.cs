@@ -34,6 +34,14 @@ public class TicketsController : Controller
     }
 
     [HttpGet]
+    public IActionResult CloseTicket(string id)
+    {
+        ticketsService.CloseTicket(id);
+        
+        return RedirectToAction(nameof(List));
+    }
+
+    [HttpGet]
     public IActionResult Delete(string id)
     {
         ticketsService.DeleteTicket(id);

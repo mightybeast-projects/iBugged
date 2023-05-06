@@ -8,6 +8,7 @@ public class TicketsService : Service
 {
     private List<TicketViewModel> ticketViewModels = null!;
     private Project project = null!;
+    private Ticket ticket = null!;
 
     public TicketsService(
         IRepository<User> usersRepository,
@@ -19,6 +20,13 @@ public class TicketsService : Service
 
     public void Edit(string id, Ticket ticket) =>
         ticketsRepository.Edit(id, ticket);
+
+    public void CloseTicket(string id)
+    {
+        ticket = ticketsRepository.Get(id);
+        ticket.isOpened = false;
+        ticketsRepository.Edit(ticket.id, ticket);
+    }
 
     public void DeleteTicket(string id)
     {

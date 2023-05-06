@@ -38,6 +38,13 @@
             <h5>Author : @viewModel.author.name</h5>
         }
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
+
+        if (viewModel.ticket.isOpened)
+        {
+            <a asp-controller="Tickets"
+                asp-action="closeTicket"
+                asp-route-id="@viewModel.ticket.id">Close ticket</a>
+        }
         
         if (service.user.role != TeamMember ||
             UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))

@@ -122,6 +122,23 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
+    public void CloseTicket_RedirectsToListView()
+    {
+        result = controller.CloseTicket(ticket.id);
+
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
+    }
+
+    [Test]
+    public void CloseTicket_ClosesTicket()
+    {
+        result = controller.CloseTicket(ticket.id);
+
+        ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+    }
+
+    [Test]
     public void Delete_RedirectsToListAction()
     {
         result = controller.Delete(ticket.id);
