@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using iBugged.Models;
 using iBugged.Services.Repositories;
 
@@ -6,7 +5,6 @@ namespace iBugged.Services;
 
 public class UsersService : Service
 {
-    private List<Project> projects = new List<Project>();
     private List<Ticket> tickets = new List<Ticket>();
 
     public UsersService(
@@ -34,8 +32,9 @@ public class UsersService : Service
 
     private void DeleteUserFromProjects(string id)
     {
-        projects = projectsRepository.GetAll(project =>
-            project.membersId.Contains(id));
+        List<Project> projects =
+            projectsRepository.GetAll(project =>
+                project.membersId.Contains(id));
         projects.ForEach(project => project.membersId.Remove(id));
         projects.ForEach(project =>
             projectsRepository.Edit(project.id, project));

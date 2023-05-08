@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using iBugged.Models;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +9,7 @@ public abstract class Service
     protected readonly IRepository<User> usersRepository;
     protected readonly IRepository<Project> projectsRepository;
     protected readonly IRepository<Ticket> ticketsRepository;
+    private List<SelectListItem> itemList = null!;
 
     public Service(
         IRepository<User> usersRepository,
@@ -23,19 +23,21 @@ public abstract class Service
 
     public List<SelectListItem> GetUsersList()
     {
-        List<SelectListItem> usersList = new List<SelectListItem>();
+        itemList = new List<SelectListItem>();
         usersRepository.GetAll()
-            .ForEach(u => usersList
+            .ForEach(u => itemList
             .Add(new SelectListItem() { Text = u.name, Value = u.id }));
-        return usersList;
+
+        return itemList;
     }
 
     public List<SelectListItem> GetProjectsList()
     {
-        List<SelectListItem> projectsList = new List<SelectListItem>();
+        itemList = new List<SelectListItem>();
         projectsRepository.GetAll()
-            .ForEach(p => projectsList
+            .ForEach(p => itemList
             .Add(new SelectListItem() { Text = p.name, Value = p.id }));
-        return projectsList;
+
+        return itemList;
     }
 }

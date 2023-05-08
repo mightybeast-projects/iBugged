@@ -1,6 +1,5 @@
 using iBugged.Controllers;
 using iBugged.Models;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using NUnit.Framework;
 

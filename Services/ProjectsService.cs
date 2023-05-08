@@ -6,8 +6,6 @@ namespace iBugged.Services;
 
 public class ProjectsService : Service
 {
-    private List<ProjectViewModel> projectViewModels = null!;
-    private Project project = null!;
     private ProjectViewModel projectVM = null!;
 
     public ProjectsService(
@@ -26,14 +24,15 @@ public class ProjectsService : Service
 
     public void DeleteProject(string id)
     {
-        project = projectsRepository.Get(id);
+        Project project = projectsRepository.Get(id);
         projectsRepository.Delete(id);
         project.ticketsId.ForEach(id => ticketsRepository.Delete(id));
     }
 
     public List<ProjectViewModel> GetProjectViewModels(User user)
     {
-        projectViewModels = new List<ProjectViewModel>();
+        List<ProjectViewModel> projectViewModels =
+            new List<ProjectViewModel>();
         projectsRepository
             .GetAll(project => project.membersId.Contains(user.id))
             .ForEach(project =>

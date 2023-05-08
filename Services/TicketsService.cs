@@ -6,9 +6,7 @@ namespace iBugged.Services;
 
 public class TicketsService : Service
 {
-    private List<TicketViewModel> ticketViewModels = null!;
     private Project project = null!;
-    private Ticket ticket = null!;
 
     public TicketsService(
         IRepository<User> usersRepository,
@@ -23,7 +21,7 @@ public class TicketsService : Service
 
     public void CloseTicket(string id)
     {
-        ticket = ticketsRepository.Get(id);
+        Ticket ticket = ticketsRepository.Get(id);
         ticket.isOpened = false;
         ticketsRepository.Edit(ticket.id, ticket);
     }
@@ -47,7 +45,7 @@ public class TicketsService : Service
 
     public List<TicketViewModel> GetTicketViewModels()
     {
-        ticketViewModels = new List<TicketViewModel>();
+        List<TicketViewModel> ticketViewModels = new List<TicketViewModel>();
 
         ticketsRepository
             .GetAll().ForEach(ticket =>
