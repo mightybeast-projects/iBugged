@@ -1,11 +1,10 @@
 using iBugged.Models;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
-public class AccessController : Controller
+public class AccessController : ControllerBase
 {
     private const string ERROR_MESSAGE = "Incorect email or password";
     private readonly IRepository<User> usersRepository;
@@ -50,8 +49,7 @@ public class AccessController : Controller
 
     private IActionResult SetUserInSessionAndRedirectToDashboard(User user)
     {
-        string json = JsonConvert.SerializeObject(user);
-        HttpContext.Session.SetString("User", json);
+        SetUserInSession(user);
         return RedirectPermanent("~/Dashboard/Home");
     }
 }

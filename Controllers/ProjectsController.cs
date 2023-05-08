@@ -1,12 +1,10 @@
 using iBugged.Models;
 using iBugged.Services;
-using iBugged.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
-public class ProjectsController : Controller
+public class ProjectsController : ControllerBase
 {
     private readonly ProjectsService projectsService;
 
@@ -15,7 +13,8 @@ public class ProjectsController : Controller
 
     [HttpGet]
     public IActionResult List() =>
-        View(nameof(List), GetProjectViewModels());
+        View(nameof(List),
+            projectsService.GetProjectViewModels(GetUserInSession()));
 
     [HttpGet]
     public IActionResult Create()
@@ -55,12 +54,5 @@ public class ProjectsController : Controller
         projectsService.Edit(project.id, project);
 
         return RedirectToAction(nameof(List));
-    }
-
-    private List<ProjectViewModel> GetProjectViewModels()
-    {
-        string userJson = HttpContext.Session.GetString("User")!;
-        User user = JsonConvert.DeserializeObject<User>(userJson)!;
-        return projectsService.GetProjectViewModels(user);
     }
 }

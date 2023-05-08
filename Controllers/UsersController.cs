@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iBugged.Controllers;
 
-public class UsersController : Controller
+public class UsersController : ControllerBase
 {
     private readonly UsersService usersService;
 

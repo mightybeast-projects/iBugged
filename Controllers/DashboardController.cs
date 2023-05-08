@@ -1,11 +1,9 @@
-﻿using iBugged.Models;
-using iBugged.Services;
+﻿using iBugged.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
-public class DashboardController : Controller
+public class DashboardController : ControllerBase
 {
     private readonly DashboardService dashboardService;
 
@@ -13,14 +11,9 @@ public class DashboardController : Controller
         this.dashboardService = dashboardService;
 
     [HttpGet]
-    public IActionResult Home()
-    {
-        string userJson = HttpContext.Session.GetString("User")!;
-        User user = JsonConvert.DeserializeObject<User>(userJson)!;
-
-        return View(nameof(Home),
-            dashboardService.GetTicketViewModels(user.id));
-    }
+    public IActionResult Home() =>
+        View(nameof(Home),
+            dashboardService.GetTicketViewModels(GetUserInSession().id));
 
     [HttpGet]
     public IActionResult CloseTicket(string id)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace iBugged.Controllers;
 
-public class TicketsController : Controller
+public class TicketsController : ControllerBase
 {
     private readonly TicketsService ticketsService;
 
