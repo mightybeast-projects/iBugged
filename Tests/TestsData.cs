@@ -60,8 +60,8 @@ public static class TestsData
         priority = Priority.Low,
         ticketType = TicketType.Bug,
         projectId = "1",
-        authorId = "1",
         assigneeId = "1",
+        authorId = "1",
     };
 
     public static TestCaseData[] userCases =

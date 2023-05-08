@@ -39,10 +39,10 @@
         }
         <h5>Creation date : @viewModel.ticket.creationDate</h5>
 
-        if (viewModel.ticket.isOpened)
+        if (service.user.role != TeamMember && viewModel.ticket.isOpened)
         {
             <a asp-controller="Tickets"
-                asp-action="closeTicket"
+                asp-action="CloseTicket"
                 asp-route-id="@viewModel.ticket.id">Close ticket</a>
         }
         

@@ -1,7 +1,42 @@
-﻿@{
+﻿@model IEnumerable<TicketViewModel>
+
+@{
     ViewData["Title"] = "Dashboard";
 }
 
 <div class="text-center">
     <h1 class="display-4">Dashboard</h1>
+</div>
+
+<div>
+    @foreach (var viewModel in Model)
+    {
+        <h1>@viewModel.ticket.title</h1>
+        <h5>@viewModel.ticket.description</h5>
+        <h5>Ticket type : @viewModel.ticket.ticketType</h5>
+        <h5>Ticket priority : @viewModel.ticket.priority</h5>
+        <h5>Opened : @viewModel.ticket.isOpened</h5>
+        <h5>Project : @viewModel.project.name</h5>
+        if (viewModel.assignee == null)
+        {
+            <h5>Assignee : Unassigned</h5>
+        }
+        else
+        {
+            <h5>Assignee : @viewModel.assignee.name</h5>
+        }
+        if (viewModel.author == null)
+        {
+            <h5>Author : Deleted user</h5>
+        }
+        else
+        {
+            <h5>Author : @viewModel.author.name</h5>
+        }
+        <h5>Creation date : @viewModel.ticket.creationDate</h5>
+
+        <a asp-controller="Dashboard"
+            asp-action="CloseTicket"
+            asp-route-id="@viewModel.ticket.id">Close ticket</a>
+    }
 </div>
