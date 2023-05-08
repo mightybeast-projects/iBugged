@@ -9,8 +9,8 @@ public class AccessController : ControllerBase
     private const string ERROR_MESSAGE = "Incorect email or password";
     private readonly IRepository<User> usersRepository;
 
-    public AccessController(IRepository<User> usersService) =>
-        this.usersRepository = usersService;
+    public AccessController(IRepository<User> usersRepository) =>
+        this.usersRepository = usersRepository;
 
     [HttpGet]
     public IActionResult Index() => View(nameof(Index));
@@ -32,7 +32,10 @@ public class AccessController : ControllerBase
         User user = usersRepository
             .Get(f => f.email == email && f.password == password);
         if (user is not null)
-            return SetUserInSessionAndRedirectToDashboard(user);
+        {
+            SetUserInSession(user);
+            return RedirectPermanent("~/Dashboard/Home");
+        }
 
         ViewBag.errorMessage = ERROR_MESSAGE;
 
@@ -45,11 +48,5 @@ public class AccessController : ControllerBase
         usersRepository.Create(user);
 
         return RedirectToAction(nameof(Index));
-    }
-
-    private IActionResult SetUserInSessionAndRedirectToDashboard(User user)
-    {
-        SetUserInSession(user);
-        return RedirectPermanent("~/Dashboard/Home");
     }
 }

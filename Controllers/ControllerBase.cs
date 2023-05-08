@@ -8,15 +8,11 @@ public abstract class ControllerBase : Controller
 {
     private const string SESSION_USER_STR = "User";
 
-    protected void SetUserInSession(User user)
-    {
-        string json = JsonConvert.SerializeObject(user);
-        HttpContext.Session.SetString(SESSION_USER_STR, json);
-    }
+    protected void SetUserInSession(User user) =>
+        HttpContext.Session.SetString(SESSION_USER_STR,
+            JsonConvert.SerializeObject(user));
 
-    protected User GetUserInSession()
-    {
-        string userJson = HttpContext.Session.GetString(SESSION_USER_STR)!;
-        return JsonConvert.DeserializeObject<User>(userJson)!;
-    }
+    protected User GetUserInSession() =>
+        JsonConvert.DeserializeObject<User>(
+            HttpContext.Session.GetString(SESSION_USER_STR)!)!;
 }
