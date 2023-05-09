@@ -21,23 +21,15 @@ public abstract class Service
         this.ticketsRepository = ticketsRepository;
     }
 
-    public List<SelectListItem> GetUsersList()
-    {
-        itemList = new List<SelectListItem>();
-        usersRepository.GetAll()
-            .ForEach(u => itemList
-            .Add(new SelectListItem() { Text = u.name, Value = u.id }));
+    public List<SelectListItem> GetUsersList() =>
+        usersRepository
+            .GetAll()
+            .ConvertAll(i =>
+                new SelectListItem() { Text = i.name, Value = i.id });
 
-        return itemList;
-    }
-
-    public List<SelectListItem> GetProjectsList()
-    {
-        itemList = new List<SelectListItem>();
-        projectsRepository.GetAll()
-            .ForEach(p => itemList
-            .Add(new SelectListItem() { Text = p.name, Value = p.id }));
-
-        return itemList;
-    }
+    public List<SelectListItem> GetProjectsList() =>
+        projectsRepository
+            .GetAll()
+            .ConvertAll(i =>
+                new SelectListItem() { Text = i.name, Value = i.id });
 }

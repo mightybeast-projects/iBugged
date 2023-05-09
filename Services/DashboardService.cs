@@ -19,18 +19,11 @@ public class DashboardService : Service
         ticketsRepository.Edit(ticket.id, ticket);
     }
 
-    public List<TicketViewModel> GetTicketViewModels(string userId)
-    {
-        List<TicketViewModel> ticketViewModels = new List<TicketViewModel>();
-
+    public List<TicketViewModel> GetTicketViewModels(string userId) =>
         ticketsRepository
             .GetAll(ticket =>
                 ticket.assigneeId == userId && ticket.isOpened)
-            .ForEach(ticket =>
-                ticketViewModels.Add(GetTicketViewModel(ticket)));
-
-        return ticketViewModels;
-    }
+            .ConvertAll(ticket => GetTicketViewModel(ticket));
 
     private TicketViewModel GetTicketViewModel(Ticket ticket) =>
         new TicketViewModel()

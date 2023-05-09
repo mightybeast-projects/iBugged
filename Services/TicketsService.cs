@@ -43,16 +43,10 @@ public class TicketsService : Service
         projectsRepository.Edit(project.id, project);
     }
 
-    public List<TicketViewModel> GetTicketViewModels()
-    {
-        List<TicketViewModel> ticketViewModels = new List<TicketViewModel>();
-
+    public List<TicketViewModel> GetTicketViewModels() =>
         ticketsRepository
-            .GetAll().ForEach(ticket =>
-                ticketViewModels.Add(GetTicketViewModel(ticket)));
-
-        return ticketViewModels;
-    }
+            .GetAll()
+            .ConvertAll(ticket => GetTicketViewModel(ticket));
 
     private TicketViewModel GetTicketViewModel(Ticket ticket) =>
         new TicketViewModel()

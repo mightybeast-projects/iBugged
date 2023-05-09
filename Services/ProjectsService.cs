@@ -29,17 +29,10 @@ public class ProjectsService : Service
         project.ticketsId.ForEach(id => ticketsRepository.Delete(id));
     }
 
-    public List<ProjectViewModel> GetProjectViewModels(User user)
-    {
-        List<ProjectViewModel> projectViewModels =
-            new List<ProjectViewModel>();
+    public List<ProjectViewModel> GetProjectViewModels(User user) =>
         projectsRepository
             .GetAll(project => project.membersId.Contains(user.id))
-            .ForEach(project =>
-                projectViewModels.Add(GetProjectViewModel(project)));
-
-        return projectViewModels;
-    }
+            .ConvertAll(project => GetProjectViewModel(project));
 
     private ProjectViewModel GetProjectViewModel(Project project)
     {
