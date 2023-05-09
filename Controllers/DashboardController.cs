@@ -19,7 +19,7 @@ public class DashboardController : ControllerBase
     public IActionResult CloseTicket(string id)
     {
         dashboardService.CloseTicket(id);
-        
+
         return RedirectToAction(nameof(Home));
     }
 }

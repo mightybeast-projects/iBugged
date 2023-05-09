@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
     public IActionResult Delete(string id)
     {
         usersService.DeleteUser(id);
-        
+
         return RedirectToAction(nameof(List));
     }
 

@@ -60,7 +60,7 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
     protected void AssertModelIsEqualWithResultModel<W>(W model)
     {
         var viewModel = ((ViewResult)result).Model!;
-        var modelProject = (W) viewModel;
+        var modelProject = (W)viewModel;
         AssertObjectsAreEqualAsJsons(model!, viewModel);
     }
 

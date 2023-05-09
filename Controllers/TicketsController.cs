@@ -37,7 +37,7 @@ public class TicketsController : ControllerBase
     public IActionResult CloseTicket(string id)
     {
         ticketsService.CloseTicket(id);
-        
+
         return RedirectToAction(nameof(List));
     }
 
