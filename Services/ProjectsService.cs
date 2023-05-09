@@ -16,8 +16,7 @@ public class ProjectsService : Service
 
     public Project Get(string id) => projectsRepository.Get(id);
 
-    public void Create(Project project) =>
-        projectsRepository.Create(project);
+    public void Create(Project project) => projectsRepository.Create(project);
 
     public void Edit(string id, Project project) =>
         projectsRepository.Edit(id, project);

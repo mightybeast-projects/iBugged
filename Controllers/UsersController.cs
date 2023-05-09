@@ -12,8 +12,7 @@ public class UsersController : ControllerBase
         this.usersService = usersService;
 
     [HttpGet]
-    public IActionResult List() =>
-        View(nameof(List), usersService.GetAll());
+    public IActionResult List() => View(nameof(List), usersService.GetAll());
 
     [HttpGet]
     public IActionResult Edit(string id) =>
