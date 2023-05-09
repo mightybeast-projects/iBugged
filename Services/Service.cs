@@ -9,7 +9,6 @@ public abstract class Service
     protected readonly IRepository<User> usersRepository;
     protected readonly IRepository<Project> projectsRepository;
     protected readonly IRepository<Ticket> ticketsRepository;
-    private List<SelectListItem> itemList = null!;
 
     public Service(
         IRepository<User> usersRepository,
