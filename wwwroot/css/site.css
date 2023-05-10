@@ -68,11 +68,27 @@ form {
 }
 
 nav {
-  width: fit-content;
+  width: 255px;
   height: 100vh;
   position: fixed;
+  box-shadow: 14px 3rem 1rem 0px rgba(0, 0, 0, .05);
+}
+
+nav .container-fluid {
+  padding: 10px;
+}
+
+nav svg {
+  width: 25px;
+  margin-right: 10px;
+}
+
+#user-info {
+  position: fixed;
+  bottom: 0;
+  padding-bottom: 10px;
 }
 
 main {
-  margin-left: 50px;
+  margin-left: 100px;
 }
