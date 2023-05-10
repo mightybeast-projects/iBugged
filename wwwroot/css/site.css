@@ -21,6 +21,10 @@ body {
   margin-bottom: 60px;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 .register-btn{
   right: 0;
   position: absolute;
@@ -61,4 +65,14 @@ form {
 
 #register-btn {
   width: 100%;
+}
+
+nav {
+  width: fit-content;
+  height: 100vh;
+  position: fixed;
+}
+
+main {
+  margin-left: 50px;
 }
