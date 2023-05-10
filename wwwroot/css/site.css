@@ -43,6 +43,10 @@ form {
   width: 100%;
 }
 
+#login-btn, #register-page-btn {
+  width: 45%;
+}
+
 #registration-form {
   width: 250px;
 }
@@ -56,5 +60,5 @@ form {
 }
 
 #register-btn {
-  width: inherit;
+  width: 100%;
 }
