@@ -26,7 +26,7 @@ body {
   position: absolute;
 }
 
-.login-div {
+.center-div {
   width: fit-content;
   height: fit-content;
 
@@ -39,10 +39,22 @@ body {
   margin: auto;
 }
 
-.login-form{
+form {
   width: 100%;
+}
+
+#registration-form {
+  width: 250px;
+}
+
+.form-control {
+  margin-bottom: 10px;
 }
 
 .form-group input {
   width: 100%;
+}
+
+#register-btn {
+  width: inherit;
 }

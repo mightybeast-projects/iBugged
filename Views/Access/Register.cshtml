@@ -1,20 +1,34 @@
 @model User;
 
 @{
+    Layout = null;
     ViewData["Title"] = "Create new user";
 }
 
-<form asp-controller="Access" asp-action="Register" method="post">
-    <p>Create new user :</p>
-    <label>Username:</label><br />
-    <input asp-for="name" /><br />
-    <label>Email:</label><br />
-    <input asp-for="email" /><br />
-    <label>Password:</label><br />
-    <input asp-for="password" /><br />
-    <label>Role:</label><br />
-    <select asp-for="role" asp-items="Html.GetEnumSelectList<Role>()">
-    </select>
-    <br /><br />
-    <input type="Submit" value="Register"/>
-</form>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<div class="center-div">
+    <h3 class="text-center">iBugged</h3>
+    <h5 class="text-center">Create new user</h5>
+    <form id="registration-form" asp-controller="Access" asp-action="Register" method="post">
+        <div class="form-group">
+            <label for="name">Username:</label>
+            <input id="name" class="form-control" asp-for="name" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" asp-for="email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" asp-for="password" />
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label><br />
+            <select id="role" class="form-select" asp-for="role" asp-items="Html.GetEnumSelectList<Role>()"></select>
+        </div>
+        <div class="form-check"></div>
+        <input id="register-btn" class="btn btn-success" type="Submit" value="Register" />
+    </form>
+</div>

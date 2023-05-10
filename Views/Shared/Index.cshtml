@@ -1,40 +1,43 @@
 @model User;
 
 @{
-    ViewData["Title"] = "Login";
     Layout = null;
+    ViewData["Title"] = "Login";
 }
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
-<div class="login-div">
-  <h3 class="text-center">iBugged</h3>
-  <form class="login-form" asp-controller="Access" asp-action="LogIn" method="post">
-    <div class="form-group">
-      <label for="email">Email:</label>
-      <input id="email" class="form-control" asp-for="email" />
-    </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input id="password" class="form-control" asp-for="password" />
-    </div>
-    <div class="form-check"></div>
-    <input class="btn btn-success" type="Submit"/>
-    <a class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
-    <p>@ViewBag.errorMessage</p>
-  </form>
+<div class="center-div">
+    <h3 class="text-center">iBugged</h3>
+    <form asp-controller="Access" asp-action="LogIn" method="post">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" asp-for="email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" asp-for="password" />
+        </div>
+        <div class="form-check"></div>
+        <input class="btn btn-success" type="Submit" />
+        <a class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
+        <p>@ViewBag.errorMessage</p>
+    </form>
 
-  <label>Or log in as demo users:</label><br>
-  <button type="button" class="btn btn-secondary" onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
-  <button type="button" class="btn btn-secondary" onclick="logIn(`demodeveloper@gmail.com`, `1234567`)">Developer</button>
-  <button type="button" class="btn btn-secondary" onclick="logIn(`demoteammember@gmail.com`, `1234567`)">Team member</button>
+    <label>Or log in as demo users:</label><br>
+    <button type="button" class="btn btn-secondary"
+        onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
+    <button type="button" class="btn btn-secondary"
+        onclick="logIn(`demodeveloper@gmail.com`, `1234567`)">Developer</button>
+    <button type="button" class="btn btn-secondary"
+        onclick="logIn(`demoteammember@gmail.com`, `1234567`)">Team member</button>
 </div>
 
 <script>
-  function logIn(email, password) {
-    document.getElementById("email").value = email;
-    document.getElementById("password").value = password;
-    document.forms[0].submit();
-  }
+    function logIn(email, password) {
+        document.getElementById("email").value = email;
+        document.getElementById("password").value = password;
+        document.forms[0].submit();
+    }
 </script>
