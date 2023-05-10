@@ -20,3 +20,29 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.register-btn{
+  right: 0;
+  position: absolute;
+}
+
+.login-div {
+  width: fit-content;
+  height: fit-content;
+
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  
+  margin: auto;
+}
+
+.login-form{
+  width: 100%;
+}
+
+.form-group input {
+  width: 100%;
+}

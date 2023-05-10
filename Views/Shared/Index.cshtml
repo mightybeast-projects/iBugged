@@ -2,24 +2,34 @@
 
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<form asp-controller="Access" asp-action="LogIn" method="post">
-    <p>Login :</p>
-    <label>Email:</label><br />
-    <input id="email" asp-for="email" /><br />
-    <label>Password:</label><br />
-    <input id="password" asp-for="password" /><br />
-    <br />
-    <input type="Submit"/>
-    <a asp-controller="Access" asp-action="Register">Register</a>
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+<div class="login-div">
+  <h3 class="text-center">iBugged</h3>
+  <form class="login-form" asp-controller="Access" asp-action="LogIn" method="post">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" class="form-control" asp-for="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input id="password" class="form-control" asp-for="password" />
+    </div>
+    <div class="form-check"></div>
+    <input class="btn btn-success" type="Submit"/>
+    <a class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
     <p>@ViewBag.errorMessage</p>
-</form>
-<br />
-Or login as demo users:<br />
-<button type="button" onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
-<button type="button" onclick="logIn(`demodeveloper@gmail.com`, `1234567`)">Developer</button>
-<button type="button" onclick="logIn(`demoteammember@gmail.com`, `1234567`)">Team member</button>
+  </form>
+
+  <label>Or log in as demo users:</label><br>
+  <button type="button" class="btn btn-secondary" onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
+  <button type="button" class="btn btn-secondary" onclick="logIn(`demodeveloper@gmail.com`, `1234567`)">Developer</button>
+  <button type="button" class="btn btn-secondary" onclick="logIn(`demoteammember@gmail.com`, `1234567`)">Team member</button>
+</div>
 
 <script>
   function logIn(email, password) {
