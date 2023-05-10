@@ -67,15 +67,22 @@ form {
   width: 100%;
 }
 
-nav {
+#nav-bar {
   width: 255px;
   height: 100vh;
+  display: block;
   position: fixed;
   box-shadow: 14px 3rem 1rem 0px rgba(0, 0, 0, .05);
 }
 
 nav .container-fluid {
-  padding: 10px;
+  height: 100%;
+  padding: 10px 0px;
+}
+
+nav label {
+  width: 100%;
+  padding: 0.8rem 1rem;
 }
 
 nav svg {
@@ -83,8 +90,17 @@ nav svg {
   margin-right: 10px;
 }
 
+.nav-link {
+  padding: 0.8rem 1rem;
+}
+
+.nav-link:hover {
+  background-color: rgba(197, 197, 197, 0.246);
+}
+
 #user-info {
-  position: fixed;
+  width: 100%;
+  position: absolute;
   bottom: 0;
   padding-bottom: 10px;
 }
