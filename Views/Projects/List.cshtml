@@ -38,36 +38,39 @@
             <br />
         }
         <h5>Tickets (@viewModel.tickets.Count)</h5>
-        <div class="ticket-type-chart-div">
-            <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
-            <script>
-                drawChart(
-                    "@viewModel.project.name-ticket-type-chart",
-                    @ViewData["TicketTypes"],
-                    @ViewData["TicketTypeColors"],
-                    @Json.Serialize(GetTicketTypesCount(viewModel.tickets)))
-            </script>
-        </div>
-        <div class="ticket-priority-chart-div">
-            <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
-            <script>
-                drawChart(
-                    "@viewModel.project.name-ticket-priority-chart",
-                    @ViewData["TicketPriorities"],
-                    @ViewData["TicketPriorityColors"],
-                    @Json.Serialize(GetTicketPriorityCount(viewModel.tickets)))
-            </script>
-        </div>
-        <div class="ticket-status-chart-div">
-            <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
-            <script>
-                drawChart(
-                    "@viewModel.project.name-ticket-status-chart",
-                    @ViewData["TicketStatuses"],
-                    @ViewData["TicketStatusColors"],
-                    @Json.Serialize(GetTicketStatusCount(viewModel.tickets)))
-            </script>
-        </div>
+        @if (viewModel.tickets.Count > 0)
+        {
+            <div class="ticket-type-chart-div">
+                <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
+                <script>
+                    drawChart(
+                        "@viewModel.project.name-ticket-type-chart",
+                        @ViewData["TicketTypes"],
+                        @ViewData["TicketTypeColors"],
+                        @viewModel.GetTicketTypesCountJson())
+                </script>
+            </div>
+            <div class="ticket-priority-chart-div">
+                <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
+                <script>
+                    drawChart(
+                        "@viewModel.project.name-ticket-priority-chart",
+                        @ViewData["TicketPriorities"],
+                        @ViewData["TicketPriorityColors"],
+                        @viewModel.GetTicketPriorityCountJson())
+                </script>
+            </div>
+            <div class="ticket-status-chart-div">
+                <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
+                <script>
+                    drawChart(
+                        "@viewModel.project.name-ticket-status-chart",
+                        @ViewData["TicketStatuses"],
+                        @ViewData["TicketStatusColors"],
+                        @viewModel.GetTicketStatusCountJson())
+                </script>
+            </div>
+        }
         if (service.user.role is ProjectManager)
         {
             <div class="edit-btn">
@@ -84,29 +87,3 @@
         }
     }
 </div>
-
-@functions {
-    public int[] GetTicketTypesCount(List<Ticket> tickets) =>
-        new[]
-        {
-            tickets.Count(ticket => ticket.ticketType == TicketType.Bug),
-            tickets.Count(ticket => ticket.ticketType == TicketType.Task),
-            tickets.Count(ticket => ticket.ticketType == TicketType.Support),
-            tickets.Count(ticket => ticket.ticketType == TicketType.Other)
-        };
-
-    public int[] GetTicketPriorityCount(List<Ticket> tickets) =>
-        new[]
-        {
-            tickets.Count(ticket => ticket.priority == Priority.Low),
-            tickets.Count(ticket => ticket.priority == Priority.Medium),
-            tickets.Count(ticket => ticket.priority == Priority.High)
-        };
-
-    public int[] GetTicketStatusCount(List<Ticket> tickets) =>
-        new[]
-        {
-            tickets.Count(ticket => !ticket.isOpened),
-            tickets.Count(ticket => ticket.isOpened)
-        };
-}
