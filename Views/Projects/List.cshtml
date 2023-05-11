@@ -32,7 +32,7 @@
             <br />
         }
         <h5>Tickets (@viewModel.tickets.Count)</h5>
-        @if (viewModel.tickets.Count > 0)
+        @if (viewModel.tickets.Count != 0)
         {
             <div class="ticket-type-chart-div">
                 <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>

@@ -62,7 +62,7 @@ form {
 }
 
 #nav-bar {
-  width: 255px;
+  width: 260px;
   height: 100vh;
   display: block;
   position: fixed;
@@ -79,13 +79,17 @@ nav label {
   padding: 0.8rem 1rem;
 }
 
-nav svg {
-  width: 25px;
+nav i {
   margin-right: 10px;
 }
 
 .nav-link {
   padding: 0.8rem 1rem;
+  font-size: 20px;
+}
+
+#user-info label {
+  font-size: 18px;
 }
 
 .nav-link:hover {
