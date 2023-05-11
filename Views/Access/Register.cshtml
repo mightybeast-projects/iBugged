@@ -7,10 +7,14 @@
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/icons/css/all.css" asp-append-version="true" />
 
 <body>
     <div class="center-div">
-        <h3 class="text-center">iBugged</h3>
+        <h3 class="text-center">
+            <i class="fa-solid fa-bug"></i>
+            iBugged
+        </h3>
         <h5 class="text-center">Create new user</h5>
         <form id="registration-form" asp-controller="Access" asp-action="Register" method="post">
             <div class="form-group">
