@@ -4,20 +4,48 @@
     ViewData["Title"] = "Users";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Users</h1>
+<div class="text-left">
+    <p><h3>Users</h3></p>
+    
 </div>
 
-@foreach (var user in Model)
-{
-    <h1> @user.name </h1>
-    <h6> Email: @user.email </h6>
-    <h6> Password: @user.password </h6>
-    <h6> Role: @user.role </h6>
-    <a asp-controller="Users"
-                asp-action="Edit"
-                asp-route-id="@user.id">Edit user</a>
-    <a asp-controller="Users"
-                asp-action="Delete"
-                asp-route-id="@user.id">Delete user</a>
-}
+<table id="users-table" class="table">
+    <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">Role</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.name</td>
+                <td>@user.email</td>
+                <td>@user.password</td>
+                <td>@user.role</td>
+                <td>
+                    <ul>
+                        <li>
+                            <div class="edit-btn">
+                                <a class="link-icon" title="Edit user" asp-controller="Users" asp-action="Edit" asp-route-id="@user.id">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="delete-btn">
+                                <a class="link-icon" asp-controller="Users" asp-action="Delete" asp-route-id="@user.id">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

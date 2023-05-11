@@ -100,5 +100,65 @@ nav svg {
 }
 
 .content {
+  padding-top: 0.5rem;
   margin-left: 300px;
+  margin-right: 50px;
+}
+
+a {
+  text-decoration: none;
+}
+
+#users-table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.edit-btn, .delete-btn {
+  width: 30px;
+  height: 30px;
+  border: solid transparent 1px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.edit-btn {
+  background-color: orange;
+}
+
+.delete-btn {
+  background-color: red;
+}
+
+.link-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  color: white;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.link-icon:hover {
+  color: white;
+}
+
+td ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+th {
+  border: none;
+}
+
+tbody tr {
+  box-shadow: 0px 0rem 1rem 0px rgba(0, 0, 0, .05);
+  background-color: white;
 }
