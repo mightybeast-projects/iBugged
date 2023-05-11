@@ -2,15 +2,28 @@
 
 @{
     ViewData["Title"] = "Projects";
+    ViewData["TicketTypes"] = Json.Serialize(System.Enum.GetNames(typeof(TicketType)));
+    ViewData["TicketTypeColors"] = Json.Serialize(new[] { "rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)" });
+    ViewData["TicketPriorities"] = Json.Serialize(System.Enum.GetNames(typeof(Priority)));
+    ViewData["TicketPriorityColors"] = Json.Serialize(new[] { "rgb(33, 196, 0)", "rgb(235, 192, 0)", "rgb(255, 0, 0)" });
+    ViewData["TicketStatuses"] = Json.Serialize(new[] { "Closed", "Opened" });
+    ViewData["TicketStatusColors"] = Json.Serialize(new[] { "rgb(33, 196, 0)", "rgb(255, 0, 0)" });
 }
 
-<div class="text-center">
-    <h1 class="display-4">Projects</h1>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="~/js/chartDrawer.js" asp-append-version="true"></script>
+
+<div class="text-left">
+    <p>
+    <h3>Projects</h3>
+    </p>
 </div>
 <div>
     @if (service.user.role is ProjectManager)
     {
-        <a asp-controller="Projects" asp-action="Create">Create new project</a>
+        <a class="btn btn-success" asp-controller="Projects" asp-action="Create">
+            <i class="fa-solid fa-book"></i> Create new project
+        </a>
     }
 </div>
 <div>
@@ -21,21 +34,64 @@
         <h5>Members (@viewModel.members.Count) :</h5>
         foreach (var member in viewModel.members)
         {
-            <h7>@member.name</h7><br />
+            <h7>@member.name</h7>
+            <br />
         }
-        <h5>Tickets (@viewModel.tickets.Count) :</h5>
-        foreach (var ticket in viewModel.tickets)
-        {
-            <h7>@ticket.title</h7><br />
-        }
+        <h5>Tickets (@viewModel.tickets.Count)</h5>
+        <div class="ticket-type-chart-div">
+            <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
+            <script>
+                drawChart(
+                    "@viewModel.project.name-ticket-type-chart",
+                    @ViewData["TicketTypes"],
+                    @ViewData["TicketTypeColors"],
+                    @Json.Serialize(GetTicketTypesCount(viewModel.tickets)))
+            </script>
+        </div>
+        <div class="ticket-priority-chart-div">
+            <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
+            <script>
+                drawChart(
+                    "@viewModel.project.name-ticket-priority-chart",
+                    @ViewData["TicketPriorities"],
+                    @ViewData["TicketPriorityColors"],
+                    [10, 20, 30])
+            </script>
+        </div>
+        <div class="ticket-status-chart-div">
+            <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
+            <script>
+                drawChart(
+                    "@viewModel.project.name-ticket-status-chart",
+                    @ViewData["TicketStatuses"],
+                    @ViewData["TicketStatusColors"],
+                    [10, 20])
+            </script>
+        </div>
         if (service.user.role is ProjectManager)
         {
-            <a asp-controller="Projects"
-                asp-action="Edit"
-                asp-route-id="@viewModel.project.id">Edit project</a>
-            <a asp-controller="Projects"
-                asp-action="Delete"
-                asp-route-id="@viewModel.project.id">Delete project</a>
+            <div class="edit-btn">
+                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit"
+                    asp-route-id="@viewModel.project.id">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
+            </div>
+            <div class="delete-btn">
+                <a class="link-icon" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </div>
         }
     }
 </div>
+
+@functions {
+    public int[] GetTicketTypesCount(List<Ticket> tickets) =>
+        new[]
+        {
+            tickets.Count(ticket => ticket.ticketType == TicketType.Bug),
+            tickets.Count(ticket => ticket.ticketType == TicketType.Task),
+            tickets.Count(ticket => ticket.ticketType == TicketType.Support),
+            tickets.Count(ticket => ticket.ticketType == TicketType.Other)
+        };
+}
