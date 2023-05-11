@@ -55,7 +55,7 @@
                     "@viewModel.project.name-ticket-priority-chart",
                     @ViewData["TicketPriorities"],
                     @ViewData["TicketPriorityColors"],
-                    [10, 20, 30])
+                    @Json.Serialize(GetTicketPriorityCount(viewModel.tickets)))
             </script>
         </div>
         <div class="ticket-status-chart-div">
@@ -65,7 +65,7 @@
                     "@viewModel.project.name-ticket-status-chart",
                     @ViewData["TicketStatuses"],
                     @ViewData["TicketStatusColors"],
-                    [10, 20])
+                    @Json.Serialize(GetTicketStatusCount(viewModel.tickets)))
             </script>
         </div>
         if (service.user.role is ProjectManager)
@@ -93,5 +93,20 @@
             tickets.Count(ticket => ticket.ticketType == TicketType.Task),
             tickets.Count(ticket => ticket.ticketType == TicketType.Support),
             tickets.Count(ticket => ticket.ticketType == TicketType.Other)
+        };
+
+    public int[] GetTicketPriorityCount(List<Ticket> tickets) =>
+        new[]
+        {
+            tickets.Count(ticket => ticket.priority == Priority.Low),
+            tickets.Count(ticket => ticket.priority == Priority.Medium),
+            tickets.Count(ticket => ticket.priority == Priority.High)
+        };
+
+    public int[] GetTicketStatusCount(List<Ticket> tickets) =>
+        new[]
+        {
+            tickets.Count(ticket => !ticket.isOpened),
+            tickets.Count(ticket => ticket.isOpened)
         };
 }
