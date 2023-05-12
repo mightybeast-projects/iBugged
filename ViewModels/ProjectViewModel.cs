@@ -13,10 +13,7 @@ public class ProjectViewModel
         System.Enum.GetNames(typeof(TicketType));
 
     public string[] GetTicketTypesColors() =>
-        new [] {
-            "rgb(255, 0, 0)", "rgb(54, 162, 235)",
-            "rgb(235, 192, 0)", "rgb(194, 194, 194)"
-        };
+        new [] { "#ff0000", "#9a00c9", "#00c3c9", "#969696" };
 
     public int[] GetTicketTypesCount() =>
         new[]
@@ -31,7 +28,7 @@ public class ProjectViewModel
         System.Enum.GetNames(typeof(Priority));
 
     public string[] GetTicketPriorityColors() =>
-        new[] { "rgb(33, 196, 0)", "rgb(235, 192, 0)", "rgb(255, 0, 0)" };
+        new[] { "#00c900", "#e3cc00", "#ff0000" };
 
     public int[] GetTicketPriorityCount() =>
         new[]
@@ -43,8 +40,7 @@ public class ProjectViewModel
 
     public string[] GetTicketStatuses() => new[] { "Closed", "Opened" };
 
-    public string[] GetTicketStatusColors() =>
-        new[] { "rgb(33, 196, 0)", "rgb(255, 0, 0)" };
+    public string[] GetTicketStatusColors() => new[] { "#00c900", "#ff0000" };
 
     public int[] GetTicketStatusCount() =>
         new[]

@@ -4,8 +4,34 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Dashboard</h1>
+<script src="~/js/tagsDrawer.js" asp-append-version="true"></script>
+
+<div class="text-left">
+    <p><h3>Dashboard</h3></p>
+</div>
+
+<div class="dashboard-container">
+    <div class="dashboard-ticket-div">
+        <div class="ticket-title-div">
+            <h3>Ticket 1</h3>
+            <div class="ticket-tags-div">
+                <div class="ticket-tag">Task</div>
+                <div class="ticket-tag">High</div>
+            </div>
+        </div>
+        <div class="ticket-description">
+            ticket.descriptionticket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.description<br />
+            in Project 1 <br />
+        </div>
+        <div class="creation-details-div">
+            Demo project manager | 12.05.2023
+        </div>
+        <div class="close-ticket-btn">
+            <a class="link-icon">
+                <i class="fa-solid fa-check fa-lg"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div>
@@ -40,3 +66,12 @@
             asp-route-id="@viewModel.ticket.id">Close ticket</a>
     }
 </div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function(){
+            drawTags();
+        });
+    </script>
+}

@@ -254,3 +254,56 @@ tbody tr {
   display: flex;
   justify-content: space-around;
 }
+
+.dashboard-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dashboard-ticket-div {
+  max-width: 30%;
+  word-wrap: break-word;
+  padding: 20px;
+  flex-direction: column;
+  display: flex;
+  box-shadow: 0px 0rem 1rem 10px rgba(0, 0, 0, .05);
+  border-radius: 10px;
+}
+
+.dashboard-ticket-div .close-ticket-btn {
+  margin-top: 10px;
+  width: unset;
+}
+
+.ticket-title-div {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ticket-title-div h3 {
+  margin: 0;
+}
+
+.ticket-tags-div {
+  display: flex;
+  align-items: center;
+}
+
+.ticket-tags-div div {
+  margin: 0 5px;
+}
+
+.ticket-tag {
+  font-size: 18px;
+  background-color: red;
+  padding: 2px 5px;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
+}
+
+.creation-details-div {
+  display: flex;
+  justify-content: flex-end;
+}
