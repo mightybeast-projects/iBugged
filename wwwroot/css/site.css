@@ -113,12 +113,13 @@ a {
   text-decoration: none;
 }
 
-#users-table {
+.data-table {
   border-collapse: separate;
   border-spacing: 0 10px;
+  vertical-align: middle;
 }
 
-.edit-btn, .delete-btn {
+.edit-btn, .delete-btn, .close-ticket-btn {
   width: 30px;
   height: 30px;
   border: solid transparent 1px;
@@ -134,6 +135,10 @@ a {
 
 .delete-btn {
   background-color: red;
+}
+
+.close-ticket-btn {
+  background-color: green;
 }
 
 .link-icon {
@@ -155,7 +160,11 @@ td ul {
   margin: 0;
   list-style: none;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
+}
+
+td ul li {
+  margin-left: 10px;
 }
 
 th {

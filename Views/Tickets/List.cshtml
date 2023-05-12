@@ -4,63 +4,96 @@
     ViewData["Title"] = "Tickets";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Tickets</h1>
+<div class="text-left">
+    <p><h3>Tickets</h3></p>
 </div>
 
-<div>
-    <a asp-controller="Tickets" asp-action="Create">Create new ticket</a>
-</div>
+<a class="btn btn-success" asp-controller="Tickets" asp-action="Create">
+    <i class="fa-solid fa-ticket-simple"></i> Create new ticket
+</a>
 
-<div>
-    @foreach (var viewModel in Model)
-    {
-        <h1>@viewModel.ticket.title</h1>
-        <h5>@viewModel.ticket.description</h5>
-        <h5>Ticket type : @viewModel.ticket.ticketType</h5>
-        <h5>Ticket priority : @viewModel.ticket.priority</h5>
-        <h5>Opened : @viewModel.ticket.isOpened</h5>
-        <h5>Project : @viewModel.project.name</h5>
-        if (viewModel.assignee == null)
+<table class="table data-table">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Type</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Status</th>
+            <th scope="col">Project</th>
+            <th scope="col">Assignee</th>
+            <th scope="col">Author</th>
+            <th scope="col">Creation date</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var viewModel in Model)
         {
-            <h5>Assignee : Unassigned</h5>
-        }
-        else
-        {
-            <h5>Assignee : @viewModel.assignee.name</h5>
-        }
-        if (viewModel.author == null)
-        {
-            <h5>Author : Deleted user</h5>
-        }
-        else
-        {
-            <h5>Author : @viewModel.author.name</h5>
-        }
-        <h5>Creation date : @viewModel.ticket.creationDate</h5>
+            <tr>
+                <td>@viewModel.ticket.title</td>
+                <td>@viewModel.ticket.description</td>
+                <td>@viewModel.ticket.ticketType</td>
+                <td>@viewModel.ticket.priority</td>
+                <td>@viewModel.ticket.isOpened</td>
+                <td>@viewModel.project.name</td>
+                @if (viewModel.assignee == null)
+                {
+                    <td>Unassigned</td>
+                }
+                else
+                {
+                    <td>@viewModel.assignee.name</td>
+                }
+                @if (viewModel.author == null)
+                {
+                    <td>Deleted user</td>
+                }
+                else
+                {
+                    <td>@viewModel.author.name</td>
+                }
+                <td>@viewModel.ticket.creationDate</td>
 
-        if (service.user.role != TeamMember && viewModel.ticket.isOpened)
-        {
-            <a asp-controller="Tickets"
-                asp-action="CloseTicket"
-                asp-route-id="@viewModel.ticket.id">Close ticket</a>
+                <td>
+                    <ul>
+                        @if (service.user.role != TeamMember && viewModel.ticket.isOpened)
+                        {
+                            <li>
+                                <div class="close-ticket-btn">
+                                    <a class="link-icon" title="Close ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="CloseTicket" asp-route-id="@viewModel.ticket.id">
+                                        <i class="fa-solid fa-check fa-lg"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                        @if (service.user.role != TeamMember ||
+                            UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))
+                        {
+                            <li>
+                                <div class="edit-btn">
+                                    <a class="link-icon" title="Edit ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Edit" asp-route-id="@viewModel.ticket.id">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                        @if (service.user.role != TeamMember)
+                        {
+                        <li>
+                            <div class="delete-btn">
+                                <a class="link-icon" title="Delete ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Delete" asp-route-id="@viewModel.ticket.id">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        </li>
+                        }
+                    </ul>
+                </td>
+            </tr>
         }
-        
-        if (service.user.role != TeamMember ||
-            UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))
-        {
-            <a asp-controller="Tickets"
-                asp-action="Edit"
-                asp-route-id="@viewModel.ticket.id">Edit ticket</a>
-        }
-        if (service.user.role != TeamMember)
-        {
-            <a asp-controller="Tickets"
-                asp-action="Delete"
-                asp-route-id="@viewModel.ticket.id">Delete ticket</a>
-        }
-    }
-</div>
+    </tbody>
+</table>
 
 @functions
 {
