@@ -171,3 +171,36 @@ tbody tr {
   width: 250px;
   height: 250px;
 }
+
+.projects-main-div {
+  margin-top: 20px;
+}
+
+.project-container {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0rem 1rem 10px rgba(0, 0, 0, .05);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.project-info-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-name-div {
+  max-width: 30%;
+  overflow-wrap: anywhere;
+}
+
+.project-members-div ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.charts-div {
+  display: flex;
+  justify-content: space-around;
+}

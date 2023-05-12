@@ -20,6 +20,74 @@
         </a>
     }
 </div>
+
+<div class="projects-main-div">
+    <div class="project-container">
+        <div class="project-info-div">
+            <div class="project-name-div">
+                <h3>Project 1</h3>
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            </div>
+            <div class="project-members-div">
+                <h5>Members (5) :</h5>
+                <ul>
+                    <li><i class="fa-solid fa-user"></i> member.name</li>
+                    <li><i class="fa-solid fa-user"></i> member.name</li>
+                    <li><i class="fa-solid fa-user"></i> member.name</li>
+                    <li><i class="fa-solid fa-user"></i> member.name</li>
+                    <li><i class="fa-solid fa-user"></i> member.name</li>
+                </ul>
+            </div>
+            <div class="project-actions-div">
+                <div class="edit-btn">
+                    <a class="link-icon" title="Edit user">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
+                </div>
+                <div class="delete-btn">
+                    <a class="link-icon">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <h5>Tickets : 10 </h5>
+        <div class="charts-div">
+            <div class="ticket-type-chart-div">
+                <canvas id="project.name-ticket-type-chart"></canvas>
+                <script>
+                    drawChart(
+                        "project.name-ticket-type-chart",
+                        ["1", "2", "3", "4"],
+                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
+                        [10, 20, 30 ,40]);
+                </script>
+            </div>
+            <div class="ticket-priority-chart-div">
+                <canvas id="project.name-ticket-priority-chart"></canvas>
+                <script>
+                    drawChart(
+                        "project.name-ticket-priority-chart",
+                        ["1", "2", "3", "4"],
+                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
+                        [10, 20, 30 ,40])
+                </script>
+            </div>
+            <div class="ticket-status-chart-div">
+                <canvas id="project.name-ticket-status-chart"></canvas>
+                <script>
+                    drawChart(
+                        "project.name-ticket-status-chart",
+                        ["1", "2", "3", "4"],
+                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
+                        [10, 20, 30 ,40])
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div>
     @foreach (var viewModel in Model)
     {
@@ -39,9 +107,9 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-type-chart",
-                        @Json.Serialize(viewModel.GetTicketTypes()),
-                        @Json.Serialize(viewModel.GetTicketTypesColors()),
-                        @Json.Serialize(viewModel.GetTicketTypesCount()))
+                    @Json.Serialize(viewModel.GetTicketTypes()),
+                    @Json.Serialize(viewModel.GetTicketTypesColors()),
+                    @Json.Serialize(viewModel.GetTicketTypesCount()))
                 </script>
             </div>
             <div class="ticket-priority-chart-div">
@@ -49,9 +117,9 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-priority-chart",
-                        @Json.Serialize(viewModel.GetTicketPriorities()),
-                        @Json.Serialize(viewModel.GetTicketPriorityColors()),
-                        @Json.Serialize(viewModel.GetTicketPriorityCount()))
+                    @Json.Serialize(viewModel.GetTicketPriorities()),
+                    @Json.Serialize(viewModel.GetTicketPriorityColors()),
+                    @Json.Serialize(viewModel.GetTicketPriorityCount()))
                 </script>
             </div>
             <div class="ticket-status-chart-div">
@@ -59,16 +127,17 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-status-chart",
-                        @Json.Serialize(viewModel.GetTicketStatuses()),
-                        @Json.Serialize(viewModel.GetTicketStatusColors()),
-                        @Json.Serialize(viewModel.GetTicketStatusCount()))
+                    @Json.Serialize(viewModel.GetTicketStatuses()),
+                    @Json.Serialize(viewModel.GetTicketStatusColors()),
+                    @Json.Serialize(viewModel.GetTicketStatusCount()))
                 </script>
             </div>
         }
         if (service.user.role is ProjectManager)
         {
             <div class="edit-btn">
-                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit" asp-route-id="@viewModel.project.id">
+                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit"
+                    asp-route-id="@viewModel.project.id">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
             </div>
