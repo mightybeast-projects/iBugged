@@ -30,14 +30,14 @@
                     <ul>
                         <li>
                             <div class="edit-btn">
-                                <a class="link-icon" title="Edit user" asp-controller="Users" asp-action="Edit" asp-route-id="@user.id">
+                                <a class="link-icon" title="Edit user @user.name" asp-controller="Users" asp-action="Edit" asp-route-id="@user.id">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
                         </li>
                         <li>
                             <div class="delete-btn">
-                                <a class="link-icon" asp-controller="Users" asp-action="Delete" asp-route-id="@user.id">
+                                <a class="link-icon" title="Delete user @user.name" asp-controller="Users" asp-action="Delete" asp-route-id="@user.id">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
                             </div>

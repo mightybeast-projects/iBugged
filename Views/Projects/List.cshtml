@@ -8,9 +8,7 @@
 <script src="~/js/chartDrawer.js" asp-append-version="true"></script>
 
 <div class="text-left">
-    <p>
-    <h3>Projects</h3>
-    </p>
+    <p><h3>Projects</h3></p>
 </div>
 <div>
     @if (service.user.role is ProjectManager)
@@ -32,8 +30,7 @@
                         @if (service.user.role is ProjectManager)
                         {
                             <div class="edit-btn">
-                                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit"
-                                    asp-route-id="@viewModel.project.id">
+                                <a class="link-icon" title="Edit project @viewModel.project.name" asp-controller="Projects" asp-action="Edit" asp-route-id="@viewModel.project.id">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
@@ -55,7 +52,7 @@
                 @if (service.user.role is ProjectManager)
                 {
                     <div class="delete-btn">
-                        <a class="link-icon" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
+                        <a class="link-icon" title="Delete project @viewModel.project.name" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
                             <i class="fa-solid fa-trash"></i>
                         </a>
                     </div>
