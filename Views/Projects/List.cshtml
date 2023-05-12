@@ -58,6 +58,7 @@
                 <script>
                     drawChart(
                         "project.name-ticket-type-chart",
+                        "Tickets by type",
                         ["1", "2", "3", "4"],
                         ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
                         [10, 20, 30 ,40]);
@@ -68,6 +69,7 @@
                 <script>
                     drawChart(
                         "project.name-ticket-priority-chart",
+                        "Tickets by priority",
                         ["1", "2", "3", "4"],
                         ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
                         [10, 20, 30 ,40])
@@ -78,6 +80,7 @@
                 <script>
                     drawChart(
                         "project.name-ticket-status-chart",
+                        "Tickets by status",
                         ["1", "2", "3", "4"],
                         ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
                         [10, 20, 30 ,40])
@@ -107,6 +110,7 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-type-chart",
+                        "Tickets by type",
                     @Json.Serialize(viewModel.GetTicketTypes()),
                     @Json.Serialize(viewModel.GetTicketTypesColors()),
                     @Json.Serialize(viewModel.GetTicketTypesCount()))
@@ -117,6 +121,7 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-priority-chart",
+                        "Tickets by priority",
                     @Json.Serialize(viewModel.GetTicketPriorities()),
                     @Json.Serialize(viewModel.GetTicketPriorityColors()),
                     @Json.Serialize(viewModel.GetTicketPriorityCount()))
@@ -127,6 +132,7 @@
                 <script>
                     drawChart(
                         "@viewModel.project.name-ticket-status-chart",
+                        "Tickets by status",
                     @Json.Serialize(viewModel.GetTicketStatuses()),
                     @Json.Serialize(viewModel.GetTicketStatusColors()),
                     @Json.Serialize(viewModel.GetTicketStatusCount()))
