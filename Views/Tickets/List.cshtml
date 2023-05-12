@@ -4,6 +4,8 @@
     ViewData["Title"] = "Tickets";
 }
 
+<link rel="stylesheet" href="~/css/tags.css" asp-append-version="true" />
+
 <div class="text-left">
     <p><h3>Tickets</h3></p>
 </div>
@@ -33,9 +35,24 @@
             <tr>
                 <td>@viewModel.ticket.title</td>
                 <td>@viewModel.ticket.description</td>
-                <td>@viewModel.ticket.ticketType</td>
-                <td>@viewModel.ticket.priority</td>
-                <td>@viewModel.ticket.isOpened</td>
+                <td>
+                    <div class="ticket-tag @viewModel.ticket.ticketType-tag">
+                        @viewModel.ticket.ticketType
+                    </div>
+                </td>
+                <td>
+                    <div class="ticket-tag @viewModel.ticket.priority-tag">
+                        @viewModel.ticket.priority
+                    </div>
+                </td>
+                @if (viewModel.ticket.isOpened)
+                {
+                    <td><div class="ticket-tag Opened-tag">Opened</div></td>
+                }
+                else
+                {
+                    <td><div class="ticket-tag Closed-tag">Closed</div></td>
+                }
                 <td>@viewModel.project.name</td>
                 @if (viewModel.assignee == null)
                 {

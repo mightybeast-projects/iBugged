@@ -4,74 +4,40 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<script src="~/js/tagsDrawer.js" asp-append-version="true"></script>
+<link rel="stylesheet" href="~/css/tags.css" asp-append-version="true" />
 
 <div class="text-left">
     <p><h3>Dashboard</h3></p>
 </div>
 
 <div class="dashboard-container">
-    <div class="dashboard-ticket-div">
-        <div class="ticket-title-div">
-            <h3>Ticket 1</h3>
-            <div class="ticket-tags-div">
-                <div class="ticket-tag">Task</div>
-                <div class="ticket-tag">High</div>
-            </div>
-        </div>
-        <div class="ticket-description">
-            ticket.descriptionticket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.descriptionket.descriptionticket.description<br />
-            in Project 1 <br />
-        </div>
-        <div class="creation-details-div">
-            Demo project manager | 12.05.2023
-        </div>
-        <div class="close-ticket-btn">
-            <a class="link-icon">
-                <i class="fa-solid fa-check fa-lg"></i>
-            </a>
-        </div>
-    </div>
-</div>
 
-<div>
     @foreach (var viewModel in Model)
     {
-        <h1>@viewModel.ticket.title</h1>
-        <h5>@viewModel.ticket.description</h5>
-        <h5>Ticket type : @viewModel.ticket.ticketType</h5>
-        <h5>Ticket priority : @viewModel.ticket.priority</h5>
-        <h5>Opened : @viewModel.ticket.isOpened</h5>
-        <h5>Project : @viewModel.project.name</h5>
-        if (viewModel.assignee == null)
-        {
-            <h5>Assignee : Unassigned</h5>
-        }
-        else
-        {
-            <h5>Assignee : @viewModel.assignee.name</h5>
-        }
-        if (viewModel.author == null)
-        {
-            <h5>Author : Deleted user</h5>
-        }
-        else
-        {
-            <h5>Author : @viewModel.author.name</h5>
-        }
-        <h5>Creation date : @viewModel.ticket.creationDate</h5>
-
-        <a asp-controller="Dashboard"
-            asp-action="CloseTicket"
-            asp-route-id="@viewModel.ticket.id">Close ticket</a>
+        <div class="dashboard-ticket-div">
+            <div class="ticket-title-div">
+                <h3>@viewModel.ticket.title</h3>
+                <div class="ticket-tags-div">
+                    <div class="ticket-tag @viewModel.ticket.ticketType-tag">@viewModel.ticket.ticketType</div>
+                    <div class="ticket-tag @viewModel.ticket.priority-tag">@viewModel.ticket.priority</div>
+                </div>
+            </div>
+            <div class="ticket-description">
+                @viewModel.ticket.description<br />
+                in @viewModel.project.name <br />
+            </div>
+            <div class="creation-details-div">
+                @if (viewModel.author != null)
+                {
+                    @viewModel.author.name
+                }
+                | @viewModel.ticket.creationDate.ToShortDateString()
+            </div>
+            <div class="close-ticket-btn">
+                <a class="link-icon"  title="Close ticket @viewModel.ticket.title" asp-controller="Dashboard" asp-action="CloseTicket" asp-route-id="@viewModel.ticket.id">
+                    <i class="fa-solid fa-check fa-lg"></i>
+                </a>
+            </div>
+        </div>
     }
 </div>
-
-@section scripts
-{
-    <script>
-        $(document).ready(function(){
-            drawTags();
-        });
-    </script>
-}

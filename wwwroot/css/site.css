@@ -6,6 +6,11 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+.btn-success {
+  background-color: #00c900;
+  border: #00c900;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -138,7 +143,7 @@ a {
 }
 
 .close-ticket-btn {
-  background-color: green;
+  background-color: #00c900;
 }
 
 .link-icon {
@@ -172,7 +177,7 @@ th {
 }
 
 tbody tr {
-  box-shadow: 0px 0rem 1rem 0px rgba(0, 0, 0, .05);
+  box-shadow: 0px 0rem 1rem 0px rgba(53, 48, 48, 0.05);
   background-color: white;
 }
 
@@ -257,14 +262,15 @@ tbody tr {
 
 .dashboard-container {
   display: flex;
-  justify-content: space-between;
 }
 
 .dashboard-ticket-div {
+  margin-right: 20px;
   max-width: 30%;
   word-wrap: break-word;
   padding: 20px;
   flex-direction: column;
+  justify-content: space-between;
   display: flex;
   box-shadow: 0px 0rem 1rem 10px rgba(0, 0, 0, .05);
   border-radius: 10px;
@@ -286,6 +292,7 @@ tbody tr {
 }
 
 .ticket-tags-div {
+  margin-left: 20px;
   display: flex;
   align-items: center;
 }
@@ -296,11 +303,11 @@ tbody tr {
 
 .ticket-tag {
   font-size: 18px;
-  background-color: red;
   padding: 2px 5px;
   border-radius: 5px;
   color: white;
   font-weight: 500;
+  text-align: center;
 }
 
 .creation-details-div {
