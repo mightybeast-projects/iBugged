@@ -22,134 +22,84 @@
 </div>
 
 <div class="projects-main-div">
-    <div class="project-container">
-        <div class="project-info-div">
-            <div class="project-name-div">
-                <h3>Project 1</h3>
-                <div class="edit-btn">
-                    <a class="link-icon" title="Edit user">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                </div>
-                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            </div>
-            <div class="project-members-div">
-                <h5>Members (5)</h5>
-                <ul>
-                    <li><i class="fa-solid fa-user"></i> member.name</li>
-                    <li><i class="fa-solid fa-user"></i> member.name</li>
-                    <li><i class="fa-solid fa-user"></i> member.name</li>
-                    <li><i class="fa-solid fa-user"></i> member.name</li>
-                    <li><i class="fa-solid fa-user"></i> member.name</li>
-                </ul>
-            </div>
-            <div class="delete-btn">
-                <a class="link-icon">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
-            </div>
-        </div>
-        <h5>Tickets : 10 </h5>
-        <div class="charts-div">
-            <div class="ticket-type-chart-div">
-                <canvas id="project.name-ticket-type-chart"></canvas>
-                <script>
-                    drawChart(
-                        "project.name-ticket-type-chart",
-                        "Tickets by type",
-                        ["1", "2", "3", "4"],
-                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
-                        [10, 20, 30 ,40]);
-                </script>
-            </div>
-            <div class="ticket-priority-chart-div">
-                <canvas id="project.name-ticket-priority-chart"></canvas>
-                <script>
-                    drawChart(
-                        "project.name-ticket-priority-chart",
-                        "Tickets by priority",
-                        ["1", "2", "3", "4"],
-                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
-                        [10, 20, 30 ,40])
-                </script>
-            </div>
-            <div class="ticket-status-chart-div">
-                <canvas id="project.name-ticket-status-chart"></canvas>
-                <script>
-                    drawChart(
-                        "project.name-ticket-status-chart",
-                        "Tickets by status",
-                        ["1", "2", "3", "4"],
-                        ["rgb(255, 0, 0)", "rgb(54, 162, 235)", "rgb(235, 192, 0)", "rgb(194, 194, 194)"],
-                        [10, 20, 30 ,40])
-                </script>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div>
     @foreach (var viewModel in Model)
     {
-        <h1>@viewModel.project.name</h1>
-        <h5>@viewModel.project.description</h5>
-        <h5>Members (@viewModel.members.Count) :</h5>
-        foreach (var member in viewModel.members)
-        {
-            <h7>@member.name</h7>
-            <br />
-        }
-        <h5>Tickets (@viewModel.tickets.Count)</h5>
-        @if (viewModel.tickets.Count != 0)
-        {
-            <div class="ticket-type-chart-div">
-                <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
-                <script>
-                    drawChart(
-                        "@viewModel.project.name-ticket-type-chart",
-                        "Tickets by type",
-                    @Json.Serialize(viewModel.GetTicketTypes()),
-                    @Json.Serialize(viewModel.GetTicketTypesColors()),
-                    @Json.Serialize(viewModel.GetTicketTypesCount()))
-                </script>
+        <div class="project-container">
+            <div class="project-info-div">
+                <div class="project-name-div">
+                    <div class="project-name">
+                        <h3>@viewModel.project.name</h3>
+                        @if (service.user.role is ProjectManager)
+                        {
+                            <div class="edit-btn">
+                                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit"
+                                    asp-route-id="@viewModel.project.id">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                    <div class="project-desc-div">
+                        @viewModel.project.description
+                    </div>
+                </div>
+                <div class="project-members-div">
+                    <h5>Members (@viewModel.members.Count)</h5>
+                    <ul>
+                        @foreach (var member in viewModel.members)
+                        {
+                            <li><i class="fa-solid fa-user"></i> @member.name</li>
+                        }
+                    </ul>
+                </div>
+                @if (service.user.role is ProjectManager)
+                {
+                    <div class="delete-btn">
+                        <a class="link-icon" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                }
             </div>
-            <div class="ticket-priority-chart-div">
-                <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
-                <script>
-                    drawChart(
-                        "@viewModel.project.name-ticket-priority-chart",
-                        "Tickets by priority",
-                    @Json.Serialize(viewModel.GetTicketPriorities()),
-                    @Json.Serialize(viewModel.GetTicketPriorityColors()),
-                    @Json.Serialize(viewModel.GetTicketPriorityCount()))
-                </script>
-            </div>
-            <div class="ticket-status-chart-div">
-                <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
-                <script>
-                    drawChart(
-                        "@viewModel.project.name-ticket-status-chart",
-                        "Tickets by status",
-                    @Json.Serialize(viewModel.GetTicketStatuses()),
-                    @Json.Serialize(viewModel.GetTicketStatusColors()),
-                    @Json.Serialize(viewModel.GetTicketStatusCount()))
-                </script>
-            </div>
-        }
-        if (service.user.role is ProjectManager)
-        {
-            <div class="edit-btn">
-                <a class="link-icon" title="Edit user" asp-controller="Projects" asp-action="Edit"
-                    asp-route-id="@viewModel.project.id">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </a>
-            </div>
-            <div class="delete-btn">
-                <a class="link-icon" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
-            </div>
-        }
+            <h5>Tickets : @viewModel.tickets.Count </h5>
+            @if (viewModel.tickets.Count != 0)
+            {
+                <div class="charts-div">
+                    <div class="ticket-type-chart-div">
+                        <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
+                        <script>
+                            drawChart(
+                                "@viewModel.project.name-ticket-type-chart",
+                                "Tickets by type",
+                                @Json.Serialize(viewModel.GetTicketTypes()),
+                                @Json.Serialize(viewModel.GetTicketTypesColors()),
+                                @Json.Serialize(viewModel.GetTicketTypesCount()))
+                        </script>
+                    </div>
+                    <div class="ticket-priority-chart-div">
+                        <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
+                        <script>
+                            drawChart(
+                                "@viewModel.project.name-ticket-priority-chart",
+                                "Tickets by priority",
+                                @Json.Serialize(viewModel.GetTicketPriorities()),
+                                @Json.Serialize(viewModel.GetTicketPriorityColors()),
+                                @Json.Serialize(viewModel.GetTicketPriorityCount()))
+                        </script>
+                    </div>
+                    <div class="ticket-status-chart-div">
+                        <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
+                        <script>
+                            drawChart(
+                                "@viewModel.project.name-ticket-status-chart",
+                                "Tickets by status",
+                                @Json.Serialize(viewModel.GetTicketStatuses()),
+                                @Json.Serialize(viewModel.GetTicketStatusColors()),
+                                @Json.Serialize(viewModel.GetTicketStatusCount()))
+                        </script>
+                    </div>
+                </div>
+            }
+        </div>
     }
 </div>
