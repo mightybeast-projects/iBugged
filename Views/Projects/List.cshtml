@@ -142,6 +142,7 @@
                 success: function (data) {
                     $('.modal-body').html(data);
                     $("#project-create-modal").modal("show");
+                    applyMultiSelect();
                 }
             })
         });
@@ -155,12 +156,17 @@
                 success: function (data) {
                     $('.modal-body').html(data);
                     $("#project-edit-modal").modal("show");
-                    $('#my-select').multiSelect(
-                    {
-                        selectableHeader: "<div class='custom-header'>Select members:</div>",
-                        selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
-                    })
+                    applyMultiSelect();
                 }
+            })
+        }
+
+        function applyMultiSelect()
+        {
+            $('.my-select').multiSelect(
+            {
+                selectableHeader: "<div class='custom-header'>Select members:</div>",
+                selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
             })
         }
     </script>

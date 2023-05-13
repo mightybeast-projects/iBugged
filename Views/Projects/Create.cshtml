@@ -5,18 +5,8 @@
     <input asp-for="name" /><br />
     <label>Description:</label><br />
     <input asp-for="description" /><br />
-    <br />
-    <select id="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
-    <br />
+    <label>Choose project members :</label><br />
+    <select class="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
+    <br /><br />
     <input type="Submit" value="Create"/>
 </form>
-
-@section scripts {
-    <script type="text/javascript">
-        $('#my-select').multiSelect(
-        {
-            selectableHeader: "<div class='custom-header'>Select members:</div>",
-            selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
-        })
-    </script>
-}
