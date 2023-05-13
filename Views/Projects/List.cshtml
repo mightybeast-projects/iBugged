@@ -6,14 +6,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="~/js/chartDrawer.js" asp-append-version="true"></script>
+<script src="~/js/projectModalsInit.js" asp-append-version="true" async></script>
 
 <div class="text-left">
     <p><h3>Projects</h3></p>
 </div>
+
 <div>
     @if (service.user.role is ProjectManager)
     {
-        <a id="create-project-btn" class="btn btn-success">
+        <a onclick="createProject()" id="create-project-btn" class="btn btn-success">
             <i class="fa-solid fa-book"></i> Create new project
         </a>
     }
@@ -130,44 +132,3 @@
         </div>
     </div>
 </div>
-
-@section scripts
-{
-    <script>
-        $("#create-project-btn").on("click", function() {
-            $.ajax({
-                type: "GET",
-                url: '/Projects/Create',
-                contentType: "application/text; charset=utf-8",
-                success: function (data) {
-                    $('.modal-body').html(data);
-                    $("#project-create-modal").modal("show");
-                    applyMultiSelect();
-                }
-            })
-        });
-
-        function editProject(projectId)
-        {
-            $.ajax({
-                type: "GET",
-                url: '/Projects/Edit?id=' + projectId,
-                contentType: "application/text; charset=utf-8",
-                success: function (data) {
-                    $('.modal-body').html(data);
-                    $("#project-edit-modal").modal("show");
-                    applyMultiSelect();
-                }
-            })
-        }
-
-        function applyMultiSelect()
-        {
-            $('.my-select').multiSelect(
-            {
-                selectableHeader: "<div class='custom-header'>Select members:</div>",
-                selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
-            })
-        }
-    </script>
-}
