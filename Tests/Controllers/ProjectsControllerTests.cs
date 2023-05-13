@@ -55,7 +55,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Create();
 
-        AssertViewResultReturnsView(nameof(controller.Create));
+        AssertViewResultReturnsPartialView(nameof(controller.Create));
     }
 
     [Test]

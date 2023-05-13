@@ -13,7 +13,7 @@
 <div>
     @if (service.user.role is ProjectManager)
     {
-        <a class="btn btn-success" asp-controller="Projects" asp-action="Create">
+        <a id="create-project-btn" class="btn btn-success">
             <i class="fa-solid fa-book"></i> Create new project
         </a>
     }
@@ -100,3 +100,35 @@
         </div>
     }
 </div>
+
+<div id="project-create-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create new project</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@section scripts
+{
+    <script>
+        $("#create-project-btn").on( "click", function() {
+            $.ajax({
+                type: "GET",
+                url: '/Projects/Create',
+                contentType: "application/text; charset=utf-8",
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $("#project-create-modal").modal("show");
+                }
+            })
+        });
+    </script>
+}

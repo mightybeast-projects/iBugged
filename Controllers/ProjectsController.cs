@@ -21,7 +21,7 @@ public class ProjectsController : ControllerBase
     {
         ViewBag.usersList = projectsService.GetUsersList();
 
-        return View(nameof(Create));
+        return PartialView(nameof(Create));
     }
 
     [HttpGet]

@@ -38,6 +38,12 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
         Assert.AreEqual(viewName, ((ViewResult)result).ViewName);
     }
 
+    protected void AssertViewResultReturnsPartialView(string viewName)
+    {
+        Assert.IsInstanceOf<PartialViewResult>(result);
+        Assert.AreEqual(viewName, ((PartialViewResult)result).ViewName);
+    }
+
     protected void AssertRedirectToActionResultReturnsAction(string actionName)
     {
         Assert.IsInstanceOf<RedirectToActionResult>(result);
