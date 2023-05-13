@@ -30,7 +30,7 @@
                         @if (service.user.role is ProjectManager)
                         {
                             <div class="edit-btn">
-                                <a class="link-icon" title="Edit project @viewModel.project.name" asp-controller="Projects" asp-action="Edit" asp-route-id="@viewModel.project.id">
+                                <a onclick="editProject('@viewModel.project.id')" href="#" class="link-icon" title="Edit project @viewModel.project.name">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
@@ -102,24 +102,39 @@
 </div>
 
 <div id="project-create-modal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Create new project</h4>
-                </div>
-                <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create new project</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
+
+<div id="project-edit-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit project</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts
 {
     <script>
-        $("#create-project-btn").on( "click", function() {
+        $("#create-project-btn").on("click", function() {
             $.ajax({
                 type: "GET",
                 url: '/Projects/Create',
@@ -130,5 +145,23 @@
                 }
             })
         });
+
+        function editProject(projectId)
+        {
+            $.ajax({
+                type: "GET",
+                url: '/Projects/Edit?id=' + projectId,
+                contentType: "application/text; charset=utf-8",
+                success: function (data) {
+                    $('.modal-body').html(data);
+                    $("#project-edit-modal").modal("show");
+                    $('#my-select').multiSelect(
+                    {
+                        selectableHeader: "<div class='custom-header'>Select members:</div>",
+                        selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
+                    })
+                }
+            })
+        }
     </script>
 }

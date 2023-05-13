@@ -29,7 +29,7 @@ public class ProjectsController : ControllerBase
     {
         ViewBag.usersList = projectsService.GetUsersList();
 
-        return View(nameof(Edit), projectsService.Get(id));
+        return PartialView(nameof(Edit), projectsService.Get(id));
     }
 
     [HttpGet]

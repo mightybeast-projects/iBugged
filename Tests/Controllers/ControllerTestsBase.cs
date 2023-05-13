@@ -63,9 +63,16 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
         Assert.AreEqual(obj1Json, obj2Json);
     }
 
-    protected void AssertModelIsEqualWithResultModel<W>(W model)
+    protected void AssertModelIsEqualWithViewResultModel<W>(W model)
     {
         var viewModel = ((ViewResult)result).Model!;
+        var modelProject = (W)viewModel;
+        AssertObjectsAreEqualAsJsons(model!, viewModel);
+    }
+
+    protected void AssertModelIsEqualWithPartialViewResultModel<W>(W model)
+    {
+        var viewModel = ((PartialViewResult)result).Model!;
         var modelProject = (W)viewModel;
         AssertObjectsAreEqualAsJsons(model!, viewModel);
     }

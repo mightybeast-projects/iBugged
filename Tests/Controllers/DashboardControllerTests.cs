@@ -44,7 +44,7 @@ public class DashboardControllerTests : ControllerTestsBase<DashboardController>
             m.GetAll(It.IsAny<Expression<Func<Ticket, bool>>>()));
         projectsRepositoryMock.Verify(m => m.Get(project.id));
         usersRepositoryMock.Verify(m => m.Get(user.id));
-        AssertModelIsEqualWithResultModel(
+        AssertModelIsEqualWithViewResultModel(
             new List<TicketViewModel> { ticketViewModel });
     }
 

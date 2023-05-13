@@ -46,7 +46,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
                 project.membersId.Contains(user.id))));
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
-        AssertModelIsEqualWithResultModel(
+        AssertModelIsEqualWithViewResultModel(
             new List<ProjectViewModel>{ projectVM });
     }
 
@@ -88,7 +88,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Edit(project.id);
 
-        AssertViewResultReturnsView(nameof(controller.Edit));
+        AssertViewResultReturnsPartialView(nameof(controller.Edit));
     }
 
     [Test]
@@ -98,7 +98,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
 
         AssertViewBagList(controller.ViewBag.usersList,
             users.Cast<Document>().ToList());
-        AssertModelIsEqualWithResultModel(project);
+        AssertModelIsEqualWithPartialViewResultModel(project);
     }
 
     [Test]

@@ -32,7 +32,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.List();
 
-        AssertModelIsEqualWithResultModel(users);
+        AssertModelIsEqualWithViewResultModel(users);
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Edit(user.id);
 
-        AssertModelIsEqualWithResultModel(user);
+        AssertModelIsEqualWithViewResultModel(user);
     }
 
     [Test]

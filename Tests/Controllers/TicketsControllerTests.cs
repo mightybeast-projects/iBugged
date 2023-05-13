@@ -44,7 +44,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         ticketsRepositoryMock.Verify(m => m.GetAll());
         projectsRepositoryMock.Verify(m => m.Get(project.id));
         usersRepositoryMock.Verify(m => m.Get(user.id));
-        AssertModelIsEqualWithResultModel(
+        AssertModelIsEqualWithViewResultModel(
             new List<TicketViewModel> { ticketViewModel });
     }
 
@@ -102,7 +102,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.Edit(ticket.id);
 
         AssertUsersAndProjectsListsInViewBag();
-        AssertModelIsEqualWithResultModel(ticket);
+        AssertModelIsEqualWithViewResultModel(ticket);
     }
 
     [Test]
