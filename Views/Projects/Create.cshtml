@@ -1,12 +1,16 @@
 @model Project
 
 <form asp-controller="Projects" asp-action="Create" method="post">
-    <label>Name:</label><br />
-    <input asp-for="name" /><br />
-    <label>Description:</label><br />
-    <input asp-for="description" /><br />
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" class="form-control" asp-for="name" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label><br />
+        <input id="description" class="form-control" asp-for="description" />
+    </div>
     <label>Choose project members :</label><br />
     <select class="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
-    <br /><br />
-    <input type="Submit" value="Create"/>
+    <br />
+    <input class="btn btn-success" type="Submit" value="Create"/>
 </form>
