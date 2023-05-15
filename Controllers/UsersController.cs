@@ -16,7 +16,7 @@ public class UsersController : ControllerBase
 
     [HttpGet]
     public IActionResult Edit(string id) =>
-        View(nameof(Edit), usersService.Get(id));
+        PartialView(nameof(Edit), usersService.Get(id));
 
     [HttpGet]
     public IActionResult Delete(string id)

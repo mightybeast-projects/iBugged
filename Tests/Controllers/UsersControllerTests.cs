@@ -40,7 +40,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Edit(user.id);
 
-        AssertViewResultReturnsView(nameof(controller.Edit));
+        AssertViewResultReturnsPartialView(nameof(controller.Edit));
     }
 
     [Test]
@@ -48,7 +48,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Edit(user.id);
 
-        AssertModelIsEqualWithViewResultModel(user);
+        AssertModelIsEqualWithPartialViewResultModel(user);
     }
 
     [Test]

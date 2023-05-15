@@ -4,6 +4,8 @@
     ViewData["Title"] = "Users";
 }
 
+<script src="~/js/userModalInit.js" asp-append-version="true" async></script>
+
 <div class="text-left">
     <p><h3>Users</h3></p>
 </div>
@@ -30,7 +32,7 @@
                     <ul>
                         <li>
                             <div class="edit-btn">
-                                <a class="link-icon" title="Edit user @user.name" asp-controller="Users" asp-action="Edit" asp-route-id="@user.id">
+                                <a onclick="editUser('@user.id')" href="#" class="link-icon" title="Edit user @user.name">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
@@ -48,3 +50,18 @@
         }
     </tbody>
 </table>
+
+<div id="user-edit-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit user</h4>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
