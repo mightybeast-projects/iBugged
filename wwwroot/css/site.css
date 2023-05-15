@@ -263,11 +263,15 @@ tbody tr {
 
 .dashboard-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
 }
 
 .dashboard-ticket-div {
-  margin-right: 20px;
-  max-width: 30%;
+  margin: 15px;
+  margin-bottom: 20px;
+  min-width: 22rem;
+  max-width: 1rem;
   word-wrap: break-word;
   padding: 20px;
   flex-direction: column;
@@ -286,6 +290,7 @@ tbody tr {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .ticket-title-div h3 {
@@ -296,6 +301,9 @@ tbody tr {
   margin-left: 20px;
   display: flex;
   align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .ticket-tags-div div {
