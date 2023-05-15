@@ -1,9 +1,5 @@
 @model Ticket
 
-@{
-    ViewData["Title"] = "Create new ticket";
-}
-
 <form asp-controller="Tickets" asp-action="Create" method="post">
     <div class="form-group">
         <label for="title">Title :</label>
@@ -43,7 +39,7 @@
     </div>
     <div class="form-group">
         <label for="authorId">Author :</label>
-        <input id="authorId" class="form-control" asp-for="authorId" hidden />
+        <input id="authorId" value="@service.user.id" class="form-control" asp-for="authorId" hidden />
         <input class="form-control" value="@service.user.name" disabled />
     </div>
     <br />
