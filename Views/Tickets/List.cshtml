@@ -5,12 +5,13 @@
 }
 
 <link rel="stylesheet" href="~/css/tags.css" asp-append-version="true" />
+<script src="~/js/ticketModalsInit.js" asp-append-version="true" async></script>
 
 <div class="text-left">
     <p><h3>Tickets</h3></p>
 </div>
 
-<a class="btn btn-success" asp-controller="Tickets" asp-action="Create">
+<a onclick="createTicket()" class="btn btn-success">
     <i class="fa-solid fa-ticket-simple"></i> Create new ticket
 </a>
 
@@ -89,7 +90,7 @@
                         {
                             <li>
                                 <div class="edit-btn">
-                                    <a class="link-icon" title="Edit ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Edit" asp-route-id="@viewModel.ticket.id">
+                                    <a onclick="editTicket('@viewModel.ticket.id')" href="#" class="link-icon" title="Edit ticket @viewModel.ticket.title">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </div>
@@ -111,6 +112,37 @@
         }
     </tbody>
 </table>
+
+
+<div id="ticket-create-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create new ticket</h4>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ticket-edit-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Edit ticket</h4>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
 
 @functions
 {

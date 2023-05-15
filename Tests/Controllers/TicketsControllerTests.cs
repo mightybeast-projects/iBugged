@@ -53,7 +53,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create();
 
-        AssertViewResultReturnsView(nameof(controller.Create));
+        AssertViewResultReturnsPartialView(nameof(controller.Create));
     }
 
     [Test]
@@ -93,7 +93,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket.id);
 
-        AssertViewResultReturnsView(nameof(controller.Edit));
+        AssertViewResultReturnsPartialView(nameof(controller.Edit));
     }
 
     [Test]
@@ -102,7 +102,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.Edit(ticket.id);
 
         AssertUsersAndProjectsListsInViewBag();
-        AssertModelIsEqualWithViewResultModel(ticket);
+        AssertModelIsEqualWithPartialViewResultModel(ticket);
     }
 
     [Test]

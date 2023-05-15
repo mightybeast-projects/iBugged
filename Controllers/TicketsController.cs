@@ -21,7 +21,7 @@ public class TicketsController : ControllerBase
         ViewBag.projectsList = ticketsService.GetProjectsList();
         ViewBag.usersList = ticketsService.GetUsersList();
 
-        return View(nameof(Create));
+        return PartialView(nameof(Create));
     }
 
     [HttpGet]
@@ -30,7 +30,7 @@ public class TicketsController : ControllerBase
         ViewBag.projectsList = ticketsService.GetProjectsList();
         ViewBag.usersList = ticketsService.GetUsersList();
 
-        return View(nameof(Edit), ticketsService.Get(id));
+        return PartialView(nameof(Edit), ticketsService.Get(id));
     }
 
     [HttpGet]
