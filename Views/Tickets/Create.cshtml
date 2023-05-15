@@ -5,33 +5,47 @@
 }
 
 <form asp-controller="Tickets" asp-action="Create" method="post">
-    <label>Title :</label><br />
-    <input asp-for="title" /><br />
-    <label>Description :</label><br />
-    <input asp-for="description" /><br />
-    <label>TicketType :</label><br />
-    <select asp-for="ticketType" asp-items="Html.GetEnumSelectList<TicketType>()"></select><br />
-    <label>Priority :</label><br />
-    <select asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select><br />
-    <label>Select project :</label><br />
-    <select asp-for="projectId" asp-items="ViewBag.projectsList"></select><br />
-    <label>Assignee :</label><br />
-    @if (service.user.role != Role.TeamMember)
-    {
-        <select asp-for="assigneeId" asp-items="ViewBag.usersList">
-            <option value="" selected>Unassigned</option>
-        </select><br />
-    }
-    else
-    {
-        <select asp-for="assigneeId">
-            <option value="" selected>Unassigned</option>
-            <option value="@service.user.id">@service.user.name</option>
-        </select><br />
-    }
-    <label>Author :</label><br />
-    <input asp-for="authorId" value="@service.user.id" hidden >
-    <input value="@service.user.name" disabled /><br />
+    <div class="form-group">
+        <label for="title">Title :</label>
+        <input id="title" class="form-control" asp-for="title" />
+    </div>
+    <div class="form-group">
+        <label for="description">Description :</label>
+        <input id="description" class="form-control" asp-for="description" />
+    </div>
+    <div class="form-group">
+        <label for="ticketType">Ticket type :</label>
+        <select class="form-select" asp-for="ticketType" asp-items="Html.GetEnumSelectList<TicketType>()"></select>
+    </div>
+    <div class="form-group">
+        <label for="priority">Priority :</label>
+        <select class="form-select" asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    </div>
+    <div class="form-group">
+        <label for="projectId">Select project :</label>
+        <select class="form-select" asp-for="projectId" asp-items="ViewBag.projectsList"></select>
+    </div>
+    <div class="form-group">
+        <label for="assigneeId">Assignee :</label>
+        @if (service.user.role != Role.TeamMember)
+        {
+            <select class="form-select" asp-for="assigneeId" asp-items="ViewBag.usersList">
+                <option value="" selected>Unassigned</option>
+            </select>
+        }
+        else
+        {
+            <select class="form-select" asp-for="assigneeId">
+                <option value="" selected>Unassigned</option>
+                <option value="@service.user.id">@service.user.name</option>
+            </select>
+        }
+    </div>
+    <div class="form-group">
+        <label for="authorId">Author :</label>
+        <input id="authorId" class="form-control" asp-for="authorId" hidden />
+        <input class="form-control" value="@service.user.name" disabled />
+    </div>
     <br />
-    <input type="Submit" value="Create"/>
+    <input class="btn btn-success" type="Submit" value="Create"/>
 </form>
