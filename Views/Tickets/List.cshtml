@@ -27,7 +27,7 @@
             <th scope="col">Assignee</th>
             <th scope="col">Author</th>
             <th scope="col">Creation date</th>
-            <th scope="col"></th>
+            <th class="text-center" scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -75,7 +75,8 @@
 
                 <td>
                     <ul>
-                        @if (service.user.role != TeamMember && viewModel.ticket.isOpened)
+                        @if (service.user.role != TeamMember && viewModel.ticket.isOpened ||
+                            UserIsTeamMemberAndAssigneeOfTicket(viewModel.ticket))
                         {
                             <li>
                                 <div class="close-ticket-btn">
@@ -96,15 +97,16 @@
                                 </div>
                             </li>
                         }
-                        @if (service.user.role != TeamMember)
+                        @if (service.user.role != TeamMember ||
+                            UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))
                         {
-                        <li>
-                            <div class="delete-btn">
-                                <a class="link-icon" title="Delete ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Delete" asp-route-id="@viewModel.ticket.id">
-                                    <i class="fa-solid fa-trash"></i>
-                                </a>
-                            </div>
-                        </li>
+                            <li>
+                                <div class="delete-btn">
+                                    <a class="link-icon" title="Delete ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Delete" asp-route-id="@viewModel.ticket.id">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </li>
                         }
                     </ul>
                 </td>
@@ -149,4 +151,9 @@
     private bool UserIsTeamMemberAndAuthorOfTicket(Ticket ticket) =>
         service.user.role == TeamMember && 
         service.user.id == ticket.authorId;
+
+    private bool UserIsTeamMemberAndAssigneeOfTicket(Ticket ticket) =>
+        service.user.role == TeamMember &&
+        service.user.id == ticket.assigneeId &&
+        ticket.isOpened;
 }

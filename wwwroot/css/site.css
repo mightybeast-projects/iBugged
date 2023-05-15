@@ -290,7 +290,6 @@ tbody tr {
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .ticket-title-div h3 {
@@ -300,10 +299,7 @@ tbody tr {
 .ticket-tags-div {
   margin-left: 20px;
   display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  align-items: flex-start;
 }
 
 .ticket-tags-div div {
