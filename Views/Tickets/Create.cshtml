@@ -11,27 +11,27 @@
     </div>
     <div class="form-group">
         <label for="ticketType">Ticket type :</label>
-        <select class="form-select" asp-for="ticketType" asp-items="Html.GetEnumSelectList<TicketType>()"></select>
+        <select id="ticketType" class="form-select" asp-for="ticketType" asp-items="Html.GetEnumSelectList<TicketType>()"></select>
     </div>
     <div class="form-group">
         <label for="priority">Priority :</label>
-        <select class="form-select" asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+        <select id="priority" class="form-select" asp-for="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
     </div>
     <div class="form-group">
         <label for="projectId">Select project :</label>
-        <select class="form-select" asp-for="projectId" asp-items="ViewBag.projectsList"></select>
+        <select id="projectId" class="form-select" asp-for="projectId" asp-items="ViewBag.projectsList"></select>
     </div>
     <div class="form-group">
         <label for="assigneeId">Assignee :</label>
         @if (service.user.role != Role.TeamMember)
         {
-            <select class="form-select" asp-for="assigneeId" asp-items="ViewBag.usersList">
+            <select id="assigneeId" class="form-select" asp-for="assigneeId" asp-items="ViewBag.usersList">
                 <option value="" selected>Unassigned</option>
             </select>
         }
         else
         {
-            <select class="form-select" asp-for="assigneeId">
+            <select id="assigneeId" class="form-select" asp-for="assigneeId">
                 <option value="" selected>Unassigned</option>
                 <option value="@service.user.id">@service.user.name</option>
             </select>
