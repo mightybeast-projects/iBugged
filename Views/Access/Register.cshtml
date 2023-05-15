@@ -20,7 +20,7 @@
         <form id="registration-form" asp-controller="Access" asp-action="Register" method="post">
             <div class="form-group">
                 <label for="name">Username:</label>
-                <input id="name" class="form-control" asp-for="name" />
+                <input id="name" class="form-control" asp-for="name" maxlength="20" />
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>

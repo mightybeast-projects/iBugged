@@ -25,13 +25,18 @@
                 <label for="password">Password:</label>
                 <input id="password" class="form-control" asp-for="password" />
             </div>
-            <div class="form-check"></div>
+            <div class="form-check">
+                <div class="error-message">
+                    @ViewBag.errorMessage <br />
+                </div>
+            </div>
             <button id="login-btn" class="btn btn-success" type="Submit">Log In</button>
             <a id="register-page-btn" class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
-            <p>@ViewBag.errorMessage</p>
         </form>
 
-        <label>Or log in as demo users:</label><br>
+        <div class="demo-users-message text-center">
+            <h5>Or log in as demo users :</h5>
+        </div>
         <button type="button" class="btn btn-secondary"
             onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
         <button type="button" class="btn btn-secondary"
