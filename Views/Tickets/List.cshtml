@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="~/css/tags.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 <script src="~/js/ticketModalsInit.js" asp-append-version="true" async></script>
 
 <div class="text-left">
@@ -17,12 +18,7 @@
 
 <br />
 
-<form class="search-form" asp-controller="Tickets" asp-action="List">
-    <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="20" placeholder="Search by title"/>
-    <input class="btn btn-info" type="Submit" value="Search"/>
-</form>
-
-<table class="table data-table">
+<table id="ticketsTable" class="data-table">
     <thead>
         <tr>
             <th scope="col">Title</th>
@@ -163,4 +159,19 @@
         service.user.role == TeamMember &&
         service.user.id == ticket.assigneeId &&
         ticket.isOpened;
+}
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('.data-table').DataTable({
+                "lengthChange": false,
+                language: {
+                    search : "",
+                    searchPlaceholder: "Search..."
+                }
+            });
+        } );
+    </script>
 }
