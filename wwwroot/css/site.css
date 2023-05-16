@@ -148,7 +148,7 @@ table.dataTable thead th, table.dataTable thead td {
   vertical-align: middle;
 }
 
-.edit-btn, .delete-btn, .close-ticket-btn {
+.edit-btn, .delete-btn, .close-ticket-btn, .reopen-ticket-btn {
   width: 30px;
   height: 30px;
   border: solid transparent 1px;
@@ -168,6 +168,10 @@ table.dataTable thead th, table.dataTable thead td {
 
 .close-ticket-btn {
   background-color: #00c900;
+}
+
+.reopen-ticket-btn {
+  background-color: rgb(0, 106, 255);
 }
 
 .link-icon {

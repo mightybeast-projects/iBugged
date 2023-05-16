@@ -88,6 +88,17 @@
                                 </div>
                             </li>
                         }
+                        else if(service.user.role != TeamMember && !viewModel.ticket.isOpened ||
+                            UserIsTeamMemberAndAssigneeOfTicket(viewModel.ticket))
+                        {
+                            <li>
+                                <div class="reopen-ticket-btn">
+                                    <a class="link-icon" title="Reopen ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="ReopenTicket" asp-route-id="@viewModel.ticket.id">
+                                        <i class="fa-solid fa-rotate-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        }
                         @if (service.user.role != TeamMember ||
                             UserIsTeamMemberAndAuthorOfTicket(viewModel.ticket))
                         {
