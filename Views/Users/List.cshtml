@@ -10,12 +10,7 @@
     <p><h3>Users</h3></p>
 </div>
 
-<form class="search-form" asp-controller="Users" asp-action="List">
-    <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="20" placeholder="Search by username"/>
-    <input class="btn btn-info" type="Submit" value="Search"/>
-</form>
-
-<table class="table data-table">
+<table id="data-table" class="table table-striped data-table">
     <thead>
         <tr>
             <th scope="col">Username</th>
@@ -68,3 +63,8 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="~/js/dataTablesInit.js" asp-append-version="true"></script>
+}

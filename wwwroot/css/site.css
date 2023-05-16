@@ -136,8 +136,15 @@ a {
 }
 
 .data-table {
-  border-collapse: separate;
-  border-spacing: 0 10px;
+  vertical-align: middle;
+}
+
+table.dataTable thead th, table.dataTable thead td {
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.table>thead {
   vertical-align: middle;
 }
 
@@ -375,4 +382,8 @@ tbody tr {
   appearance: none;
   border-radius: 0.25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  margin-top: 1em;
 }
