@@ -28,15 +28,17 @@ public class ProjectsService : Service
         project.ticketsId.ForEach(id => ticketsRepository.Delete(id));
     }
 
-    public List<ProjectViewModel> GetProjectViewModels() =>
-        projectsRepository
-            .GetAll()
-            .ConvertAll(project => GetProjectViewModel(project));
+    public List<ProjectViewModel> GetProjectViewModels(string searchString = null!)
+    {
+        List<Project> projects;
 
-    public List<ProjectViewModel> GetProjectViewModels(string searchString) =>
-        projectsRepository
-            .GetAll(project => project.name.Contains(searchString))
-            .ConvertAll(project => GetProjectViewModel(project));
+        if (searchString is null)
+            projects = projectsRepository.GetAll();
+        else
+            projects = projectsRepository
+                .GetAll(project => project.name.Contains(searchString));
+        return projects.ConvertAll(project => GetProjectViewModel(project));
+    }
 
     private ProjectViewModel GetProjectViewModel(Project project)
     {

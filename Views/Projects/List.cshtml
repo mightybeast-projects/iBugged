@@ -20,6 +20,11 @@
         </a>
     }
 </div>
+<br />
+<form class="search-form" asp-controller="Projects" asp-action="List">
+    <input id="searchField" class="form-control" name="searchString" maxlength="30" placeholder="Search by name"/>
+    <input class="btn btn-info" type="Submit" value="Search"/>
+</form>
 
 <div class="projects-main-div">
     @foreach (var viewModel in Model)
