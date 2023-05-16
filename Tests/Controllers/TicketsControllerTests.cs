@@ -118,7 +118,9 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Edit(ticket);
 
+        projectsRepositoryMock.Verify(m => m.Get(ticket.projectId));
         ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+        projectsRepositoryMock.Verify(m => m.Edit(ticket.projectId, project));
     }
 
     [Test]

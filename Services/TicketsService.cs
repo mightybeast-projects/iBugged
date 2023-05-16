@@ -16,8 +16,18 @@ public class TicketsService : Service
 
     public Ticket Get(string id) => ticketsRepository.Get(id);
 
-    public void Edit(string id, Ticket ticket) =>
+    public void Edit(string id, Ticket ticket)
+    {
+        Project project = projectsRepository.Get(project => project.ticketsId.Contains(id));
+        project.ticketsId.Remove(id);
+        projectsRepository.Edit(project.id, project);
+
         ticketsRepository.Edit(id, ticket);
+
+        project = projectsRepository.Get(ticket.projectId);
+        project.ticketsId.Add(id);
+        projectsRepository.Edit(project.id, project);
+    }
 
     public void CloseTicket(string id)
     {
