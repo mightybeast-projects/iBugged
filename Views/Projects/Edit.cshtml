@@ -4,15 +4,15 @@
     <input asp-for="id" visible=false hidden>
     <div class="form-group">
         <label for="name">Name:</label>
-        <input id="name" class="form-control" asp-for="name" maxlength="30"/>
+        <input id="name" class="form-control" asp-for="name" maxlength="30" required/>
     </div>
     <div class="form-group">
         <label for="description">Description:</label>
-        <textarea id="description" class="form-control" asp-for="description" maxlength="100"></textarea>
+        <textarea id="description" class="form-control" asp-for="description" maxlength="100" required></textarea>
     </div>
     <div class="form-group">
         <label for="membersId">Choose project members :</label><br />
-        <select id="membersId" class="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple"></select>
+        <select id="membersId" class="my-select" asp-for="membersId" asp-items="@ViewBag.usersList" multiple="multiple" required></select>
     </div>
     @for(int i = 0; i < Model.ticketsId.Count; i++)
     {

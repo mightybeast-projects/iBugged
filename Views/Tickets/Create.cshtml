@@ -3,11 +3,11 @@
 <form asp-controller="Tickets" asp-action="Create" method="post">
     <div class="form-group">
         <label for="title">Title :</label>
-        <input id="title" class="form-control" asp-for="title" maxlength="30"/>
+        <input id="title" class="form-control" asp-for="title" maxlength="30" required/>
     </div>
     <div class="form-group">
         <label for="description">Description :</label>
-        <textarea id="description" class="form-control" asp-for="description" maxlength="100"></textarea>
+        <textarea id="description" class="form-control" asp-for="description" maxlength="100" required></textarea>
     </div>
     <div class="form-group">
         <label for="ticketType">Ticket type :</label>

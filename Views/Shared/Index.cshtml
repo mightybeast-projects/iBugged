@@ -19,11 +19,11 @@
         <form asp-controller="Access" asp-action="LogIn" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input id="email" class="form-control" asp-for="email" />
+                <input id="email" class="form-control" asp-for="email" required/>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input id="password" class="form-control" asp-for="password" />
+                <input id="password" class="form-control" asp-for="password" required/>
             </div>
             <div class="form-check">
                 <div class="error-message">
