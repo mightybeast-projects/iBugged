@@ -1,4 +1,4 @@
-function createProject(username)
+function createProject()
 {
     $.ajax({
         type: "GET",
@@ -7,12 +7,12 @@ function createProject(username)
         success: function (data) {
             $("#project-create-modal").modal("show");
             $('.modal-body').html(data);
-            applyMultiSelect(username);
+            applyMultiSelect();
         }
     })
 }
 
-function editProject(projectId, username)
+function editProject(projectId)
 {
     $.ajax({
         type: "GET",
@@ -21,12 +21,12 @@ function editProject(projectId, username)
         success: function (data) {
             $("#project-edit-modal").modal("show");
             $('.modal-body').html(data);            
-            applyMultiSelect(username);
+            applyMultiSelect();
         }
     })
 }
 
-function applyMultiSelect(username)
+function applyMultiSelect()
 {
     $('.my-select').multiSelect(
     {
