@@ -15,7 +15,7 @@
 <div>
     @if (service.user.role is ProjectManager)
     {
-        <a onclick="createProject()" id="create-project-btn" class="btn btn-success">
+        <a onclick="createProject('@service.user.name')" id="create-project-btn" class="btn btn-success">
             <i class="fa-solid fa-book"></i> Create new project
         </a>
     }
@@ -36,7 +36,7 @@
                         @if (service.user.role is ProjectManager)
                         {
                             <div class="edit-btn">
-                                <a onclick="editProject('@viewModel.project.id')" href="#" class="link-icon" title="Edit project @viewModel.project.name">
+                                <a onclick="editProject('@viewModel.project.id', '@service.user.name')" href="#" class="link-icon" title="Edit project @viewModel.project.name">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                             </div>
