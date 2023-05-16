@@ -360,7 +360,7 @@ tbody tr {
   display: contents;
 }
 
-#ticketsTable_filter input {
+#data-table_filter input {
   margin: 0;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
