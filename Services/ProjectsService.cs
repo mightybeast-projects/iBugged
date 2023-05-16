@@ -28,9 +28,9 @@ public class ProjectsService : Service
         project.ticketsId.ForEach(id => ticketsRepository.Delete(id));
     }
 
-    public List<ProjectViewModel> GetProjectViewModels(User user) =>
+    public List<ProjectViewModel> GetProjectViewModels() =>
         projectsRepository
-            .GetAll(project => project.membersId.Contains(user.id))
+            .GetAll()
             .ConvertAll(project => GetProjectViewModel(project));
 
     private ProjectViewModel GetProjectViewModel(Project project)

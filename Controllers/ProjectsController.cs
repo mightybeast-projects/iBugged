@@ -14,7 +14,7 @@ public class ProjectsController : ControllerBase
     [HttpGet]
     public IActionResult List() =>
         View(nameof(List),
-            projectsService.GetProjectViewModels(GetUserInSession()));
+            projectsService.GetProjectViewModels());
 
     [HttpGet]
     public IActionResult Create()

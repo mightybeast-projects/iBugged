@@ -41,9 +41,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.List();
 
-        projectsRepositoryMock.Verify(m =>
-            m.GetAll(It.Is<Expression<Func<Project, bool>>>(e =>
-                project.membersId.Contains(user.id))));
+        projectsRepositoryMock.Verify(m => m.GetAll());
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
         AssertModelIsEqualWithViewResultModel(
