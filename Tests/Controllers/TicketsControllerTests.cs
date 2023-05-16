@@ -49,6 +49,21 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
+    public void List_WithSearch_ReturnsFilteredTicketViewModelList()
+    {
+        string searchString = "i";
+
+        result = controller.List(searchString);
+
+        ticketsRepositoryMock.Verify(m =>
+            m.GetAll(It.IsAny<Expression<Func<Ticket, bool>>>()));
+        projectsRepositoryMock.Verify(m => m.Get(project.id));
+        usersRepositoryMock.Verify(m => m.Get(user.id));
+        AssertModelIsEqualWithViewResultModel(
+            new List<TicketViewModel> { ticketViewModel });
+    }
+
+    [Test]
     public void CreateGet_ReturnsCreateView()
     {
         result = controller.Create();

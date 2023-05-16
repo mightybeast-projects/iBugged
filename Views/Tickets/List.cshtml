@@ -15,6 +15,13 @@
     <i class="fa-solid fa-ticket-simple"></i> Create new ticket
 </a>
 
+<br />
+
+<form class="search-form" asp-controller="Tickets" asp-action="List">
+    <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="20" placeholder="Search by title"/>
+    <input class="btn btn-info" type="Submit" value="Search"/>
+</form>
+
 <table class="table data-table">
     <thead>
         <tr>

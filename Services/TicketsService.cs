@@ -58,6 +58,11 @@ public class TicketsService : Service
             .GetAll()
             .ConvertAll(ticket => GetTicketViewModel(ticket));
 
+    public List<TicketViewModel> GetTicketViewModels(string searchString) =>
+        ticketsRepository
+            .GetAll(ticket => ticket.title.Contains(searchString))
+            .ConvertAll(ticket => GetTicketViewModel(ticket));
+
     private TicketViewModel GetTicketViewModel(Ticket ticket) =>
         new TicketViewModel()
         {
