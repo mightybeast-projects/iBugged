@@ -27,6 +27,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    public IActionResult List(string searchString) =>
+        View(nameof(List), usersService.GetAll(searchString));
+
+    [HttpPost]
     public IActionResult Edit(User user)
     {
         usersService.Edit(user.id, user);

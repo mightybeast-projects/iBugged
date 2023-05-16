@@ -1,5 +1,8 @@
+using System.Linq.Expressions;
 using iBugged.Controllers;
+using iBugged.Models;
 using iBugged.Services;
+using Moq;
 using NUnit.Framework;
 
 namespace iBugged.Tests.Controllers;
@@ -32,6 +35,20 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.List();
 
+        AssertModelIsEqualWithViewResultModel(users);
+    }
+
+    [Test]
+    public void List_WithSearch_ReturnsFilteredUsersListModel()
+    {
+        string searchString = "e";
+
+        result = controller.List(searchString);
+
+        usersRepositoryMock.Verify(m =>
+            m.GetAll(It.Is<Expression<Func<User, bool>>>(e =>
+                user.name.Contains(searchString)))
+        );
         AssertModelIsEqualWithViewResultModel(users);
     }
 

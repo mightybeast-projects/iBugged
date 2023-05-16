@@ -10,6 +10,11 @@
     <p><h3>Users</h3></p>
 </div>
 
+<form class="search-form" asp-controller="users" asp-action="List">
+    <input id="searchField" class="form-control" name="searchString" maxlength="20" placeholder="Search by name"/>
+    <input class="btn btn-info" type="Submit" value="Search"/>
+</form>
+
 <table class="table data-table">
     <thead>
         <tr>

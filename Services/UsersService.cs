@@ -10,8 +10,11 @@ public class UsersService : Service
         IRepository<Project> projectsRepository,
         IRepository<Ticket> ticketsRepository)
         : base(usersRepository, projectsRepository, ticketsRepository) { }
-
-    public List<User> GetAll() => usersRepository.GetAll();
+    
+    public List<User> GetAll(string searchString = null!) =>
+        searchString is null ?
+            usersRepository.GetAll() :
+            usersRepository.GetAll(user => user.name.Contains(searchString));
 
     public User Get(string id) => usersRepository.Get(id);
 
