@@ -27,8 +27,12 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult List(string searchString) =>
-        View(nameof(List), usersService.GetAll(searchString));
+    public IActionResult List(string searchString)
+    {
+        ViewData["SearchString"] = searchString;
+    
+        return View(nameof(List), usersService.GetAll(searchString));
+    }
 
     [HttpPost]
     public IActionResult Edit(User user)

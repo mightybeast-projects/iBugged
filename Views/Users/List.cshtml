@@ -11,7 +11,7 @@
 </div>
 
 <form class="search-form" asp-controller="users" asp-action="List">
-    <input id="searchField" class="form-control" name="searchString" maxlength="20" placeholder="Search by name"/>
+    <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="20" placeholder="Search by name"/>
     <input class="btn btn-info" type="Submit" value="Search"/>
 </form>
 

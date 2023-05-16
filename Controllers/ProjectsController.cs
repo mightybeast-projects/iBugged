@@ -40,8 +40,12 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult List(string searchString) =>
-        View(nameof(List), projectsService.GetProjectViewModels(searchString));
+    public IActionResult List(string searchString)
+    {
+        ViewData["SearchString"] = searchString;
+
+        return View(nameof(List), projectsService.GetProjectViewModels(searchString));
+    }
 
     [HttpPost]
     public IActionResult Create(Project project)
