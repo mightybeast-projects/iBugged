@@ -33,6 +33,11 @@ public class ProjectsService : Service
             .GetAll()
             .ConvertAll(project => GetProjectViewModel(project));
 
+    public List<ProjectViewModel> GetProjectViewModels(string searchString) =>
+        projectsRepository
+            .GetAll(project => project.name.Contains(searchString))
+            .ConvertAll(project => GetProjectViewModel(project));
+
     private ProjectViewModel GetProjectViewModel(Project project)
     {
         projectVM = new ProjectViewModel();

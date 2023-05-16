@@ -13,8 +13,7 @@ public class ProjectsController : ControllerBase
 
     [HttpGet]
     public IActionResult List() =>
-        View(nameof(List),
-            projectsService.GetProjectViewModels());
+        View(nameof(List), projectsService.GetProjectViewModels());
 
     [HttpGet]
     public IActionResult Create()
@@ -39,6 +38,10 @@ public class ProjectsController : ControllerBase
 
         return RedirectToAction(nameof(List));
     }
+
+    [HttpPost]
+    public IActionResult List(string searchString) =>
+        View(nameof(List), projectsService.GetProjectViewModels(searchString));
 
     [HttpPost]
     public IActionResult Create(Project project)

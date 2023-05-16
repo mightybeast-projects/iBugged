@@ -37,6 +37,22 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     }
 
     [Test]
+    public void List_WithSearch_ReturnsFilteredViewModelList()
+    {
+        string searchString = "Project_";
+
+        result = controller.List(searchString);
+
+        projectsRepositoryMock.Verify(m =>
+            m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()));
+        usersRepositoryMock.Verify(m => m.Get(user.id));
+        ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
+        AssertModelIsEqualWithViewResultModel(
+            new List<ProjectViewModel> { projectVM }
+        );
+    }
+
+    [Test]
     public void List_ReturnsProjectViewModelList()
     {
         result = controller.List();
@@ -45,7 +61,8 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
         AssertModelIsEqualWithViewResultModel(
-            new List<ProjectViewModel>{ projectVM });
+            new List<ProjectViewModel>{ projectVM }
+        );
     }
 
     [Test]
