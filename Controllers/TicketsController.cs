@@ -42,6 +42,14 @@ public class TicketsController : ControllerBase
     }
 
     [HttpGet]
+    public IActionResult ReopenTicket(string id)
+    {
+        ticketsService.ReopenTicket(id);
+
+        return RedirectToAction(nameof(List));
+    }
+
+    [HttpGet]
     public IActionResult Delete(string id)
     {
         ticketsService.DeleteTicket(id);

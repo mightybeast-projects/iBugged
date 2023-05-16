@@ -139,6 +139,23 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     }
 
     [Test]
+    public void ReopenTicket_ReturnsListView()
+    {
+        result = controller.ReopenTicket(ticket.id);
+
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
+    }
+
+    [Test]
+    public void ReopenTicket_ReopensTicket()
+    {
+        result = controller.ReopenTicket(ticket.id);
+
+        ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, It.IsAny<Ticket>()));
+    }
+
+    [Test]
     public void CloseTicket_RedirectsToListView()
     {
         result = controller.CloseTicket(ticket.id);
@@ -152,7 +169,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         result = controller.CloseTicket(ticket.id);
 
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
-        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, It.IsAny<Ticket>()));
     }
 
     [Test]

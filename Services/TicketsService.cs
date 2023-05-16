@@ -29,12 +29,9 @@ public class TicketsService : Service
         projectsRepository.Edit(project.id, project);
     }
 
-    public void CloseTicket(string id)
-    {
-        Ticket ticket = ticketsRepository.Get(id);
-        ticket.isOpened = false;
-        ticketsRepository.Edit(ticket.id, ticket);
-    }
+    public void CloseTicket(string id) => ChangeTicketStatusAndEdit(id, false);
+
+    public void ReopenTicket(string id) => ChangeTicketStatusAndEdit(id, true);
 
     public void DeleteTicket(string id)
     {
@@ -62,6 +59,13 @@ public class TicketsService : Service
         ticketsRepository
             .GetAll(ticket => ticket.title.Contains(searchString))
             .ConvertAll(ticket => GetTicketViewModel(ticket));
+
+    private void ChangeTicketStatusAndEdit(string id, bool status)
+    {
+        Ticket ticket = ticketsRepository.Get(id);
+        ticket.isOpened = status;
+        ticketsRepository.Edit(ticket.id, ticket);
+    }
 
     private TicketViewModel GetTicketViewModel(Ticket ticket) =>
         new TicketViewModel()
