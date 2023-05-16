@@ -1,4 +1,4 @@
-function createProject(username)
+function createProject()
 {
     $.ajax({
         type: "GET",
@@ -7,12 +7,12 @@ function createProject(username)
         success: function (data) {
             $("#project-create-modal").modal("show");
             $('.modal-body').html(data);
-            applyMultiSelect(username);
+            applyMultiSelect();
         }
     })
 }
 
-function editProject(projectId, username)
+function editProject(projectId)
 {
     $.ajax({
         type: "GET",
@@ -26,14 +26,11 @@ function editProject(projectId, username)
     })
 }
 
-function applyMultiSelect(username)
+function applyMultiSelect()
 {
     $('.my-select').multiSelect(
     {
         selectableHeader: "<div class='custom-header'>Select members:</div>",
         selectionHeader: "<div class='custom-header'>Selected memebers:</div>"
     })
-
-    $('.my-select').multiSelect('select', 'MightyBeast');
-    $('.my-select').multiselect('refresh');
 }
