@@ -6,7 +6,7 @@ function createTicket()
         contentType: "application/text; charset=utf-8",
         success: function (data) {
             $("#ticket-create-modal").modal("show");
-            $('.modal-body').html(data);
+            $('#ticket-create-modal .modal-body').html(data);
         }
     })
 }
@@ -19,7 +19,7 @@ function editTicket(ticketId)
         contentType: "application/text; charset=utf-8",
         success: function (data) {
             $("#ticket-edit-modal").modal("show");
-            $('.modal-body').html(data);
+            $('#ticket-edit-modal .modal-body').html(data);
         }
     })
 }

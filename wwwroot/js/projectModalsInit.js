@@ -6,7 +6,7 @@ function createProject()
         contentType: "application/text; charset=utf-8",
         success: function (data) {
             $("#project-create-modal").modal("show");
-            $('.modal-body').html(data);
+            $('#project-create-modal .modal-body').html(data);
             applyMultiSelect();
         }
     })
@@ -20,7 +20,7 @@ function editProject(projectId)
         contentType: "application/text; charset=utf-8",
         success: function (data) {
             $("#project-edit-modal").modal("show");
-            $('.modal-body').html(data);            
+            $('#project-edit-modal .modal-body').html(data);            
             applyMultiSelect();
         }
     })

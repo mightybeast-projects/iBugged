@@ -122,11 +122,29 @@
                         {
                             <li>
                                 <div class="delete-btn">
-                                    <a class="link-icon" title="Delete ticket @viewModel.ticket.title" asp-controller="Tickets" asp-action="Delete" asp-route-id="@viewModel.ticket.id">
+                                    <a href="#" onclick="$('#deleteModal-@viewModel.ticket.id').modal('show')" class="link-icon" title="Delete ticket @viewModel.ticket.title">
                                         <i class="fa-solid fa-trash"></i>
                                     </a>
                                 </div>
                             </li>
+                            <div id="deleteModal-@viewModel.ticket.id" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Delete confirmation</h4>
+                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                                <i class="fa-solid fa-xmark"></i>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Do you want to delete ticket : @viewModel.ticket.title</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-success" asp-controller="Tickets" asp-action="Delete" asp-route-id="@viewModel.ticket.id">Confirm</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         }
                     </ul>
                 </td>
