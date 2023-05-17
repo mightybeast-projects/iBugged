@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 
 namespace iBugged;
 
+[AutoValidateAntiforgeryToken]
 public abstract class ControllerBase : Controller
 {
     private const string SESSION_USER_STR = "User";
