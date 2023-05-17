@@ -27,6 +27,7 @@
 <table id="data-table" class="table table-striped data-table">
     <thead>
         <tr>
+            <th scope="col" hidden></th>
             <th scope="col">Title</th>
             <th scope="col">Description</th>
             <th scope="col">Type</th>
@@ -43,6 +44,7 @@
         @foreach (var viewModel in Model)
         {
             <tr>
+                <td hidden>@viewModel.ticket.id</td>
                 <td>@viewModel.ticket.title</td>
                 <td>@viewModel.ticket.description</td>
                 <td>
@@ -199,4 +201,9 @@
 @section scripts {
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="~/js/dataTablesInit.js" asp-append-version="true"></script>
+    <script>
+        $(function() {
+            $('.data-table').DataTable().search('@ViewData["SearchString"]').draw();
+        });
+    </script>
 }

@@ -57,12 +57,13 @@ public class TicketsController : ControllerBase
         return RedirectToAction(nameof(List));
     }
 
-    [HttpPost]
+    [Route("Tickets/List/{searchString}")]
+    [HttpGet]
     public IActionResult List(string searchString)
     {
         ViewBag.searchString = searchString;
 
-        return RedirectToAction(nameof(List));
+        return View(nameof(List), ticketsService.GetTicketViewModels());
     }
 
     [HttpPost]

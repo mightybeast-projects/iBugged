@@ -59,7 +59,7 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
         projectsRepositoryMock.Verify(m => m.Get(project.id));
         usersRepositoryMock.Verify(m => m.Get(user.id));
         AssertViewBagSearchString(controller.ViewBag.searchString, searchString);
-        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
+        AssertViewResultReturnsView(nameof(controller.List));
     }
 
     [Test]

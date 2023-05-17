@@ -11,7 +11,7 @@ public class DashboardController : ControllerBase
         this.dashboardService = dashboardService;
 
     [HttpGet]
-    public IActionResult Home() =>
+    public IActionResult Home() => 
         View(nameof(Home),
             dashboardService.GetTicketViewModels(GetUserInSession().id));
 

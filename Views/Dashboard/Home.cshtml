@@ -20,7 +20,8 @@
 <div class="dashboard-container">
     @foreach (var viewModel in Model)
     {
-        <div class="dashboard-ticket-div">
+        <div class="dashboard-ticket-div"
+            onclick="location.href = '../Tickets/List/@viewModel.ticket.title @viewModel.ticket.ticketType @viewModel.ticket.priority @viewModel.project.name'">
             <div class="ticket-title-div">
                 <h3>@viewModel.ticket.title</h3>
                 <div class="ticket-tags-div">

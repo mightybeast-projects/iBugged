@@ -31,7 +31,7 @@ public class UsersController : ControllerBase
     {
         ViewBag.searchString = searchString;
     
-        return RedirectToAction(nameof(List));
+        return View(nameof(List), usersService.GetAll());
     }
 
     [HttpPost]

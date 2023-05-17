@@ -47,7 +47,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
 
         usersRepositoryMock.Verify(m => m.GetAll());
         AssertViewBagSearchString(controller.ViewBag.searchString, searchString);
-        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
+        AssertViewResultReturnsView(nameof(controller.List));
     }
 
     [Test]
