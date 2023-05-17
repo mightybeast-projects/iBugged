@@ -67,9 +67,27 @@ else
                     @if (service.user.role is ProjectManager)
                     {
                         <div class="delete-btn">
-                            <a class="link-icon" title="Delete project @viewModel.project.name" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
+                            <a href="#" onclick="$('#deleteModal-@viewModel.project.id').modal('show')" class="link-icon" title="Delete project @viewModel.project.name">
                                 <i class="fa-solid fa-trash"></i>
                             </a>
+                        </div>
+                        <div id="deleteModal-@viewModel.project.id" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Delete confirmation</h4>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5>Do you want to delete project : @viewModel.project.name</h5>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="btn btn-success" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">Confirm</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     }
                 </div>
