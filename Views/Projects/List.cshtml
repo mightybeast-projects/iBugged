@@ -12,100 +12,110 @@
     <p><h3>Projects</h3></p>
 </div>
 
-<div>
-    @if (service.user.role is ProjectManager)
-    {
-        <a onclick="createProject()" id="create-project-btn" class="btn btn-success">
-            <i class="fa-solid fa-book"></i> Create new project
-        </a>
-    }
-</div>
-<form class="search-form" asp-controller="Projects" asp-action="List">
-    <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="30" placeholder="Search by name"/>
-    <input class="btn btn-info" type="Submit" value="Search"/>
-</form>
+@if (Model.Count() == 0)
+{
+    <div class="text-left">
+        <p><h4>There are no newly created projects in the system.</h4></p>
+    </div>
+}
+else
+{
+    <div>
+        @if (service.user.role is ProjectManager)
+        {
+            <a onclick="createProject()" id="create-project-btn" class="btn btn-success">
+                <i class="fa-solid fa-book"></i> Create new project
+            </a>
+        }
+    </div>
 
-<div class="projects-main-div">
-    @foreach (var viewModel in Model)
-    {
-        <div class="project-container">
-            <div class="project-info-div">
-                <div class="project-name-div">
-                    <div class="project-name">
-                        <h3>@viewModel.project.name</h3>
-                        @if (service.user.role is ProjectManager)
-                        {
-                            <div class="edit-btn">
-                                <a onclick="editProject('@viewModel.project.id')" href="#" class="link-icon" title="Edit project @viewModel.project.name">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
-                            </div>
-                        }
+    <form class="search-form" asp-controller="Projects" asp-action="List">
+        <input id="searchField" class="form-control" name="searchString" value='@ViewData["SearchString"]' maxlength="30" placeholder="Search by name"/>
+        <input class="btn btn-info" type="Submit" value="Search"/>
+    </form>
+
+    <div class="projects-main-div">
+        @foreach (var viewModel in Model)
+        {
+            <div class="project-container">
+                <div class="project-info-div">
+                    <div class="project-name-div">
+                        <div class="project-name">
+                            <h3>@viewModel.project.name</h3>
+                            @if (service.user.role is ProjectManager)
+                            {
+                                <div class="edit-btn">
+                                    <a onclick="editProject('@viewModel.project.id')" href="#" class="link-icon" title="Edit project @viewModel.project.name">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <div class="project-desc-div">
+                            @viewModel.project.description
+                        </div>
                     </div>
-                    <div class="project-desc-div">
-                        @viewModel.project.description
+                    <div class="project-members-div">
+                        <h5>Members (@viewModel.members.Count)</h5>
+                        <ul>
+                            @foreach (var member in viewModel.members)
+                            {
+                                <li><i class="fa-solid fa-user"></i> @member.name</li>
+                            }
+                        </ul>
                     </div>
+                    @if (service.user.role is ProjectManager)
+                    {
+                        <div class="delete-btn">
+                            <a class="link-icon" title="Delete project @viewModel.project.name" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </div>
+                    }
                 </div>
-                <div class="project-members-div">
-                    <h5>Members (@viewModel.members.Count)</h5>
-                    <ul>
-                        @foreach (var member in viewModel.members)
-                        {
-                            <li><i class="fa-solid fa-user"></i> @member.name</li>
-                        }
-                    </ul>
-                </div>
-                @if (service.user.role is ProjectManager)
+                <h5>Tickets : @viewModel.tickets.Count </h5>
+                @if (viewModel.tickets.Count != 0)
                 {
-                    <div class="delete-btn">
-                        <a class="link-icon" title="Delete project @viewModel.project.name" asp-controller="Projects" asp-action="Delete" asp-route-id="@viewModel.project.id">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                    <div class="charts-div">
+                        <div class="ticket-type-chart-div">
+                            <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
+                            <script>
+                                drawChart(
+                                    "@viewModel.project.name-ticket-type-chart",
+                                    "Tickets by type",
+                                    @Json.Serialize(viewModel.GetTicketTypes()),
+                                    @Json.Serialize(viewModel.GetTicketTypesColors()),
+                                    @Json.Serialize(viewModel.GetTicketTypesCount()))
+                            </script>
+                        </div>
+                        <div class="ticket-priority-chart-div">
+                            <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
+                            <script>
+                                drawChart(
+                                    "@viewModel.project.name-ticket-priority-chart",
+                                    "Tickets by priority",
+                                    @Json.Serialize(viewModel.GetTicketPriorities()),
+                                    @Json.Serialize(viewModel.GetTicketPriorityColors()),
+                                    @Json.Serialize(viewModel.GetTicketPriorityCount()))
+                            </script>
+                        </div>
+                        <div class="ticket-status-chart-div">
+                            <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
+                            <script>
+                                drawChart(
+                                    "@viewModel.project.name-ticket-status-chart",
+                                    "Tickets by status",
+                                    @Json.Serialize(viewModel.GetTicketStatuses()),
+                                    @Json.Serialize(viewModel.GetTicketStatusColors()),
+                                    @Json.Serialize(viewModel.GetTicketStatusCount()))
+                            </script>
+                        </div>
                     </div>
                 }
             </div>
-            <h5>Tickets : @viewModel.tickets.Count </h5>
-            @if (viewModel.tickets.Count != 0)
-            {
-                <div class="charts-div">
-                    <div class="ticket-type-chart-div">
-                        <canvas id="@viewModel.project.name-ticket-type-chart"></canvas>
-                        <script>
-                            drawChart(
-                                "@viewModel.project.name-ticket-type-chart",
-                                "Tickets by type",
-                                @Json.Serialize(viewModel.GetTicketTypes()),
-                                @Json.Serialize(viewModel.GetTicketTypesColors()),
-                                @Json.Serialize(viewModel.GetTicketTypesCount()))
-                        </script>
-                    </div>
-                    <div class="ticket-priority-chart-div">
-                        <canvas id="@viewModel.project.name-ticket-priority-chart"></canvas>
-                        <script>
-                            drawChart(
-                                "@viewModel.project.name-ticket-priority-chart",
-                                "Tickets by priority",
-                                @Json.Serialize(viewModel.GetTicketPriorities()),
-                                @Json.Serialize(viewModel.GetTicketPriorityColors()),
-                                @Json.Serialize(viewModel.GetTicketPriorityCount()))
-                        </script>
-                    </div>
-                    <div class="ticket-status-chart-div">
-                        <canvas id="@viewModel.project.name-ticket-status-chart"></canvas>
-                        <script>
-                            drawChart(
-                                "@viewModel.project.name-ticket-status-chart",
-                                "Tickets by status",
-                                @Json.Serialize(viewModel.GetTicketStatuses()),
-                                @Json.Serialize(viewModel.GetTicketStatusColors()),
-                                @Json.Serialize(viewModel.GetTicketStatusCount()))
-                        </script>
-                    </div>
-                </div>
-            }
-        </div>
-    }
-</div>
+        }
+    </div>
+}
 
 <div id="project-create-modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
