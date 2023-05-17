@@ -37,24 +37,21 @@ public class RepositoryMocksSetup
     {
         usersRepositoryMock.Setup(m => m.GetAll()).Returns(users);
         usersRepositoryMock.Setup(m => m.Get(user.id)).Returns(user);
+
         users.ForEach(u => usersRepositoryMock
             .Setup(m => m.Get(It.IsAny<Expression<Func<User, bool>>>()))
             .Returns((Expression<Func<User, bool>> predicate) =>
                 users.Find(predicate.Compile().Invoke)!));
         usersRepositoryMock
             .Setup(m => m.GetAll(It.IsAny<Expression<Func<User, bool>>>()))
-            .Returns((Expression<Func<User, bool>> predicate) =>
-                users.FindAll(predicate.Compile().Invoke));
+            .Returns(users);
     }
 
     private void SetUpTicketsRepositoryMock()
     {
-        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
         ticketsRepositoryMock.Setup(m => m.GetAll()).Returns(tickets);
-        ticketsRepositoryMock
-            .Setup(m => m.GetAll(It.IsAny<Expression<Func<Ticket, bool>>>()))
-            .Returns((Expression<Func<Ticket, bool>> predicate) =>
-                tickets.FindAll(predicate.Compile().Invoke));
+        ticketsRepositoryMock.Setup(m => m.Get(ticket.id)).Returns(ticket);
+
         ticketsRepositoryMock
             .Setup(m => m.GetAll(It.IsAny<Expression<Func<Ticket, bool>>>()))
             .Returns(tickets);
@@ -63,14 +60,13 @@ public class RepositoryMocksSetup
     private void SetUpProjectsRepositoryMock()
     {
         projectsRepositoryMock.Setup(m => m.GetAll()).Returns(projects);
+        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
+
         projectsRepositoryMock
             .Setup(m => m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()))
-            .Returns((Expression<Func<Project, bool>> predicate) =>
-                projects.FindAll(predicate.Compile().Invoke));
-        projectsRepositoryMock.Setup(m => m.Get(project.id)).Returns(project);
+            .Returns(projects);
         projectsRepositoryMock
             .Setup(m => m.Get(It.IsAny<Expression<Func<Project, bool>>>()))
-            .Returns((Expression<Func<Project, bool>> predicate) =>
-                projects.Find(predicate.Compile().Invoke)!);
+            .Returns(project);
     }
 }

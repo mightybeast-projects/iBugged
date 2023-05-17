@@ -7,7 +7,7 @@ namespace iBugged.Tests;
 
 public static class TestsData
 {
-    public static User dummyUser = new User()
+    public static User dummyUser => new User()
     {
         id = "1",
         name = "MightyBeast",
@@ -16,7 +16,7 @@ public static class TestsData
         role = Role.ProjectManager
     };
 
-    public static User demoProjectManager = new User()
+    public static User demoProjectManager => new User()
     {
         id = "2",
         name = "Demo Project Manager",
@@ -25,7 +25,7 @@ public static class TestsData
         role = Role.ProjectManager
     };
 
-    public static User demoDeveloper = new User()
+    public static User demoDeveloper => new User()
     {
         id = "3",
         name = "Demo Developer",
@@ -34,7 +34,7 @@ public static class TestsData
         role = Role.Developer
     };
 
-    public static User demoTeamMember = new User()
+    public static User demoTeamMember => new User()
     {
         id = "4",
         name = "Demo Team Member",
@@ -43,16 +43,16 @@ public static class TestsData
         role = Role.TeamMember
     };
 
-    public static Project dummyProject = new Project()
+    public static Project dummyProject => new Project()
     {
         id = "1",
         name = "Project_1",
         description = "Simple project.",
-        membersId = new List<string>() { "1" },
-        ticketsId = new List<string>() { "1" }
+        membersId = new List<string>{ dummyUser.id },
+        ticketsId = new List<string>{ "1" }
     };
 
-    public static Ticket dummyTicket = new Ticket()
+    public static Ticket dummyTicket => new Ticket()
     {
         id = "1",
         title = "Ticket 1",
@@ -60,11 +60,12 @@ public static class TestsData
         priority = Priority.Low,
         ticketType = TicketType.Bug,
         projectId = "1",
-        assigneeId = "1",
-        authorId = "1",
+        assigneeId = dummyUser.id,
+        authorId = dummyUser.id,
+        creationDate = DateTime.Today
     };
 
-    public static TestCaseData[] userCases =
+    public static TestCaseData[] userCases => new TestCaseData[]
     {
         new TestCaseData(dummyUser),
         new TestCaseData(demoProjectManager),
@@ -72,7 +73,7 @@ public static class TestsData
         new TestCaseData(demoTeamMember),
     };
 
-    public static List<User> users = new List<User>
+    public static List<User> users => new List<User>
     {
         dummyUser,
         demoProjectManager,
@@ -80,11 +81,11 @@ public static class TestsData
         demoTeamMember
     };
 
-    public static List<Ticket> tickets = new List<Ticket>{ dummyTicket };
+    public static List<Ticket> tickets => new List<Ticket>{ dummyTicket };
 
-    public static List<Project> projects = new List<Project>{ dummyProject };
+    public static List<Project> projects => new List<Project>{ dummyProject };
 
-    public static TicketViewModel dummyTicketVM = new TicketViewModel()
+    public static TicketViewModel dummyTicketVM => new TicketViewModel()
     {
         ticket = dummyTicket,
         project = dummyProject,
@@ -92,7 +93,7 @@ public static class TestsData
         author = dummyUser
     };
 
-    public static ProjectViewModel dummyProjectVM = new ProjectViewModel()
+    public static ProjectViewModel dummyProjectVM => new ProjectViewModel()
     {
         project = dummyProject,
         members = new List<User>{ dummyUser },

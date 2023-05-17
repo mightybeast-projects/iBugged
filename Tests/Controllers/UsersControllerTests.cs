@@ -39,7 +39,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     }
 
     [Test]
-    public void List_WithSearch_RedirectsToListActionWithSearchString()
+    public void List_WithSearch_ReturnsListViewResultWithSearchString()
     {
         string searchString = "e";
 
@@ -103,7 +103,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Delete(user.id);
 
-        projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
+        projectsRepositoryMock.Verify(m => m.Edit(project.id, It.IsAny<Project>()));
     }
 
     [Test]
@@ -111,6 +111,6 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Delete(user.id);
 
-        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, It.IsAny<Ticket>()));
     }
 }

@@ -18,7 +18,8 @@ public class TicketsService : Service
 
     public void Edit(string id, Ticket ticket)
     {
-        Project project = projectsRepository.Get(project => project.ticketsId.Contains(id));
+        Project project = projectsRepository.Get(
+            project => project.ticketsId.Contains(id));
         project.ticketsId.Remove(id);
         projectsRepository.Edit(project.id, project);
 
@@ -35,8 +36,8 @@ public class TicketsService : Service
 
     public void DeleteTicket(string id)
     {
-        project = projectsRepository.Get(project =>
-            project.ticketsId.Contains(id));
+        project = projectsRepository.Get(
+            project => project.ticketsId.Contains(id));
         project.ticketsId.Remove(id);
         projectsRepository.Edit(project.id, project);
         ticketsRepository.Delete(id);
