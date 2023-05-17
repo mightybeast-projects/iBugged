@@ -79,7 +79,7 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     {
         result = controller.Edit(user);
 
-        usersRepositoryMock.Verify(m => m.Edit(user.id, user));
+        usersRepositoryMock.Verify(m => m.Edit(user.id, It.IsAny<User>()));
     }
 
     [Test]

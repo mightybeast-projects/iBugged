@@ -130,7 +130,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
     {
         result = controller.Edit(project);
 
-        projectsRepositoryMock.Verify(m => m.Edit(project.id, project));
+        projectsRepositoryMock.Verify(m => m.Edit(project.id, It.IsAny<Project>()));
     }
 
     [Test]

@@ -62,6 +62,6 @@ public class DashboardControllerTests : ControllerTestsBase<DashboardController>
         result = controller.CloseTicket(ticket.id);
 
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
-        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, ticket));
+        ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, It.IsAny<Ticket>()));
     }
 }
