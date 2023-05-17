@@ -45,7 +45,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
         AssertModelIsEqualWithViewResultModel(
-            new List<ProjectViewModel>{ projectVM }
+            new List<ProjectViewModel> { projectVM }
         );
     }
 

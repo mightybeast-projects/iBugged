@@ -44,7 +44,8 @@ public class ProjectsController : ControllerBase
     {
         ViewBag.searchString = searchString;
 
-        return View(nameof(List), projectsService.GetProjectViewModels(searchString));
+        return View(nameof(List),
+            projectsService.GetProjectViewModels(searchString));
     }
 
     [HttpPost]

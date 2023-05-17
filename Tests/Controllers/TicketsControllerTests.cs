@@ -99,7 +99,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     {
         result = controller.Create(ticket);
 
-        projectsRepositoryMock.Verify(m => m.Edit(project.id, It.IsAny<Project>()));
+        projectsRepositoryMock.Verify(m =>
+            m.Edit(project.id, It.IsAny<Project>()));
     }
 
     [Test]
@@ -134,7 +135,8 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
 
         projectsRepositoryMock.Verify(m => m.Get(ticket.projectId));
         ticketsRepositoryMock.Verify(m => m.Edit(ticket.id, It.IsAny<Ticket>()));
-        projectsRepositoryMock.Verify(m => m.Edit(ticket.projectId, It.IsAny<Project>()));
+        projectsRepositoryMock.Verify(m =>
+            m.Edit(ticket.projectId, It.IsAny<Project>()));
     }
 
     [Test]
@@ -190,14 +192,13 @@ public class TicketsControllerTests : ControllerTestsBase<TicketsController>
     [Test]
     public void Delete_UpdatesTicketProject()
     {
-        System.Console.WriteLine(projects.Find(project => project.ticketsId.Contains(ticket.id))!.name);
-
         result = controller.Delete(ticket.id);
 
-        projectsRepositoryMock.Verify(m => 
+        projectsRepositoryMock.Verify(m =>
             m.Get(It.Is<Expression<Func<Project, bool>>>(e =>
                 project.ticketsId.Contains(ticket.id))));
-        projectsRepositoryMock.Verify(m => m.Edit(project.id, It.IsAny<Project>()));
+        projectsRepositoryMock.Verify(m =>
+            m.Edit(project.id, It.IsAny<Project>()));
     }
 
     private void AssertUsersAndProjectsListsInViewBag()
