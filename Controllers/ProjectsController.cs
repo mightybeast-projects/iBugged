@@ -42,7 +42,7 @@ public class ProjectsController : ControllerBase
     [HttpPost]
     public IActionResult List(string searchString)
     {
-        ViewData["SearchString"] = searchString;
+        ViewBag.searchString = searchString;
 
         return View(nameof(List), projectsService.GetProjectViewModels(searchString));
     }

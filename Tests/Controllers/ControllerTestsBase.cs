@@ -79,4 +79,7 @@ public abstract class ControllerTestsBase<T> : RepositoryMocksSetup
 
     protected void AssertViewBagList(dynamic viewBagList, List<Document> list) =>
         Assert.AreEqual(list[0].id, viewBagList[0].Value);
+
+    protected void AssertViewBagSearchString(dynamic viewBagString, string str) =>
+        Assert.AreEqual(str, viewBagString);
 }

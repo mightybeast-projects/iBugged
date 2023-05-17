@@ -29,9 +29,9 @@ public class UsersController : ControllerBase
     [HttpPost]
     public IActionResult List(string searchString)
     {
-        ViewData["SearchString"] = searchString;
+        ViewBag.searchString = searchString;
     
-        return View(nameof(List), usersService.GetAll(searchString));
+        return RedirectToAction(nameof(List));
     }
 
     [HttpPost]

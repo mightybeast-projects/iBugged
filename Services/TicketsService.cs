@@ -55,11 +55,6 @@ public class TicketsService : Service
             .GetAll()
             .ConvertAll(ticket => GetTicketViewModel(ticket));
 
-    public List<TicketViewModel> GetTicketViewModels(string searchString) =>
-        ticketsRepository
-            .GetAll(ticket => ticket.title.Contains(searchString))
-            .ConvertAll(ticket => GetTicketViewModel(ticket));
-
     private void ChangeTicketStatusAndEdit(string id, bool status)
     {
         Ticket ticket = ticketsRepository.Get(id);

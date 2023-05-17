@@ -60,6 +60,7 @@ public class ProjectsControllerTests : ControllerTestsBase<ProjectsController>
             m.GetAll(It.IsAny<Expression<Func<Project, bool>>>()));
         usersRepositoryMock.Verify(m => m.Get(user.id));
         ticketsRepositoryMock.Verify(m => m.Get(ticket.id));
+        AssertViewBagSearchString(controller.ViewBag.searchString, searchString);
         AssertModelIsEqualWithViewResultModel(
             new List<ProjectViewModel> { projectVM }
         );

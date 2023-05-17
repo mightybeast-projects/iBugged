@@ -39,17 +39,15 @@ public class UsersControllerTests : ControllerTestsBase<UsersController>
     }
 
     [Test]
-    public void List_WithSearch_ReturnsFilteredUsersListModel()
+    public void List_WithSearch_RedirectsToListActionWithSearchString()
     {
         string searchString = "e";
 
         result = controller.List(searchString);
 
-        usersRepositoryMock.Verify(m =>
-            m.GetAll(It.Is<Expression<Func<User, bool>>>(e =>
-                user.name.Contains(searchString)))
-        );
-        AssertModelIsEqualWithViewResultModel(users);
+        usersRepositoryMock.Verify(m => m.GetAll());
+        AssertViewBagSearchString(controller.ViewBag.searchString, searchString);
+        AssertRedirectToActionResultReturnsAction(nameof(controller.List));
     }
 
     [Test]

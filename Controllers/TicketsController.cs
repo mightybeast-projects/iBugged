@@ -60,9 +60,9 @@ public class TicketsController : ControllerBase
     [HttpPost]
     public IActionResult List(string searchString)
     {
-        ViewData["SearchString"] = searchString;
+        ViewBag.searchString = searchString;
 
-        return View(nameof(List), ticketsService.GetTicketViewModels(searchString));
+        return RedirectToAction(nameof(List));
     }
 
     [HttpPost]
