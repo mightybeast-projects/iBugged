@@ -1,5 +1,6 @@
 using iBugged.Controllers;
 using iBugged.Models;
+using iBugged.Services;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -8,9 +9,15 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
+    protected readonly AccessService accessService;
+
     public AccessControllerTests()
     {
-        controller = new AccessController(usersRepositoryMock.Object);
+        accessService = new AccessService(
+            usersRepositoryMock.Object,
+            projectsRepositoryMock.Object,
+            ticketsRepositoryMock.Object);
+        controller = new AccessController(accessService);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
     }
 
