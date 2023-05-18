@@ -2,6 +2,7 @@ using GoogleAuthentication.Services;
 using iBugged.Models;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace iBugged.Controllers;
 
@@ -16,9 +17,9 @@ public class AccessController : ControllerBase
     [HttpGet]
     public IActionResult Index()
     {
-        var clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
-        var url = "http://localhost:5227/Access/SignInGoogle";
-        var googleSignInUrl = GoogleAuth.GetAuthUrl(clientId, url);
+        string clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
+        string url = "http://localhost:5227/Access/SignInGoogle";
+        string googleSignInUrl = GoogleAuth.GetAuthUrl(clientId, url);
         ViewBag.googleSignInUrl = googleSignInUrl;
 
         return View(nameof(Index));
@@ -32,13 +33,34 @@ public class AccessController : ControllerBase
         var url = "http://localhost:5227/Access/SignInGoogle";
         var token = await GoogleAuth.GetAuthAccessToken(code, clientId, clientSecret, url);
         var userProfile = await GoogleAuth.GetProfileResponseAsync(token.AccessToken);
-        ViewBag.userProfile = userProfile;
 
-        return View(nameof(Index));
+        return RedirectToAction(nameof(Index));
     }
 
     [HttpGet]
-    public IActionResult Register() => View(nameof(Register));
+    public IActionResult Register()
+    {
+        string clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
+        string url = "http://localhost:5227/Access/RegisterGoogle";
+        string googleSignInUrl = GoogleAuth.GetAuthUrl(clientId, url);
+        ViewBag.googleSignInUrl = googleSignInUrl;
+
+        return View(nameof(Register));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> RegisterGoogle(string code)
+    {
+        var clientSecret = "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";
+        var clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
+        var url = "http://localhost:5227/Access/RegisterGoogle";
+        var token = await GoogleAuth.GetAuthAccessToken(code, clientId, clientSecret, url);
+        var userProfile = await GoogleAuth.GetProfileResponseAsync(token.AccessToken);
+        User user = JsonConvert.DeserializeObject<User>(userProfile)!;
+        user.password = user.id;
+
+        return View(nameof(RegisterGoogle), user);
+    }
 
     [HttpGet]
     public IActionResult LogOut()

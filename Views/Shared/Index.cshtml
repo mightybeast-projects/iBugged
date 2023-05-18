@@ -33,8 +33,14 @@
             <button id="login-btn" class="btn btn-success" type="Submit">Log In</button>
             <a id="register-page-btn" class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
         </form>
-        
-        <a class="google-sign-in-button" href='@ViewBag.googleSignInUrl'>Log in with Google</a>
+
+        <a class="google-sign-in-button" href='@ViewBag.googleSignInUrl'>
+            <div class="left">
+                <img width="20px" alt="Google sign-in" 
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                Login with Google
+            </div>
+        </a>
 
         <div class="demo-users-message text-center">
             <h5>Or log in as demo users :</h5>
