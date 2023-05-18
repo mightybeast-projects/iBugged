@@ -33,8 +33,10 @@ public class AccessController : ControllerBase
         var url = "http://localhost:5227/Access/SignInGoogle";
         var token = await GoogleAuth.GetAuthAccessToken(code, clientId, clientSecret, url);
         var userProfile = await GoogleAuth.GetProfileResponseAsync(token.AccessToken);
+        User user = JsonConvert.DeserializeObject<User>(userProfile)!;
+        user.password = user.id;
 
-        return RedirectToAction(nameof(Index));
+        return LogIn(user.email, user.password);
     }
 
     [HttpGet]
