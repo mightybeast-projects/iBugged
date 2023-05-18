@@ -5,10 +5,10 @@
     ViewData["Title"] = "Login";
 }
 
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/icons/css/all.min.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/google-sign-in.css" />
 
 <body>
     <div class="center-div">
@@ -33,6 +33,8 @@
             <button id="login-btn" class="btn btn-success" type="Submit">Log In</button>
             <a id="register-page-btn" class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
         </form>
+        
+        <a class="google-sign-in-button" href='@ViewBag.googleSignInUrl'>Log in with Google</a>
 
         <div class="demo-users-message text-center">
             <h5>Or log in as demo users :</h5>

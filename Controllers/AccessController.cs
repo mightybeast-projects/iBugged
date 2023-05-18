@@ -1,3 +1,4 @@
+using GoogleAuthentication.Services;
 using iBugged.Models;
 using iBugged.Services.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,28 @@ public class AccessController : ControllerBase
         this.usersRepository = usersRepository;
 
     [HttpGet]
-    public IActionResult Index() => View(nameof(Index));
+    public IActionResult Index()
+    {
+        var clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
+        var url = "http://localhost:5227/Access/SignInGoogle";
+        var googleSignInUrl = GoogleAuth.GetAuthUrl(clientId, url);
+        ViewBag.googleSignInUrl = googleSignInUrl;
+
+        return View(nameof(Index));
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SignInGoogle(string code)
+    {
+        var clientSecret = "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";
+        var clientId = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
+        var url = "http://localhost:5227/Access/SignInGoogle";
+        var token = await GoogleAuth.GetAuthAccessToken(code, clientId, clientSecret, url);
+        var userProfile = await GoogleAuth.GetProfileResponseAsync(token.AccessToken);
+        ViewBag.userProfile = userProfile;
+
+        return View(nameof(Index));
+    }
 
     [HttpGet]
     public IActionResult Register() => View(nameof(Register));
