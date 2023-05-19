@@ -9,8 +9,8 @@ public class AccessService : Service
 {
     private const string CLIENT_ID = "493795471117-io9gpva1nr1mguegl9queu6s5571od4e.apps.googleusercontent.com";
     private const string CLIENT_SECRET = "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";
-    private const string GOOGLE_SIGN_IN_URL = "http://localhost:5227/Access/SignInGoogle";
-    private const string GOOGLE_REGISTER_URL = "http://localhost:5227/Access/RegisterGoogle";
+    private const string GOOGLE_SIGN_IN_URL = "https://ibugged.azurewebsites.net/Access/SignInGoogle";
+    private const string GOOGLE_REGISTER_URL = "https://ibugged.azurewebsites.net/Access/RegisterGoogle";
 
     public AccessService(
         IRepository<User> usersRepository,
