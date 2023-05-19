@@ -3,10 +3,9 @@ using iBugged.Services.Repositories;
 using iBugged.Services.ViewServices;
 using MongoDB.Driver;
 
-var connectionString = "mongodb://localhost:27017";
-var dbName = "iBugged_db";
-
 var builder = WebApplication.CreateBuilder(args);
+var dbName = "iBugged";
+var connectionString = builder.Configuration.GetConnectionString(dbName);
 
 builder.Services.AddControllersWithViews();
 
