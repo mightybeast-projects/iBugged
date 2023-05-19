@@ -45,19 +45,16 @@
         <div class="demo-users-message text-center">
             <h5>Or log in as demo users :</h5>
         </div>
-        <button type="button" class="btn btn-secondary"
-            onclick="logIn(`demoprojectmanager@gmail.com`, `1234567`)">Project Manager</button>
-        <button type="button" class="btn btn-secondary"
-            onclick="logIn(`demodeveloper@gmail.com`, `1234567`)">Developer</button>
-        <button type="button" class="btn btn-secondary"
-            onclick="logIn(`demoteammember@gmail.com`, `1234567`)">Team member</button>
+        <div class="demo-users-div">
+            <form asp-controller="Access" asp-action="LogInAsProjectManager" method="post">
+                <button class="btn btn-secondary" type="Submit">Project Manager</button>
+            </form>
+            <form asp-controller="Access" asp-action="LogInAsDeveloper" method="post">
+                <button class="btn btn-secondary" type="Submit">Developer</button>
+            </form>
+            <form asp-controller="Access" asp-action="LogInAsTeamMember" method="post">
+                <button class="btn btn-secondary" type="Submit">Team member</button>
+            </form>
+        </div>
     </div>
 </body>
-
-<script>
-    function logIn(email, password) {
-        document.getElementById("email").value = email;
-        document.getElementById("password").value = password;
-        document.forms[0].submit();
-    }
-</script>

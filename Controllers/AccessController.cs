@@ -56,6 +56,18 @@ public class AccessController : ControllerBase
     }
 
     [HttpPost]
+    public IActionResult LogInAsProjectManager() =>
+        LogIn("demoprojectmanager@gmail.com", "1234567");
+
+    [HttpPost]
+    public IActionResult LogInAsDeveloper() =>
+        LogIn("demodeveloper@gmail.com", "1234567");
+
+    [HttpPost]
+    public IActionResult LogInAsTeamMember() =>
+        LogIn("demoteammember@gmail.com", "1234567");
+
+    [HttpPost]
     public IActionResult LogIn(string email, string password)
     {
         User user = accessService.Get(email, password);
