@@ -42,6 +42,15 @@ public static class TestsData
         password = "1234567",
         role = Role.TeamMember
     };
+    
+    public static User dummyGoogleUser => new User()
+    {
+        id = "5",
+        name = "GoogleUserMightyBeast",
+        email = "zgpoter@gmail.com",
+        password = "1234567",
+        role = Role.ProjectManager
+    };
 
     public static Project dummyProject => new Project()
     {

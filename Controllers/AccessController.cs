@@ -67,7 +67,7 @@ public class AccessController : ControllerBase
 
         ViewBag.errorMessage = WRONG_CREDENTIALS_ERROR_MESSAGE;
 
-        return View(nameof(Index));
+        return Index();
     }
 
     [HttpPost]

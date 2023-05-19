@@ -10,15 +10,11 @@ namespace iBugged.Tests.Controllers;
 [TestFixture]
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
-    protected readonly AccessService accessService;
-    protected readonly Mock<AccessService> accessServiceMock;
+    private readonly Mock<AccessService> accessServiceMock;
+    private readonly User googleUser = TestsData.dummyGoogleUser;
 
     public AccessControllerTests()
     {
-        accessService = new AccessService(
-            usersRepositoryMock.Object,
-            projectsRepositoryMock.Object,
-            ticketsRepositoryMock.Object);
         accessServiceMock = new Mock<AccessService>(
             usersRepositoryMock.Object,
             projectsRepositoryMock.Object,
@@ -34,8 +30,14 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
             .Setup(m => m.GetGoogleUserForSignIn(user.name))
             .ReturnsAsync(user);
         accessServiceMock
+            .Setup(m => m.GetGoogleUserForSignIn(googleUser.name))
+            .ReturnsAsync(googleUser);
+        accessServiceMock
             .Setup(m => m.GetGoogleUserForRegister(user.name))
             .ReturnsAsync(user);
+        accessServiceMock
+            .Setup(m => m.GetGoogleUserForRegister(googleUser.name))
+            .ReturnsAsync(googleUser);
     }
 
     [Test]
@@ -55,6 +57,22 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
+    public async Task SignInGoogle_RedirectsToDashboard_OnSuccessfulSignIn()
+    {
+        result = await controller.SignInGoogle(user.name);
+
+        AssertRedirectResultRedirectsTo("~/Dashboard/Home");
+    }
+
+    [Test]
+    public async Task SignInGoogle_ReturnsIndexView_OnFailedSignIn()
+    {
+        result = await controller.SignInGoogle(googleUser.name);
+
+        AssertViewResultReturnsView(nameof(controller.Index));
+    }
+
+    [Test]
     public void RegisterGet_ReturnsRegisterView()
     {
         result = controller.Register();
@@ -68,6 +86,22 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
         result = await controller.RegisterGoogle(user.name);
     
         accessServiceMock.Verify(m => m.GetGoogleUserForRegister(user.name));
+    }
+
+    [Test]
+    public async Task RegisterGoogle_ReturnsRegisterGoogleView_OnSuccessfulGoogleRegister()
+    {
+        result = await controller.RegisterGoogle(googleUser.name);
+
+        AssertViewResultReturnsView(nameof(controller.RegisterGoogle));
+    }
+
+    [Test]
+    public async Task RegisterGoogle_RedirectsToIndex_OnDuplicateRegisterAttempt()
+    {
+        result = await controller.RegisterGoogle(user.name);
+
+        AssertRedirectToActionResultReturnsAction(nameof(controller.Index));
     }
 
     [Test]
@@ -105,7 +139,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
-    public void LogIn_ReturnsLoginViewWithErrorMessage_OnFailedLogin()
+    public void LogIn_ReturnsIndexViewWithErrorMessage_OnFailedLogin()
     {
         result = controller.LogIn(string.Empty, string.Empty);
 
