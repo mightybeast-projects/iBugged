@@ -1,6 +1,7 @@
 using iBugged.Controllers;
 using iBugged.Models;
 using iBugged.Services;
+using Moq;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -10,6 +11,7 @@ namespace iBugged.Tests.Controllers;
 public class AccessControllerTests : ControllerTestsBase<AccessController>
 {
     protected readonly AccessService accessService;
+    protected readonly Mock<AccessService> accessServiceMock;
 
     public AccessControllerTests()
     {
@@ -17,8 +19,23 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
             usersRepositoryMock.Object,
             projectsRepositoryMock.Object,
             ticketsRepositoryMock.Object);
-        controller = new AccessController(accessService);
+        accessServiceMock = new Mock<AccessService>(
+            usersRepositoryMock.Object,
+            projectsRepositoryMock.Object,
+            ticketsRepositoryMock.Object);
+        controller = new AccessController(accessServiceMock.Object);
         controller.ControllerContext.HttpContext = httpContextMock.Object;
+    }
+
+    [SetUp]
+    public new void SetUp()
+    {
+        accessServiceMock
+            .Setup(m => m.GetGoogleUserForSignIn(user.name))
+            .ReturnsAsync(user);
+        accessServiceMock
+            .Setup(m => m.GetGoogleUserForRegister(user.name))
+            .ReturnsAsync(user);
     }
 
     [Test]
@@ -30,11 +47,27 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     }
 
     [Test]
+    public async Task SignInGoogle_ReturnsGoogleUserForSignIn()
+    {
+        result = await controller.SignInGoogle(user.name);
+
+        accessServiceMock.Verify(m => m.GetGoogleUserForSignIn(user.name));
+    }
+
+    [Test]
     public void RegisterGet_ReturnsRegisterView()
     {
         result = controller.Register();
 
         AssertViewResultReturnsView(nameof(controller.Register));
+    }
+
+    [Test]
+    public async Task RegisterGoogle_ReturnsGoogleUserForRegister()
+    {
+        result = await controller.RegisterGoogle(user.name);
+    
+        accessServiceMock.Verify(m => m.GetGoogleUserForRegister(user.name));
     }
 
     [Test]

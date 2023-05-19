@@ -29,10 +29,10 @@ public class AccessService : Service
     public string GetGoogleRegisterUrl() =>
         GoogleAuth.GetAuthUrl(CLIENT_ID, GOOGLE_REGISTER_URL);
 
-    public async Task<User> GetGoogleUserForSignIn(string code) =>
+    public virtual async Task<User> GetGoogleUserForSignIn(string code) =>
         await GetGoogleUser(code, GOOGLE_SIGN_IN_URL);
 
-    public async Task<User> GetGoogleUserForRegister(string code) =>
+    public virtual async Task<User> GetGoogleUserForRegister(string code) =>
         await GetGoogleUser(code, GOOGLE_REGISTER_URL);
 
     public async Task<User> GetGoogleUser(string code, string url)
