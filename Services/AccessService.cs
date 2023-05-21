@@ -11,8 +11,8 @@ public class AccessService : Service
     private const string CLIENT_SECRET = "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";
     private const string LOCALHOST_URL = "http://localhost:5227";
     private const string HOST_URL = "https://ibugged.azurewebsites.net";
-    private const string GOOGLE_SIGN_IN_URL = LOCALHOST_URL + "/Access/SignInGoogle";
-    private const string GOOGLE_REGISTER_URL = LOCALHOST_URL + "/Access/RegisterGoogle";
+    private const string GOOGLE_SIGN_IN_URL = HOST_URL + "/Access/SignInGoogle";
+    private const string GOOGLE_REGISTER_URL = HOST_URL + "/Access/RegisterGoogle";
 
     public AccessService(
         IRepository<User> usersRepository,

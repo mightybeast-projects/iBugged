@@ -30,5 +30,5 @@ This "should work" just like any other web project. Just try not to break it, ok
 - [ ] Bug report system
 - [ ] GitHub sync
 - [ ] Trello sync
-- [ ] Better frontend for mobile users / small screens
+- [X] Better frontend for mobile users / small screens
     - [ ] Separate app for mobile

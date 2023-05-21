@@ -171,8 +171,10 @@ nav i {
 
 .content {
   padding-top: 0.5rem;
-  margin-left: 300px;
+  margin-left: 290px;
   margin-right: 50px;
+  overflow: auto;
+  padding: 0px 10px;
 }
 
 a {
@@ -265,7 +267,7 @@ tbody tr {
 .project-container {
   display: flex;
   flex-direction: column;
-  box-shadow: 0px 0rem 1rem 10px rgba(0, 0, 0, .05);
+  box-shadow: 0px 0rem 1rem 2px rgba(0, 0, 0, .05);
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -331,6 +333,7 @@ tbody tr {
 .charts-div {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .dashboard-container {
