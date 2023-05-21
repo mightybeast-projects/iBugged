@@ -87,6 +87,6 @@ public class AccessController : ControllerBase
     {
         accessService.Create(user);
 
-        return RedirectToAction(nameof(Index));
+        return LogIn(user.email, user.password);
     }
 }

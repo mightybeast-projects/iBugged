@@ -117,7 +117,7 @@ public class AccessControllerTests : ControllerTestsBase<AccessController>
     {
         result = controller.Register(user);
 
-        AssertRedirectToActionResultReturnsAction(nameof(controller.Index));
+        AssertRedirectResultRedirectsTo("~/Dashboard/Home");
     }
 
     [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.userCases))]
