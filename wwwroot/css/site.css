@@ -24,11 +24,6 @@ body {
   display: none;
 }
 
-.register-btn{
-  right: 0;
-  position: absolute;
-}
-
 .form-check {
   display: block;
   min-height: 1.5rem;
@@ -37,14 +32,12 @@ body {
   font-weight: 500;
 }
 
-.demo-users-message {
-  margin-top: 30px;
-  margin-bottom: 10px;
-}
-
 .center-div {
+  display: flex;
   width: fit-content;
+  max-width: 80vw;
   height: fit-content;
+  flex-direction: column;
 
   position: absolute;
   top:0;
@@ -55,24 +48,58 @@ body {
   margin: auto;
 }
 
+.login-form-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.login-form {
+  margin: 0;
+  padding: 10px;
+}
+
 .error-message {
   color: red;
+  font-weight: 500;
+}
+
+.center-div form {
+  width: unset;
+  min-width: 290px;
 }
 
 form {
   width: 100%;
 }
 
+.login-btn-div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .demo-users-div {
+  margin: 0;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   flex-direction: row;
   text-align: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: end;
+  min-height: 170px;
 }
 
-.demo-users-div form:nth-of-type(2) {
-  margin: 0px 15px;
+@media (max-width: 724px) {
+  .demo-users-div {
+    text-align: center;
+  }
+}
+
+.demo-users-div form {
+  margin: 0;
 }
 
 .demo-users-div button {
@@ -85,6 +112,7 @@ form {
 
 #registration-form {
   width: 250px;
+  min-width: unset;
 }
 
 .form-control, .form-select {

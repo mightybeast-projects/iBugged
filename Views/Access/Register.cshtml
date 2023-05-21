@@ -5,6 +5,7 @@
     ViewData["Title"] = "Create new user";
 }
 
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/icons/css/all.min.css" asp-append-version="true" />
@@ -21,20 +22,18 @@
         
         <form id="registration-form" asp-controller="Access" asp-action="Register" method="post">
             <div class="form-group">
-                <label for="name">Username:</label>
-                <input id="name" class="form-control" asp-for="name" maxlength="20" required/>
+                <input id="name" class="form-control" asp-for="name" maxlength="20" placeholder="Username" required/>
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
-                <input id="email" class="form-control" asp-for="email" required/>
+                <input id="email" class="form-control" asp-for="email" placeholder="Email" required/>
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input id="password" class="form-control" asp-for="password" required/>
+                <input id="password" class="form-control" asp-for="password" placeholder="Password" required/>
             </div>
             <div class="form-group">
-                <label for="role">Role:</label><br />
-                <select id="role" class="form-select" asp-for="role" asp-items="Html.GetEnumSelectList<Role>()"></select>
+                <select id="role" class="form-select" asp-for="role" asp-items="Html.GetEnumSelectList<Role>()" required>
+                    <option value="" disabled selected hidden>Select user role</option>
+                </select>
             </div>
             <input id="register-btn" class="btn btn-success" type="Submit" value="Register" />
             <a style="margin-top: 20px;" class="google-sign-in-button" href='@ViewBag.googleRegisterUrl'>

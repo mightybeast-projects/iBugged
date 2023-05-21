@@ -5,6 +5,7 @@
     ViewData["Title"] = "Login";
 }
 
+<meta name='viewport' content='width=device-width, initial-scale=1.0'/>
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/icons/css/all.min.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -16,45 +17,45 @@
             <i class="fa-solid fa-bug"></i>
             iBugged
         </h3>
-        <form asp-controller="Access" asp-action="LogIn" method="post">
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input id="email" class="form-control" asp-for="email" required/>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input id="password" class="form-control" asp-for="password" required/>
-            </div>
-            <div class="form-check">
-                <div class="error-message">
-                    @ViewBag.errorMessage <br />
-                </div>
-            </div>
-            <button id="login-btn" class="btn btn-success" type="Submit">Log In</button>
-            <a id="register-page-btn" class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
-        </form>
 
-        <a class="google-sign-in-button" href='@ViewBag.googleSignInUrl'>
-            <div class="left">
-                <img width="20px" alt="Google sign-in" 
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-                Login with Google
-            </div>
-        </a>
-
-        <div class="demo-users-message text-center">
-            <h5>Or log in as demo users :</h5>
+        <div class="error-message text-center">
+            @ViewBag.errorMessage <br />
         </div>
-        <div class="demo-users-div">
-            <form asp-controller="Access" asp-action="LogInAsProjectManager" method="post">
-                <button class="btn btn-secondary" type="Submit">Project Manager</button>
+
+        <div class="login-form-wrapper">
+            <form class="login-form" asp-controller="Access" asp-action="LogIn" method="post">
+                <div class="form-group">
+                    <input id="email" class="form-control" asp-for="email" placeholder="Email" required/>
+                </div>
+                <div class="form-group">
+                    <input id="password" class="form-control" asp-for="password" placeholder="Password" required/>
+                </div>
+                <div class="form-check">
+                    <div class="login-btn-div">
+                        <button id="login-btn" class="btn btn-success" type="Submit">Log In</button>
+                        <a id="register-page-btn" class="btn btn-primary register-btn" asp-controller="Access" asp-action="Register">Register</a>
+                    </div>
+                </div>
+                
+                <a class="google-sign-in-button" href='@ViewBag.googleSignInUrl'>
+                    <div class="left">
+                        <img width="20px" alt="Google sign-in" 
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                        Sign In with Google
+                    </div>
+                </a>
             </form>
-            <form asp-controller="Access" asp-action="LogInAsDeveloper" method="post">
-                <button class="btn btn-secondary" type="Submit">Developer</button>
-            </form>
-            <form asp-controller="Access" asp-action="LogInAsTeamMember" method="post">
-                <button class="btn btn-secondary" type="Submit">Team member</button>
-            </form>
+            <div class="demo-users-div">
+                <form asp-controller="Access" asp-action="LogInAsProjectManager" method="post">
+                    <button class="btn btn-primary" type="Submit">Log In as demo Project Manager</button>
+                </form>
+                <form asp-controller="Access" asp-action="LogInAsDeveloper" method="post">
+                    <button class="btn btn-primary" type="Submit">Log In as demo Developer</button>
+                </form>
+                <form asp-controller="Access" asp-action="LogInAsTeamMember" method="post">
+                    <button class="btn btn-primary" type="Submit">Log In as demo Team member</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>

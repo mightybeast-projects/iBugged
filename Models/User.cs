@@ -18,5 +18,5 @@ public class User : Document
     public string password { get; set; } = null!;
 
     [BsonElement("role")]
-    public Role role { get; set; }
+    public Role? role { get; set; } = null;
 }
