@@ -25,7 +25,7 @@ Visit https://ibugged.azurewebsites.net/.
 
 This "should work" just like any other web project. Just try not to break it, okay? 😉
 
-IMHO : Don't user this thing in production. If you need bug tracker - just use Jira.
+IMHO : Don't use this thing in production. If you need bug tracker - just use Jira.
 
 # ✏️ **Potential improvement**
 - [ ] Event log system
