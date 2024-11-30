@@ -1,4 +1,10 @@
 # <img width="28px" src="wwwroot\favicon.ico" /> **iBugged - Bug tracking tool**
+
+<img src="Demos\demo_2.png" height="300"/>
+<img src="Demos\demo_1.png" height="300"/>
+<img src="Demos\demo_3.png" height="300"/>
+<img src="Demos\demo_4.png" height="300"/>
+
 ## 🔧 Developed using ##
 [![Dotnet](https://img.shields.io/badge/dotnet-black?style=for-the-badge&logo=dotnet&logoColor=black&labelColor=orange)](#)
 [![C#](https://img.shields.io/badge/CSharp-black?style=for-the-badge&logo=csharp&logoColor=black&labelColor=orange)](#)
